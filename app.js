@@ -20,7 +20,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', require('./routes/index'));
+app.get("/",function(req,res){
+  res.redirect("/back");
+})
+app.use('/back', require('./routes/index'));
 app.use('/users', require('./routes/users'));
 
 // catch 404 and forward to error handler
@@ -30,29 +33,29 @@ app.use(function(req, res, next) {
   next(err);
 });
 
-// error handlers
-
 // development error handler
 // will print stacktrace
+
+// no stacktraces leaked to user
+app.use(function(err, req, res, next) {
+  res.status(err.status || 500);
+  res.render('back/errorStack', {
+    message: err.message,
+    error: {}
+  });
+});
+
+
 if (app.get('env') === 'development') {
   app.use(function(err, req, res, next) {
     res.status(err.status || 500);
-    res.render('error', {
+    res.render('back/error', {
       message: err.message,
       error: err
     });
   });
 }
 
-// production error handler
-// no stacktraces leaked to user
-app.use(function(err, req, res, next) {
-  res.status(err.status || 500);
-  res.render('error', {
-    message: err.message,
-    error: {}
-  });
-});
 
 app.listen(3000);
 module.exports = app;
