@@ -38,6 +38,11 @@ router.get('/footer', function(req, res, next) {
   res.render('back/footer');
 });
 
+router.get('/right', function(req, res, next) {
+  res.render('back/right');
+});
+
+
 
 
 

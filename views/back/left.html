@@ -20,30 +20,26 @@ $(function(){
 			}else{
 				$parent.addClass("open").find('.sub-menus').show();	
 			}
-			
-			
 		}
 	});
 	
 	// 三级菜单点击
-	$('.sub-menus li').click(function(e) {
+    $('.sub-menus li').click(function(e) {
         $(".sub-menus li.active").removeClass("active")
 		$(this).addClass("active");
     });
 	
-	$('.title').click(function(){
-		var $ul = $(this).next('ul');
-		$('dd').find('.menuson').slideUp();
-		if($ul.is(':visible')){
-			$(this).next('.menuson').slideUp();
-		}else{
-			$(this).next('.menuson').slideDown();
-		}
-	});
+    $('.title').click(function(){
+    	var $ul = $(this).next('ul');
+    	$('dd').find('.menuson').slideUp();
+    	if($ul.is(':visible')){
+    		$(this).next('.menuson').slideUp();
+    	}else{
+    		$(this).next('.menuson').slideDown();
+    	}
+    });
 })	
 </script>
-
-
 </head>
 
 <body style="background:#fff3e1;">
@@ -60,7 +56,7 @@ $(function(){
         <li>
             <div class="header">
             <cite></cite>
-            <a href="index.html" tppabs="./index.html" target="rightFrame">首页模版</a>
+            <a href="/back/index" tppabs="./index.html" target="rightFrame">首页模版</a>
             <i></i>
             </div>
             <ul class="sub-menus">
@@ -74,7 +70,7 @@ $(function(){
         <li>
             <div class="header">
             <cite></cite>
-            <a href="right.html" tppabs="./right.html" target="rightFrame">数据列表</a>
+            <a href="/back/right" tppabs="./right.html" target="rightFrame">数据列表</a>
             <i></i>
             </div>                
             <ul class="sub-menus">
@@ -85,7 +81,6 @@ $(function(){
             </ul>
         </li>
         
-        <li class="active"><cite></cite><a href="right.html" tppabs="./right.html" target="rightFrame">数据列表</a><i></i></li>
         <li><cite></cite><a href="imgtable.html" tppabs="./imgtable.html" target="rightFrame">图片数据表</a><i></i></li>
         <li><cite></cite><a href="form.html" tppabs="./form.html" target="rightFrame">添加编辑</a><i></i></li>
         <li><cite></cite><a href="imglist.html" tppabs="./imglist.html" target="rightFrame">图片列表</a><i></i></li>
