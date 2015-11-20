@@ -123,6 +123,8 @@ h2{font-weight:normal;}
 .menuson li .sub-menus li a{padding-left:9px;color:#000000; background:url(../images/sub-menu-icon.png)/*tpa=http://www.17sucai.com/preview/423511/2015-10-16/web/web/images/sub-menu-icon.png*/ 0 12px no-repeat;}
 .menuson li .sub-menus li a:hover{color:#EB5409;}
 .menuson li .sub-menus li.active a{color:#EB5409;}
+.menuson li .sub-menus li.sub-active{position:relative;right:-1px;border-left:none;background:#fff;}
+.menuson li .sub-menus li.sub-active a{color:#EB5409;}
 .menuson li.active.open cite{margin-top:12px;margin-left:37px; background:url(../images/jtx.png)/*tpa=http://www.17sucai.com/preview/423511/2015-10-16/web/web/images/jtx.png*/ no-repeat;}
 
 

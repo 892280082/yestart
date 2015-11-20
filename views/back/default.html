@@ -3,17 +3,10 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>无标题文档</title>
-<link href="/back/stylesheets/style.css" tppabs="/back/stylesheets/style.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="jquery.js" tppabs="/back/javascripts/jquery.js"></script>
-<script type="text/javascript" src="jsapi.js" tppabs="/javascripts/jsapi.js"></script>
-<script type="text/javascript" src="format+zh_CN,default,corechart.I.js" tppabs="/javascripts/format+zh_CN,default,corechart.I.js"></script>		
-<script type="text/javascript" src="jquery.gvChart-1.0.1.min.js" tppabs="/javascripts/jquery.gvChart-1.0.1.min.js"></script>
-<script type="text/javascript" src="jquery.ba-resize.min.js" tppabs="/javascripts/jquery.ba-resize.min.js"></script>
-
+<%- include include/base.html %>
 <script type="text/javascript">
 		gvChartInit();
 		jQuery(document).ready(function(){
-
 		jQuery('#myTable5').gvChart({
 				chartType: 'PieChart',
 				gvSettings: {
@@ -26,11 +19,8 @@
 		});
 		</script>
 </head>
-
-
 <body>
-
-	<div class="place">
+    <div class="place">
     <span>位置：</span>
     <ul class="placeul">
     <li><a href="#">首页</a></li>

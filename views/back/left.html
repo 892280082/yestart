@@ -3,8 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>无标题文档</title>
-<link href="/back/stylesheets/style.css" tppabs="/back/stylesheets/style.css" rel="stylesheet" type="text/css" />
-<script language="JavaScript" src="/back/javascripts/jquery.js" tppabs="/back/javascripts/jquery.js"></script>
+<%- include include/base.html %>
 
 <script type="text/javascript">
 $(function(){	
@@ -31,8 +30,8 @@ $(function(){
 
 	// 三级菜单点击
     $('.sub-menus li').click(function(e) {
-        $(".sub-menus li.active").removeClass("active")
-		$(this).addClass("active");
+        $(".sub-menus li.sub-active").removeClass("sub-active");
+        $(this).addClass("sub-active");
     });
 	
     $('.title').click(function(){
@@ -66,7 +65,7 @@ $(function(){
             <i></i>
             </div>
             <ul class="sub-menus">
-            <li><a href="javascript:;">文件管理</a></li>
+            <li class="sub-active"><a href="javascript:;">文件管理</a></li>
             <li><a href="javascript:;">模型信息配置</a></li>
             <li><a href="javascript:;">基本内容</a></li>
             <li><a href="javascript:;">自定义</a></li>

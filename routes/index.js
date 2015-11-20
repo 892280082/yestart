@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-/* GET home page. */
+/* login page. */
 router.get('/', function(req, res, next) {
   res.render('back/login', { title: 'Express' });
 });
@@ -18,14 +18,26 @@ router.get('/login4', function(req, res, next) {
   res.render('back/login4');
 });
 
+/** main page*/
 router.get('/main', function(req, res, next) {
   res.render('back/main');
 });
 
+/**top page*/
 router.get('/top', function(req, res, next) {
   res.render('back/top');
 });
 
+router.get('/default', function(req, res, next) {
+  res.render('back/default');
+});
+
+router.get('/computer', function(req, res, next) {
+  res.render('back/computer');
+});
+
+
+/** left page*/
 router.get('/left', function(req, res, next) {
   res.render('back/left');
 });
@@ -73,6 +85,9 @@ router.get('/tab', function(req, res, next) {
 router.get('/error', function(req, res, next) {
   res.render('back/error');
 });
+
+
+
 
 
 
