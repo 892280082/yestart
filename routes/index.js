@@ -1,5 +1,19 @@
 var express = require('express');
+var Admin = require('../models/admin.js');
+var merges = require('../self_modules/merges/merges.js');
 var router = express.Router();
+
+/**middleware*/
+router.use("/*",function(req,res,next){
+  var admin =  req.session.admin;
+    console.log("indexjs 8",admin);
+    if(!req.session.admin){
+        res.render('back/login1');
+    }
+    next();
+});
+
+
 
 /* login page. */
 router.get('/', function(req, res, next) {
@@ -86,9 +100,17 @@ router.get('/error', function(req, res, next) {
   res.render('back/error');
 });
 
-
-
-
-
+/**login*/
+router.post("/login",function(req,res){
+  var admin = merges.copy(req,Admin);
+  if(admin.name == "admin" && admin.password == "a12345"){
+     console.log("indexjs 105",admin);
+      req.session.admin = 123;
+      console.log("indexJS 109",req.session.admin);
+      res.redirect('/main');
+  }else{
+      res.redirect('back');
+  }
+});
 
 module.exports = router;
