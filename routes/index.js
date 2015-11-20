@@ -42,7 +42,37 @@ router.get('/right', function(req, res, next) {
   res.render('back/right');
 });
 
+router.get('/imgtable', function(req, res, next) {
+  res.render('back/imgtable');
+});
 
+router.get('/form', function(req, res, next) {
+  res.render('back/form');
+});
+
+router.get('/imglist', function(req, res, next) {
+  res.render('back/imglist');
+});
+
+router.get('/imglist1', function(req, res, next) {
+  res.render('back/imglist1');
+});
+
+router.get('/tools', function(req, res, next) {
+  res.render('back/tools');
+});
+
+router.get('/filelist', function(req, res, next) {
+  res.render('back/filelist');
+});
+
+router.get('/tab', function(req, res, next) {
+  res.render('back/tab');
+});
+
+router.get('/error', function(req, res, next) {
+  res.render('back/error');
+});
 
 
 

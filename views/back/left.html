@@ -23,6 +23,12 @@ $(function(){
 		}
 	});
 	
+    
+    $('.menuson li').click(function(e) {
+        $(".menuson li.active").removeClass("active")
+        $(this).addClass("active");
+    });
+
 	// 三级菜单点击
     $('.sub-menus li').click(function(e) {
         $(".sub-menus li.active").removeClass("active")
@@ -80,15 +86,14 @@ $(function(){
             <li><a href="javascript:;">自定义</a></li>
             </ul>
         </li>
-        
-        <li><cite></cite><a href="imgtable.html" tppabs="./imgtable.html" target="rightFrame">图片数据表</a><i></i></li>
-        <li><cite></cite><a href="form.html" tppabs="./form.html" target="rightFrame">添加编辑</a><i></i></li>
-        <li><cite></cite><a href="imglist.html" tppabs="./imglist.html" target="rightFrame">图片列表</a><i></i></li>
-        <li><cite></cite><a href="imglist1.html" tppabs="./imglist1.html" target="rightFrame">自定义</a><i></i></li>
-        <li><cite></cite><a href="tools.html" tppabs="./tools.html" target="rightFrame">常用工具</a><i></i></li>
-        <li><cite></cite><a href="filelist.html" tppabs="./filelist.html" target="rightFrame">信息管理</a><i></i></li>
-        <li><cite></cite><a href="tab.html" tppabs="./tab.html" target="rightFrame">Tab页</a><i></i></li>
-        <li><cite></cite><a href="error.html" tppabs="./error.html" target="rightFrame">404页面</a><i></i></li>
+        <li class="active"><cite></cite><a href="/back/imgtable" tppabs="./imgtable.html" target="rightFrame">图片数据表</a><i></i></li>
+        <li><cite></cite><a href="/back/form" tppabs="./form.html" target="rightFrame">添加编辑</a><i></i></li>
+        <li><cite></cite><a href="/back/imglist" tppabs="./imglist.html" target="rightFrame">图片列表</a><i></i></li>
+        <li><cite></cite><a href="/back/imglist1" tppabs="./imglist1.html" target="rightFrame">自定义</a><i></i></li>
+        <li><cite></cite><a href="/back/tools" tppabs="./tools.html" target="rightFrame">常用工具</a><i></i></li>
+        <li><cite></cite><a href="/back/filelist" tppabs="./filelist.html" target="rightFrame">信息管理</a><i></i></li>
+        <li><cite></cite><a href="/back/tab" tppabs="./tab.html" target="rightFrame">Tab页</a><i></i></li>
+        <li><cite></cite><a href="/back/error" tppabs="./error.html" target="rightFrame">404页面</a><i></i></li>
         </ul>    
     </dd>
         
