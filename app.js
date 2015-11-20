@@ -33,7 +33,7 @@ app.use(session({
     port:setttings.port
   })
 }));
-
+=
 
 // no stacktraces leaked to user
 app.use(function(err, req, res, next) {
