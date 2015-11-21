@@ -6,12 +6,16 @@ mongoose.connect('mongodb://localhost/yestart');
 function admin(){
 	this.name=String;
 	this.password=String;
+	this.realName=String;
+	this.partment=String;
+	this.tel=String;
 }
 
 var admin_Schema = new mongoose.Schema(new admin(),{collection:'admins'}) ;
 var admin_Model = mongoose.model('admins',admin_Schema);
 var export_admin = merges.create(admin,admin_Model);
 module.exports = export_admin;
+
 
 
 // var req = {

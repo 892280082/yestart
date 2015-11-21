@@ -33,9 +33,8 @@ app.use(session({
     port:setttings.port
   })
 }));
-=
 
-// no stacktraces leaked to user
+// 下面两段代码设置报错的处理机制
 app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('back/errorStack', {
@@ -43,6 +42,17 @@ app.use(function(err, req, res, next) {
     error: {}
   });
 });
+
+if (app.get('env') === 'development') {
+  app.use(function(err, req, res, next) {
+    res.status(err.status || 500);
+    res.render('back/error', {
+      message: err.message,
+      error: err
+    });
+  });
+}
+
 
 app.get("/",function(req,res){
   res.redirect("/back");
@@ -56,16 +66,6 @@ app.use(function(req, res, next) {
   err.status = 404;
   next(err);
 });
-
-if (app.get('env') === 'development') {
-  app.use(function(err, req, res, next) {
-    res.status(err.status || 500);
-    res.render('back/error', {
-      message: err.message,
-      error: err
-    });
-  });
-}
 
 app.listen(3000);
 module.exports = app;

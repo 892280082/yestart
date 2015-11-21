@@ -5,14 +5,9 @@ var router = express.Router();
 
 /**middleware*/
 router.use("/*",function(req,res,next){
-  var admin =  req.session.admin;
-    console.log("indexjs 8",admin);
-    if(!req.session.admin){
-        res.render('back/login1');
-    }
-    next();
+  if(!req.session.admin)res.render('back/login1');
+  next();
 });
-
 
 
 /* login page. */
@@ -21,6 +16,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/login1', function(req, res, next) {
+  console.log("indexJs 17",req.session.qq);
   res.render('back/login1');
 });
 
@@ -104,13 +100,75 @@ router.get('/error', function(req, res, next) {
 router.post("/login",function(req,res){
   var admin = merges.copy(req,Admin);
   if(admin.name == "admin" && admin.password == "a12345"){
-     console.log("indexjs 105",admin);
-      req.session.admin = 123;
-      console.log("indexJS 109",req.session.admin);
-      res.redirect('/main');
+      req.session.admin = admin;
+      res.redirect('main');
   }else{
       res.redirect('back');
   }
 });
+
+/*********************后台管理员页面***GET************/
+//管理员列表页面
+router.get('/adminList',function(req, res, next) {
+  Admin.find(null,function(err,docs){
+    if(err){
+      res.send("course errory!");        
+    }
+      res.render('back/admin_manager/list',{
+        docs:docs
+      });
+  })
+});
+
+//管理员添加页面
+router.get('/adminAdd',function(req, res, next) {
+  res.render('back/admin_manager/add');
+});
+
+
+//查看
+router.get('/detailAdmin',function(req, res, next) {
+  var id = req.query.id;
+  Admin.findOne({'_id':id},function(err,doc){
+    if(err){
+      doc = null;
+    }
+    res.render('back/admin_manager/detail',{
+      admin:doc
+    })
+  });
+});
+
+/*********************后台管理员页面***POST************/
+//添加
+router.post('/doSubAdmin',function(req, res, next) {
+  var admin = merges.copy(req,Admin);
+  admin.save(function(err){
+    err ? res.send('false'):res.send('true');
+  });
+});
+
+//删除
+router.post('/delAdmin',function(req, res, next) {
+  var id = req.body.id;
+  Admin.remove({'_id':id},function(err,docs){
+    err ? res.send("false") : res.send("true");
+  });
+});
+
+//更新
+router.post('/updateAdmin',function(req,res,next){
+  
+
+});
+
+
+
+
+
+
+
+
+
 
 module.exports = router;
