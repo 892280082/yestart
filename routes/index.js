@@ -110,21 +110,18 @@ router.post("/login",function(req,res){
 /*********************后台管理员页面***GET************/
 //管理员列表页面
 router.get('/adminList',function(req, res, next) {
-  Admin.find(null,function(err,docs){
-    if(err){
-      res.send("course errory!");        
-    }
-      res.render('back/admin_manager/list',{
-        docs:docs
-      });
-  })
+  merges.getPage(null,req,Admin,function(err,docs,pageInfo){
+        !err ? res.render('back/admin_manager/list',{
+            docs:docs,
+            pageInfo:pageInfo
+        }):res.send('course erroy!');
+  });  
 });
 
 //管理员添加页面
 router.get('/adminAdd',function(req, res, next) {
   res.render('back/admin_manager/add');
 });
-
 
 //查看
 router.get('/detailAdmin',function(req, res, next) {
@@ -142,33 +139,23 @@ router.get('/detailAdmin',function(req, res, next) {
 /*********************后台管理员页面***POST************/
 //添加
 router.post('/doSubAdmin',function(req, res, next) {
-  var admin = merges.copy(req,Admin);
-  admin.save(function(err){
-    err ? res.send('false'):res.send('true');
-  });
+    merges.save(req,Admin,function(err){
+      !err ? res.send('true'): res.send('false');
+    });
 });
 
 //删除
 router.post('/delAdmin',function(req, res, next) {
-  var id = req.body.id;
-  Admin.remove({'_id':id},function(err,docs){
-    err ? res.send("false") : res.send("true");
+  merges.removeById(req,Admin,function(err,doc){
+    !err ? res.send('true') : res.send('false');
   });
 });
 
 //更新
 router.post('/updateAdmin',function(req,res,next){
-  
-
+  merges.updateById(req,Admin,function(err,docs){
+      err ? res.send('false') : res.send('true');
+  });
 });
-
-
-
-
-
-
-
-
-
 
 module.exports = router;

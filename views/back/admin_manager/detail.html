@@ -16,6 +16,7 @@
     <div class="formbody">
     <div class="formtitle"><span>基本信息</span></div>
     <form id="DataForm">
+        <input type="hidden" value="<%=admin._id%>" name="_id" />
         <ul class="forminfo">
         <li><label>登陆账号</label>
             <input name="name" type="text"  value="<%= admin.name%>" class="dfinput" />
@@ -46,10 +47,12 @@
 </body>
 <script type="text/javascript">
     function sub(){
-        var data = $("#DataForm").serialize();
-        $.post('/back/doSubAdmin',data,function(msg){
-            msg == "true" ? window.location.href = "/back/adminList" : alert('填写错误');
-        });
+        base_confirm(function(){
+            var data = $("#DataForm").serialize();
+            $.post('/back/updateAdmin',data,function(msg){
+                msg == "true" ? window.location.href = "/back/adminList" : alert('填写错误');
+            });
+        })
     }
 </script>
 </html>
