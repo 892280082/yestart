@@ -109,7 +109,13 @@ router.post("/login",function(req,res){
 /*********************后台管理员页面***GET************/
 //管理员列表页面
 router.get('/adminList',function(req, res, next) {
-  merges.getPage(null,req,Admin,function(err,docs,pageInfo){
+  var search = merges.getSearchPojo(req,Admin);
+
+  Admin.find(search,function(err,docs){
+    console.log(err,docs);
+  });
+
+  merges.getPage(search,req,Admin,function(err,docs,pageInfo){
         !err ? res.render('back/admin_manager/list',{
             docs:docs,
             pageInfo:pageInfo

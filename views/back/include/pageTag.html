@@ -1,10 +1,10 @@
     <script type="text/javascript">
     function doTagSearch(curPage){
-        var inputHtml = "<input name='curPage' value="+curPage+" type='hidden'/>";
-        $("#SearchForm").append(inputHtml);
+        $("#tag_curPage").val(curPage);
         $("#SearchForm").submit();
     }
     </script>
+    <input type="hidden" id="tag_curPage" name="curPage" value="<%=pageInfo.curPage%>">
     <div class="pagin">
     	<div class="message">共<i class="blue"><%=pageInfo.count%></i>条记录，当前显示第&nbsp;<i class="blue"><%=pageInfo.curPage%>&nbsp;</i>页</div>
         <ul class="paginList">

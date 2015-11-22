@@ -111,6 +111,19 @@ function save(req,constructor,callback){
 	});
 }
 
+function getSearchPojo(req,constructor){
+	var pojo = getPojo(req,constructor);
+	for(var p in pojo){
+		if(typeof pojo[p] == "function" || pojo[p] == "")
+		{
+			delete pojo[p];
+			continue;
+		}
+		pojo[p] = {$regex: pojo[p], $options:'i'}
+	}
+	return pojo;
+}
+
 //提供对外接口
 var merges = {
 	'copy':copy,
@@ -118,7 +131,8 @@ var merges = {
 	'updateById':updateById,
 	'removeById':removeById,
 	'save':save,
-	'getPage':getPage
+	'getPage':getPage,
+	'getSearchPojo':getSearchPojo
 }
 
 module.exports = merges;
