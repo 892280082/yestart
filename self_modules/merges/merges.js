@@ -105,7 +105,7 @@ function getPage(query,req,constructor,callback){
 
 
 function save(req,constructor,callback){
-	var admin = copy(req,Admin);
+	var admin = copy(req,constructor);
 	admin.save(function(err){
 		callback(err);
 	});

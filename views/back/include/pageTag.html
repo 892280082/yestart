@@ -1,0 +1,28 @@
+    <script type="text/javascript">
+    function doTagSearch(curPage){
+        var inputHtml = "<input name='curPage' value="+curPage+" type='hidden'/>";
+        $("#SearchForm").append(inputHtml);
+        $("#SearchForm").submit();
+    }
+    </script>
+    <div class="pagin">
+    	<div class="message">共<i class="blue"><%=pageInfo.count%></i>条记录，当前显示第&nbsp;<i class="blue"><%=pageInfo.curPage%>&nbsp;</i>页</div>
+        <ul class="paginList">
+    <%    if(pageInfo.curPage >1){  %>
+            <li class="paginItem"><a href="javascript:doTagSearch(<%= parseInt(pageInfo.curPage)-1%>)"><span class="pagepre"></span></a></li>  
+    <%    }  %>
+    <%   var total = pageInfo.count / pageInfo.pageSize;   %>
+    <%    total = parseInt(total);                         %>
+    <%    if(pageInfo.count % pageInfo.pageSize != 0) total++; %>
+    <%    for(var i=pageInfo.curPage;i<=total;i++){            %>
+            <li class="paginItem 
+              <%  if(i == pageInfo.curPage){  %>
+                    current
+              <% }  %>
+            "><a href="javascript:doTagSearch(<%= i%>)"><%= i%></a></li>
+    <%   }  %>
+    <% if(pageInfo.curPage < total){  %>
+        <li class="paginItem"><a href="javascript:doTagSearch(<%= parseInt(pageInfo.curPage)+1%>)"><span class="pagenxt"></span></a></li>
+    <% } %>
+        </ul>
+    </div>

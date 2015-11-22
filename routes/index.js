@@ -9,7 +9,6 @@ router.use("/*",function(req,res,next){
   next();
 });
 
-
 /* login page. */
 router.get('/', function(req, res, next) {
   res.render('back/login', { title: 'Express' });
