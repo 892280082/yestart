@@ -5,8 +5,11 @@ var router = express.Router();
 
 /**middleware*/
 router.use("/*",function(req,res,next){
-  if(!req.session.admin)res.render('back/login1');
-  next();
+  if(req.baseUrl == "/back/login1" || req.baseUrl == "/back/login"){
+      next();
+  } else{
+      req.session.admin ? next() : res.render('back/login1');
+  }
 });
 
 /* login page. */
@@ -15,7 +18,6 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/login1', function(req, res, next) {
-  console.log("indexJs 17",req.session.qq);
   res.render('back/login1');
 });
 
@@ -100,9 +102,9 @@ router.post("/login",function(req,res){
   var admin = merges.copy(req,Admin);
   if(admin.name == "admin" && admin.password == "a12345"){
       req.session.admin = admin;
-      res.redirect('main');
+      res.send('true');
   }else{
-      res.redirect('back');
+      res.send('false');
   }
 });
 
@@ -110,11 +112,6 @@ router.post("/login",function(req,res){
 //管理员列表页面
 router.get('/adminList',function(req, res, next) {
   var search = merges.getSearchPojo(req,Admin);
-
-  Admin.find(search,function(err,docs){
-    console.log(err,docs);
-  });
-
   merges.getPage(search,req,Admin,function(err,docs,pageInfo){
         !err ? res.render('back/admin_manager/list',{
             docs:docs,

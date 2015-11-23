@@ -95,9 +95,9 @@ function getPage(query,req,constructor,callback){
 			count:count
 		}
 		if(count == 0 ){
-			return 	callback(err,docs,pageInfo);
+			return 	callback(err,null,pageInfo);
 		}
-		constructor.find(query).skip(curPage).limit(pageSize).exec(function(err,docs){ 
+		constructor.find(query).skip((curPage - 1)*pageSize).limit(pageSize).exec(function(err,docs){ 
 			callback(err,docs,pageInfo);
 		});
 	});
