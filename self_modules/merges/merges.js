@@ -28,6 +28,7 @@ function copyParam(param,pojo,show){
 			}
 			if(pojo[p] == Number){
 				pojo[p] = Number(param[p]);
+				flag = true;
 			}
 			if(pojo[p] == Date ){
 				var timeStr = param[p];

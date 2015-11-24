@@ -53,7 +53,7 @@ if (app.get('env') === 'development') {
   });
 }
 
-
+//页面重定向
 app.get("/",function(req,res){
   res.redirect("/back");
 })
