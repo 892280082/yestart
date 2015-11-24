@@ -22,7 +22,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
 app.use(session({
   secret:setttings.cookieSecret,
   key:setttings.db,
@@ -33,6 +32,7 @@ app.use(session({
     port:setttings.port
   })
 }));
+
 
 // 下面两段代码设置报错的处理机制
 app.use(function(err, req, res, next) {
@@ -57,9 +57,11 @@ if (app.get('env') === 'development') {
 app.get("/",function(req,res){
   res.redirect("/back");
 })
+//后台路由
 app.use('/back', require('./routes/index'));
 app.use('/users', require('./routes/users'));
+//微信自动回复路由
+var autoReply = require('./routes/autoReply')(app);
 
-
-app.listen(3001);
+app.listen(8080);
 module.exports = app;
