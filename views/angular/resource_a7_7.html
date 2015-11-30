@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="a7_7">
+<head>
+	<meta charset="UTF-8">
+	<title>resource</title>
+</head>
+<body>
+	<div ng-controller="c7_7">
+		<ul>
+			<li ng-repeat="item in items">
+				<span>{{item.code}}</span>
+				<span>{{item.name}}</span>
+				<span>{{item.sex}}</span>
+			</li>
+		</ul>
+		<div>
+			<input type="text" ng-model="key">
+			<button ng-click="save()">保存</button>
+			<div>{{result}}</div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript" src="/bower_components/angular/angular.js"></script>
+<script type="text/javascript" src="/bower_components/angular/angular-route.min.js"></script>
+<script type="text/javascript" src="/bower_components/angular/angular-resource.js"></script>
+<script type="text/javascript">
+	var app = angular.module('a7_7',['ngResource']);
+
+	app.controller('c7_7',['$scope','$resource',
+		function($scope,$resource){
+			var stus = $resource('data/info');
+			stus.query({action:'search'},function(resp){
+				$scope.items = resp;
+			})
+			$scope.save = function(){
+				var data = {
+					key:$scope.key
+				}
+				stus.save({action:'save'},data,function(resp){
+					$scope.result = (resp[0] == '1') ?
+						"保存成功" :'保存失败';
+				});
+			}
+		}
+	]);
+
+
+</script>
+</html>
