@@ -40,6 +40,12 @@ router.get('/promise', function(req, res, next) {
 	res.render('angular/promise');
 });
 
+router.get('/data/async', function(req, res, next) {
+	res.send('天气冷冷,哈哈哈哈');
+});
+
+
+
 
 
 

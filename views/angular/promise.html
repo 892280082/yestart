@@ -5,11 +5,8 @@
 	<title>promise</title>
 </head>
 <body>
-	<div ng-controller="c7_9">
-		<div>{{t0}}</div>
-		<div>{{t1}}</div>
-		<button ng-click="action(true)">解决</button>
-		<button ng-click="action(false)">拒绝</button>
+	<div ng-controller="c7_10">
+		<div>{{result}}</div>
 	</div>
 </body>
 <script type="text/javascript" src="/bower_components/angular/angular.js"></script>
@@ -18,24 +15,28 @@
 <script type="text/javascript">
 	var app = angular.module('a7_9',[]);
 
-	app.controller('c7_9',['$scope','$q',
-		function($scope,$q){
+	app.factory('async',['$q','$http',
+		function($q,$http){
 			var defer = $q.defer();
-			$scope.action = function(type){
-				defer.notify(0);
-				type ? defer.resolve(1) : defer.reject(1);
-			}
-			var promise = defer.promise;
-			promise.then(function(n){
-				n++;
-				$scope.t1 = "已处理完成"+n;
+			$http.get('data/async')
+			.success(function(data){
+				defer.resolve(data);
+			})
+			.error(function(reason){
+				defer.reject(reason);
+			})
+			return defer.promise;
+		}
+	]);
+
+	app.controller('c7_10',['async','$scope',
+		function(async,$scope){
+			var promise = async;
+			promise.then(function(resp){
+				$scope.result = "请求成功"+resp;
 			},function(n){
-				n++;
-				$scope.t1 = "未完成"+n;
-			},function(n){
-				n++;
-				$scope.t0 = "正在处理中:" +n;
-			});
+				$scope.result ="请求失败"+n;
+			})
 		}
 	]);
 
