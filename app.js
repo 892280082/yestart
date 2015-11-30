@@ -57,9 +57,10 @@ if (app.get('env') === 'development') {
 app.get("/",function(req,res){
   res.redirect("/back");
 })
+
 app.use('/back', require('./routes/index'));
 app.use('/users', require('./routes/users'));
-
+app.use('/angular', require('./routes/angular'));
 
 app.listen(3000);
 module.exports = app;
