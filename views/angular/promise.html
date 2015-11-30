@@ -17,25 +17,21 @@
 
 	app.factory('async',['$q','$http',
 		function($q,$http){
-			var defer = $q.defer();
-			$http.get('data/async')
-			.success(function(data){
-				defer.resolve(data);
-			})
-			.error(function(reason){
-				defer.reject(reason);
-			})
-			return defer.promise;
+		return {
+				getDate:function(_id){
+					return $http.post('data/async',{
+						_id:_id
+					})
+				}
+			}
 		}
 	]);
 
 	app.controller('c7_10',['async','$scope',
 		function(async,$scope){
-			var promise = async;
-			promise.then(function(resp){
-				$scope.result = "请求成功"+resp;
-			},function(n){
-				$scope.result ="请求失败"+n;
+			async.getDate(1)
+			.success(function(data){
+				$scope.result = data;
 			})
 		}
 	]);

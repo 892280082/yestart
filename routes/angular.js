@@ -44,6 +44,16 @@ router.get('/data/async', function(req, res, next) {
 	res.send('天气冷冷,哈哈哈哈');
 });
 
+router.post('/data/async', function(req, res, next) {
+	if(req.body._id == '1'){
+		res.send('发送正确');
+	}else{
+		res.send('发送失败');
+	}
+
+});
+
+
 
 
 
