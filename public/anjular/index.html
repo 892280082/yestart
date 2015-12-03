@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="a8_6">
+<html lang="en" ng-app="a8_7">
 <head>
 	<meta charset="UTF-8">
 	<title>ng</title>
@@ -19,10 +19,12 @@
 </head>
 <body>
 
-<div class="frame">
-	<input type="text" ng-model="message" placeholder="请输入提示内容">
-	<ts-message>固定</ts-message>
-</div>
+	<div class="frame" ng-controller="c8_7">
+		姓名: <input type="text" ng-model="text_name" placeHolder="请输入姓名"><br>
+		年龄: <input type="text" ng-model="text_age" placeHolder="请输入年龄">
+		<div class="tip">{{tip}}</div>
+		<ts-json a-attr="{{ text_name }}" b-attr="text_age" reset="reSet()">重置</ts-json>
+	</div>
 
 </body>
 <script type="text/javascript" src="/bower_components/angular/angular.js"></script>
@@ -30,27 +32,41 @@
 <script type="text/javascript" src="/bower_components/angular/angular-resource.js"></script>
 
 <script type="text/ng-template" id="tpl">
-	<div class="tip">{{message}}</div>
+	<div class="tip">
+		<span>姓名:{{textName}}</span>
+		<span>年龄:{{textAge}}</span>
+	</div>
 	<button ng-transclude></button>
 </script>
 
 <script type="text/javascript">
-	var app = angular.module('a8_6',[]);
-	app.directive('tsMessage',function(){
+	var app =angular.module('a8_7',[]);
+	app.controller('c8_7',['$scope',function($scope){
+		$scope.reSet = function(){
+			$scope.tip = "姓名与年龄重置成功"
+		}
+	}])
+	app.directive('tsJson',function(){
 		return {
 			restrict:'EAC',
 			templateUrl:'tpl',
 			transclude:true,
-			scope:true,
+			scope:{
+				textName:'@aAttr',
+				textAge: '=bAttr',
+				reSet:'&reset',
+			},
 			link:function(scope,iEle,iAttrs){
 				iEle.bind('click',function(){
 					scope.$apply(function(){
-						scope.message = "这是单击后的内容";
+						scope.reSet();
+						scope.textName= '小明';
+						scope.textAge = 67;
 					})
-				})
+				});
 			}
 		}
-	});
+	})
 </script>
 
 
