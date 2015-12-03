@@ -11,49 +11,33 @@
 			width: 320px;
 			background-color: #eee;
 		}
+
+		.top {
+			font-size: 9px;color: #666;margin: 3px 5px;
+		}
 	</style>
 </head>
 <body>
-	<div class="frame">
-		<ts-tplfile></ts-tplfile>
-		<ts-tplscipt></ts-tplscipt>
-		<ts-tplcache></ts-tplcache>
-	</div>
-	<script type="text/ng-template" id="tpl">
-	<h3>元素内容来源于script元素</h3>				
-	</script>
+	<ts-tplscript>我被复制到div里面了</ts-tplscript>
 </body>
 <script type="text/javascript" src="/bower_components/angular/angular.js"></script>
 <script type="text/javascript" src="/bower_components/angular/angular-route.min.js"></script>
 <script type="text/javascript" src="/bower_components/angular/angular-resource.js"></script>
+<script type="text/ng-template" id="tpl">
+	<div class="frame">
+		<input type="text" ng-model="text">
+		<div class="tip" ng-transclude></div>
+	</div>
+</script>
 <script type="text/javascript">
 	var app = angular.module('a8_1',[]);
-
-	app.run(function($templateCache){
-		$templateCache.put('cache','<h3>内容来源于缓存</h3>')
-	});
-
-	app.directive('tsTplfile',function(){
+	app.directive('tsTplscript',function(){
 		return {
 			restrict:'EAC',
-			templateUrl:'tp1.html'
+			templateUrl:'tpl',
+			transclude:true
 		}
-	});
-
-	app.directive('tsTplscipt',function(){
-		return {
-			restrict:'EAC',
-			templateUrl:'tpl'
-		}
-	});
-
-	app.directive('tsTplcache',function(){
-		return {
-			restrict:'EAC',
-			templateUrl:'cache'
-		}
-	});
-
+	})
 </script>
 </html>
 
