@@ -50,7 +50,11 @@ router.post('/data/async', function(req, res, next) {
 	}else{
 		res.send('发送失败');
 	}
+});
 
+/**指令*/
+router.get('/ng',function(req,res){
+	res.render('angular/ng');
 });
 
 
