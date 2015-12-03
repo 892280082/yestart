@@ -18,27 +18,37 @@
 	</style>
 </head>
 <body>
-	<ts-tplscript>我被复制到div里面了</ts-tplscript>
+	<div class="frame">
+		<ts-tplscript></ts-tplscript>
+		<div class="tip">{{content}}</div>
+	</div>
 </body>
 <script type="text/javascript" src="/bower_components/angular/angular.js"></script>
 <script type="text/javascript" src="/bower_components/angular/angular-route.min.js"></script>
 <script type="text/javascript" src="/bower_components/angular/angular-resource.js"></script>
 <script type="text/ng-template" id="tpl">
-	<div class="frame">
-		<input type="text" ng-model="text">
-		<div class="tip" ng-transclude></div>
-	</div>
+	<button>单击按钮</button>
 </script>
 <script type="text/javascript">
-	var app = angular.module('a8_1',[]);
+	var app =angular.module('a8_1',[]);
 	app.directive('tsTplscript',function(){
 		return {
 			restrict:'EAC',
 			templateUrl:'tpl',
-			transclude:true
+			replace:true,
+			link:function(scope,iEle,iAttrs){
+				iEle.bind('click',function(){
+					scope.$apply(function(){
+						scope.content = '这是单击后的内容';
+					})
+					iAttrs.$$element[0].disabled = true;
+				});
+			}
 		}
 	})
 </script>
+
+
 </html>
 
 
