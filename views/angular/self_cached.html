@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+	<meta charset="UTF-8">
+	<title>cached</title>
+</head>
+<body>
+	<div ng-controller="c7_6">
+		<div>
+		接受的内容是:{{result}}
+		<button ng-click="refresh()">刷新</button>
+		</div>
+	</div>
+</body>
+<script type="text/javascript" src="/bower_components/angular/angular.js"></script>
+<script type="text/javascript" src="/bower_components/angular/angular-route.min.js"></script>
+<script type="text/javascript">
+	var app = angular.module('myApp',['ngRoute']);
+
+	app.service('cache',['$cacheFactory',
+		function($cacheFactory){
+			return $cacheFactory('myCache',{ capacity:3 });
+		}
+	]);
+
+	app.controller('c7_6',['$scope','$http','cache',
+		function($scope,$http,cache){
+			var url = 'data';
+			$http({
+				method:'GET',
+				url:url,
+				cache:cache
+			}).success(function(data){
+				$scope.result = data;
+				cache.put('c',data);
+			})
+			$scope.refresh = function(){
+				var _c = cache.get('c');
+				$scope.result = (_c) ? _c + "(来源缓存)" : '刷新失败';
+			}
+		}
+	])
+
+</script>
+</html>

@@ -57,11 +57,11 @@ if (app.get('env') === 'development') {
 app.get("/",function(req,res){
   res.redirect("/back");
 })
-//后台路由
+
+
 app.use('/back', require('./routes/index'));
 app.use('/users', require('./routes/users'));
-//微信自动回复路由
-var autoReply = require('./routes/autoReply')(app);
+app.use('/angular', require('./routes/angular'));
 
-app.listen(8080);
+app.listen(3000);
 module.exports = app;

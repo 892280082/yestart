@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="a7_9">
+<head>
+	<meta charset="UTF-8">
+	<title>promise</title>
+</head>
+<body>
+	<div ng-controller="c7_10">
+		<div>{{result}}</div>
+	</div>
+</body>
+<script type="text/javascript" src="/bower_components/angular/angular.js"></script>
+<script type="text/javascript" src="/bower_components/angular/angular-route.min.js"></script>
+<script type="text/javascript" src="/bower_components/angular/angular-resource.js"></script>
+<script type="text/javascript">
+	var app = angular.module('a7_9',[]);
+
+	app.factory('async',['$q','$http',
+		function($q,$http){
+		return {
+				getDate:function(_id){
+					return $http.post('data/async',{
+						_id:_id
+					})
+				}
+			}
+		}
+	]);
+
+	app.controller('c7_10',['async','$scope',
+		function(async,$scope){
+			async.getDate(1)
+			.success(function(data){
+				$scope.result = data;
+			})
+		}
+	]);
+
+</script>
+</html>

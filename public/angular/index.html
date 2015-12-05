@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="a9_1">
+<head>
+	<meta charset="UTF-8">
+	<title>ng</title>
+	<style>
+		.frame {
+			padding: 2px 8px;
+			margin: 0px;
+			font-size: 12px;
+			width: 320px;
+			background-color: #eee;
+		}
+		.frame div {
+			margin: 3px 0px;
+		}
+	</style>
+</head>
+<body>
+	<div class="frame" ng-controller="c9_1">
+		<div>absoule_address:{{ absUrl	}}</div>
+		<div>protocol:{{ protocol }}</div>
+		<div>request_host:{{ host }}</div>
+		<div>request_port:{{ port }}</div>
+		<button ng-click="change_url()">edit_url</button>
+	</div>
+
+	<hr>
+	<h3>c9_8</h3>
+	<div class="frame" ng-controller="c9_8">
+		<div><input type="text" id="Text1" ng-model="locationPath"></div>
+		<div>{{locationPath}}</div>
+	</div>	
+</body>
+<script type="text/javascript" src="/bower_components/angular/angular.js"></script>
+<script type="text/javascript" src="/bower_components/angular/angular-route.min.js"></script>
+<script type="text/javascript" src="/bower_components/angular/angular-resource.js"></script>
+
+
+<script type="text/javascript">
+var app = angular.module('a9_1',[]);
+
+app.controller('c9_1',['$scope','$location',
+	function($scope,$location){
+		$scope.absUrl = $location.absUrl();
+		$scope.protocol = $location.protocol();
+		$scope.host = $location.host();
+		$scope.port = $location.port();
+		$scope.change_url = function(){
+			$scope.absUrl  = $location.search({
+				c:'3',
+				a:'5'
+			}).absUrl();
+		}
+	}
+]);
+
+app.controller('c9_8',['$scope','$location',
+	function($scope,$location){
+		$scope.$watch('locationPath',function(path){
+			$location.path(path);
+		})
+		$scope.$watch('$location.path()',function(path){
+			$scope.locationPath = path;
+		});
+
+	}
+]);
+
+
+
+</script>
+
+
+</html>
+
+
+
+
+
+
+
+
