@@ -1,83 +1,134 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="a9_1">
+<html lang="en" ng-app='myApp'>
 <head>
 	<meta charset="UTF-8">
-	<title>ng</title>
+	<title>use angular</title>
 	<style>
-		.frame {
-			padding: 2px 8px;
-			margin: 0px;
-			font-size: 12px;
-			width: 320px;
-			background-color: #eee;
+		.outDiv {
+			width: 800px;height: 130px;background-color: red;
 		}
-		.frame div {
-			margin: 3px 0px;
+		.innerDiv {
+			background-color: blue;width: 100px;height: 100px;float: left;line-height: 30px;text-align: center;
+		}
+		.innerDiv .tt {
+			color: white;font-size: 20px;margin-left: 5px;
+		}
+		.outDiv a {
+			line-height: 40px;margin-left: 300px;
+		}
+		li {
+			background-color: #999;width: 400px;line-height: 24px;color: green;
+		}
+		li a {
+			float: right;
+		}
+		li span{
+			color: black;
 		}
 	</style>
 </head>
 <body>
-	<div class="frame" ng-controller="c9_1">
-		<div>absoule_address:{{ absUrl	}}</div>
-		<div>protocol:{{ protocol }}</div>
-		<div>request_host:{{ host }}</div>
-		<div>request_port:{{ port }}</div>
-		<button ng-click="change_url()">edit_url</button>
+	<div ng-controller="main">
+		<yq-showList ng-show="listFlag"></yq-showList>
+		<yq-getpage   ng-show="!listFlag"></yq-getpage>
+		<button ng-click="change()">change</button>
+		<yq-addpage></yq-addpage>
 	</div>
-
-	<hr>
-	<h3>c9_8</h3>
-	<div class="frame" ng-controller="c9_8">
-		<div><input type="text" id="Text1" ng-model="locationPath"></div>
-		<div>{{locationPath}}</div>
-	</div>	
 </body>
 <script type="text/javascript" src="/bower_components/angular/angular.js"></script>
 <script type="text/javascript" src="/bower_components/angular/angular-route.min.js"></script>
 <script type="text/javascript" src="/bower_components/angular/angular-resource.js"></script>
-
-
-<script type="text/javascript">
-var app = angular.module('a9_1',[]);
-
-app.controller('c9_1',['$scope','$location',
-	function($scope,$location){
-		$scope.absUrl = $location.absUrl();
-		$scope.protocol = $location.protocol();
-		$scope.host = $location.host();
-		$scope.port = $location.port();
-		$scope.change_url = function(){
-			$scope.absUrl  = $location.search({
-				c:'3',
-				a:'5'
-			}).absUrl();
-		}
-	}
-]);
-
-app.controller('c9_8',['$scope','$location',
-	function($scope,$location){
-		$scope.$watch('locationPath',function(path){
-			$location.path(path);
-		})
-		$scope.$watch('$location.path()',function(path){
-			$scope.locationPath = path;
-		});
-
-	}
-]);
-
-
-
+<script type="text/ng-template" id="addTemp">
+	<div>
+		<ul ng-repeat="add in adds">
+			<li><span>name:</span> {{ add.name }}&nbsp;&nbsp;&nbsp;
+			<span>sex:</span> {{ add.sex }} &nbsp;&nbsp;&nbsp;
+			<span>socre:</span>{{ add.score }}
+			<a href="#" ng-click="delete(add)" >delete</a>
+			</li>
+		</ul>			
+	</div>
 </script>
+<script type="text/ng-template" id="listTemp">
+	<div class="outDiv">
+		<div ng-repeat="stu in stus">
+			<div class="innerDiv">
+				name:<span class="tt">{{ stu.name }}</span><br>
+				sex:<span class="tt">{{ stu.sex }}</span> <br>
+				score:<span class="tt">{{ stu.score }}</span> <br>
+				<button ng-click="addStu(stu);">ADD</button>
+			</div>
+		</div>
+	</div>
+</script>
+<script type="text/ng-template" id="getTemp">
+	<div class="outDiv">
+		<p><a href="#" ng-click="toChange()">getUser</a></p>
+	</div>
+</script>
+<script type="text/javascript">
+	Array.prototype.remove = function(obj){
+		var flag = false;
+		for(var i=0;i<this.length;i++){
+			if(this[i] == obj){
+				flag = !flag;
+				break;
+			}
+		}
+		if(flag)this.splice(i,1);
+	}
 
+	var app = angular.module('myApp',[]);
+	app.factory('$_getUser',[
+		function(){
+			return {
+				get:function(){
+					return [
+						{_id:1,name:'lala1',sex:'man1',score:'801'},
+						{_id:2,name:'lala2',sex:'man2',score:'802'},
+						{_id:3,name:'lala3',sex:'man3',score:'803'},
+						{_id:4,name:'lala4',sex:'man4',score:'804'},
+					]
+				}
+			}
+		}
+	]);
 
+	app.directive('yqShowlist',function(){
+		return {
+			restrict:'EAC',
+			templateUrl:'listTemp'
+		}
+	})
+
+	app.directive('yqGetpage',function(){
+		return {
+			restrict:'EAC',
+			templateUrl:'getTemp'
+		}
+	})
+
+	app.directive('yqAddpage',function(){
+		return {
+			restrict:'EAC',
+			templateUrl:'addTemp'
+		}
+	})
+
+	app.controller('main',['$scope','$_getUser',
+		function($scope,$_getUser){
+			$scope.adds = [];
+			$scope.change = function(){
+				$scope.stus = $_getUser.get();
+				$scope.listFlag = !$scope.listFlag;
+			}
+			$scope.addStu = function(stu){
+				$scope.adds.push(stu);
+			}
+			$scope.delete = function(stu){
+				$scope.adds.remove(stu);
+			};
+		}
+	]);
+</script>
 </html>
-
-
-
-
-
-
-
-
