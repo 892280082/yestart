@@ -28,11 +28,17 @@
 	</style>
 </head>
 <body>
+
+
+
 	<div ng-controller="main">
 		<yq-showList ng-show="listFlag"></yq-showList>
 		<yq-getpage   ng-show="!listFlag"></yq-getpage>
 		<button ng-click="change()">change</button>
 		<yq-addpage></yq-addpage>
+	</div>
+	<div ng-controller="useSub">
+		<button ng-click="getUserList()">sub</button>
 	</div>
 </body>
 <script type="text/javascript" src="/bower_components/angular/angular.js"></script>
@@ -63,7 +69,7 @@
 </script>
 <script type="text/ng-template" id="getTemp">
 	<div class="outDiv">
-		<p><a href="#" ng-click="toChange()">getUser</a></p>
+		<p><a href="#" ng-click="getUsers()">getUser</a></p>
 	</div>
 </script>
 <script type="text/javascript">
@@ -94,6 +100,18 @@
 		}
 	]);
 
+	app.service('$_saveAdd',[function(){
+		var load = [];
+		return {
+			set:function(array){
+				load = array;
+			},
+			get:function(){
+				return load;
+			}
+		}
+	}])
+
 	app.directive('yqShowlist',function(){
 		return {
 			restrict:'EAC',
@@ -115,8 +133,8 @@
 		}
 	})
 
-	app.controller('main',['$scope','$_getUser',
-		function($scope,$_getUser){
+	app.controller('main',['$scope','$_getUser','$_saveAdd',
+		function($scope,$_getUser,$_saveAdd){
 			$scope.adds = [];
 			$scope.change = function(){
 				$scope.stus = $_getUser.get();
@@ -124,11 +142,23 @@
 			}
 			$scope.addStu = function(stu){
 				$scope.adds.push(stu);
+				$_saveAdd.set($scope.adds);
 			}
 			$scope.delete = function(stu){
 				$scope.adds.remove(stu);
 			};
+			$scope.getUsers = function(){
+				console.log($_saveAdd.get());
+			}
 		}
 	]);
+
+	app.controller('useSub',['$scope','$_saveAdd',
+		function($scope,$_saveAdd){
+			$scope.getUserList = function(){
+				console.log($_saveAdd.get());
+			}
+		}
+	])
 </script>
 </html>
