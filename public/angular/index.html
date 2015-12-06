@@ -2,7 +2,7 @@
 <html lang="en" ng-app='myApp'>
 <head>
 	<meta charset="UTF-8">
-	<title>use angular</title>
+	<title>angular使用</title>
 	<style>
 		.outDiv {
 			width: 800px;height: 130px;background-color: red;
@@ -28,22 +28,21 @@
 	</style>
 </head>
 <body>
-
-
-
 	<div ng-controller="main">
 		<yq-showList ng-show="listFlag"></yq-showList>
 		<yq-getpage   ng-show="!listFlag"></yq-getpage>
-		<button ng-click="change()">change</button>
+		<button  ng-show="!listFlag" ng-click="change()">学生列表</button>
+		<button  ng-show="listFlag" ng-click="change()">首页</button>
 		<yq-addpage></yq-addpage>
 	</div>
 	<div ng-controller="useSub">
-		<button ng-click="getUserList()">sub</button>
+		<button ng-click="getUserList()">提交</button>
+		<div ng-repeat="stu in stusInfo track by stu.score " >
+			<p>{{ stu }}</p>
+		</div>
 	</div>
 </body>
 <script type="text/javascript" src="/bower_components/angular/angular.js"></script>
-<script type="text/javascript" src="/bower_components/angular/angular-route.min.js"></script>
-<script type="text/javascript" src="/bower_components/angular/angular-resource.js"></script>
 <script type="text/ng-template" id="addTemp">
 	<div>
 		<ul ng-repeat="add in adds">
@@ -59,17 +58,17 @@
 	<div class="outDiv">
 		<div ng-repeat="stu in stus">
 			<div class="innerDiv">
-				name:<span class="tt">{{ stu.name }}</span><br>
-				sex:<span class="tt">{{ stu.sex }}</span> <br>
-				score:<span class="tt">{{ stu.score }}</span> <br>
-				<button ng-click="addStu(stu);">ADD</button>
+				姓名:<span class="tt">{{ stu.name }}</span><br>
+				性别:<span class="tt">{{ stu.sex }}</span> <br>
+				分数:<span class="tt">{{ stu.score }}</span> <br>
+				<button ng-disabled="stu.change_flag" ng-click="addStu(stu);">ADD</button>
 			</div>
 		</div>
 	</div>
 </script>
 <script type="text/ng-template" id="getTemp">
 	<div class="outDiv">
-		<p><a href="#" ng-click="getUsers()">getUser</a></p>
+		<h3>秋季大招生的活动开始了,点击学生列表即可看到优秀毕业学生</h3>	
 	</div>
 </script>
 <script type="text/javascript">
@@ -84,16 +83,31 @@
 		if(flag)this.splice(i,1);
 	}
 
+	Array.prototype.has = function(obj){
+		var flag = false;
+		for(var i=0;i<this.length;i++){
+			if(this[i] == obj){
+				flag =!flag;
+				break;
+			}
+		}
+		return flag;
+	}
+
 	var app = angular.module('myApp',[]);
 	app.factory('$_getUser',[
 		function(){
 			return {
 				get:function(){
 					return [
-						{_id:1,name:'lala1',sex:'man1',score:'801'},
-						{_id:2,name:'lala2',sex:'man2',score:'802'},
-						{_id:3,name:'lala3',sex:'man3',score:'803'},
-						{_id:4,name:'lala4',sex:'man4',score:'804'},
+						{_id:1,name:'lala1',sex:'男',score:'801'},
+						{_id:2,name:'lala2',sex:'女',score:'802'},
+						{_id:3,name:'lala3',sex:'男',score:'803'},
+						{_id:4,name:'lala4',sex:'女',score:'804'},
+						{_id:4,name:'lala5',sex:'女',score:'805'},
+						{_id:4,name:'lala6',sex:'女',score:'806'},
+						{_id:4,name:'lala7',sex:'女',score:'807'},
+
 					]
 				}
 			}
@@ -137,18 +151,25 @@
 		function($scope,$_getUser,$_saveAdd){
 			$scope.adds = [];
 			$scope.change = function(){
-				$scope.stus = $_getUser.get();
+				var stus_ori = $_getUser.get();
+				stus_ori.forEach(function(s){
+					s.change_flag = false;
+				});
+				$scope.stus = stus_ori;
 				$scope.listFlag = !$scope.listFlag;
 			}
 			$scope.addStu = function(stu){
-				$scope.adds.push(stu);
-				$_saveAdd.set($scope.adds);
+				if(!$scope.adds.has(stu)){
+					stu.change_flag = true;
+					$scope.adds.push(stu);
+					$_saveAdd.set($scope.adds);
+				}
 			}
 			$scope.delete = function(stu){
+				stu.change_flag = false;
 				$scope.adds.remove(stu);
-			};
+			}
 			$scope.getUsers = function(){
-				console.log($_saveAdd.get());
 			}
 		}
 	]);
@@ -156,7 +177,7 @@
 	app.controller('useSub',['$scope','$_saveAdd',
 		function($scope,$_saveAdd){
 			$scope.getUserList = function(){
-				console.log($_saveAdd.get());
+				$scope.stusInfo = $_saveAdd.get();
 			}
 		}
 	])

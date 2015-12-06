@@ -85,7 +85,7 @@ function removeById(req,constructor,callback){
 function getPage(query,req,constructor,callback){
 	var curPage = req.body.curPage || req.params.curPage || 
 	req.query.curPage || 1;
-	var pageSize = req.body._id || req.params._id || req.query._id || 5;
+	var pageSize = req.body._id || req.params._id || req.query._id || 20;
 	constructor.count(function(err,count){
 		if(err){
 			return callback(err);
@@ -106,9 +106,9 @@ function getPage(query,req,constructor,callback){
 
 
 function save(req,constructor,callback){
-	var admin = copy(req,constructor);
-	admin.save(function(err){
-		callback(err);
+	var cons_pojo = copy(req,constructor);
+	cons_pojo.save(function(err){
+		callback(err,cons_pojo);
 	});
 }
 

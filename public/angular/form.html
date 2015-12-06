@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+	<meta charset="UTF-8">
+	<title>form表单</title>
+</head>
+<style>
+	.tip {
+		color:red;
+	}
+</style>
+<body ng-controller="form_c">
+<h1>angular表单测试</h1>
+<form name="temp_form" ng-submit="subUser()">
+<span class="param">姓名:</span>
+<input type="text" ng-model="user.name" name="user_name" required>
+<span class="tip" ng-show="temp_form.user_name.$error.required">请输入姓名</span>
+<br>
+<span class="param">性别:</span>
+<select name="user_sex" ng-model="user.sex" required>
+	<option value="男">男</option>
+	<option value="女">女</option>
+</select>
+<span class="tip" ng-show="temp_form.user_sex.$error.required">请选择</span>
+<br>
+<span class="param">邮箱:</span>
+<input type="email" name="user_email" ng-model="user.email" required>
+<span class="tip" ng-show="temp_form.user_email.$error.required">请输入邮箱</span>
+<span class="tip" ng-show="temp_form.user_email.$error.email">邮箱格式不正确</span>
+<br>
+<span class="param">年级:</span>
+大班:<input type="radio" ng-model="user.like" value="大班">
+中班:<input type="radio" ng-model="user.like" value="中班">
+小班:<input type="radio" ng-model="user.like" value="小班">
+<br>
+<span class="param">爱好</span>
+<input type="checkbox" ng-model="user.fav[0]" ng-true-value="喜欢" ng-false-value="不喜欢">吃饭
+<input type="submit" value="提交" ng-disabled="temp_form.$invalid" />
+<p><span>进度:{{tip}}</span></p>
+</form>
+<hr>
+<h3>查看用户列表</h3>
+<table>
+	<tr>
+		<td>序号</td>
+		<td>姓名</td>
+		<td>性别</td>
+		<td>邮箱</td>
+		<td>年级</td>
+		<td>删除</td>
+	</tr>
+	<tr ng-repeat="user in users">
+		<td>{{ $index }}</td>
+		<td>{{ user.name }}</td>
+		<td>{{ user.sex }}</td>
+		<td>{{ user.email }}</td>
+		<td>{{ user.like }}</td>
+		<td><button ng-click="removeUser(user)">delete</button></td>
+	</tr>
+</table>
+
+
+</body>
+<script type="text/javascript" src="/bower_components/angular/angular.js"></script>
+<script type="text/javascript">
+	Array.prototype.remove = function(obj){
+		var flag = false;
+		for(var i=0;i<this.length;i++){
+			if(this[i] == obj){
+				flag = !flag;
+				break;
+			}
+		}
+		if(flag)this.splice(i,1);
+	}
+
+
+var app = angular.module('myApp',[]);
+
+app.service('$_userService',['$http',
+	function($http){
+			this.initUser = {
+				name:'2312221',
+				sex:'男',
+				email:'sdf@asd',
+				like:'大班',
+				fav:[{sleep:'不喜欢'},{eat:false}]
+			},
+			this.save = function(user){
+				 return $http.post('/angular/postUser',user);			},
+			this.getUsers = function(query){
+				return $http.post('/angular/getUsers',query);
+			},
+			this.removeUser = function(user){
+				return $http.post('/angular/removeUser',user);
+			}
+		}
+])
+
+
+app.controller('form_c',['$scope','$_userService',
+	function($scope,$_userService){
+		$scope.user = $_userService.initUser;
+		$scope.users = [];
+		$_userService.getUsers(null).success(function(data){
+			$scope.users = data;
+		});
+		$scope.subUser = function(){
+				$_userService.save($scope.user).success(function(data){
+					 $scope.users.push(data);
+				})		
+		}
+		$scope.removeUser = function(user){
+			$_userService.removeUser(user).success(function(data){
+				$scope.users.remove(user);
+			})
+		}
+	}
+]);
+</script>
+</html>
