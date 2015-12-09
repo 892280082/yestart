@@ -1,0 +1,214 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="stuApp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>student_info_manager</title>
+<%- include ../include/base.html %>
+</head>
+<body ng-controller="main">
+    <ts-top ng-show="show.top"></ts-top>
+    <div class="rightinfo">
+    <ts-tool ng-show="show.tool"></ts-tool>
+    <div ng-show="show.table">
+    <div>
+            <input type="text" class="dfinput" ng-model="key"  placeHolder="用户名查询" />
+            <input type="submit" value="查询" class="btn" />
+    </div>
+    <table class="tablelist">
+       <thead>
+        <tr>
+            <th><input name="" type="checkbox" value="" checked="checked"/></th>
+            <th>用户名</th>
+            <th>登陆密码</th>
+            <th ng-click="title='realName';desc=!desc">真实姓名</th>
+            <th>所属部门</th>
+            <th ng-click="title='tel';desc=!desc">手机号码</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="stu in datas | orderBy : title : desc | filter: { name:key } ">
+            <td><input name="" type="checkbox" value="" checked="checked"/></td>
+            <td>{{ stu.name }}</td>
+            <td>{{ stu.password }}</td>
+            <td>{{ stu.realName }}</td>
+            <td>{{ stu.partment }}</td>
+            <td>{{ stu.tel }}</td>
+            <td><a href="#" ng-click="removeStu(stu)">delete</a></td>
+        </tr>
+        </tbody>
+    </table>
+    </div>
+    <ts-add ng-show="show.add"></ts-add>
+<script type="text/ng-template" id="top">
+    <div class="place">
+        <span>位置：</span>
+        <ul class="placeul">
+            <li><a href="#">首页</a></li>
+            <li><a href="#">数据表</a></li>
+            <li><a href="#">基本内容</a></li>
+        </ul>
+    </div>
+</script>
+<script type="text/ng-template" id="tools">
+        <div class="tools">
+         <ul class="toolbar">
+        <li><a href="#" ng-click="changeView('add')"><span><img src="/back/images/t01.png" /></span>添加</a></li>
+        <li class="click"><span><img src="/back/images/t02.png"  /></span>修改</li>
+        <li><span><img src="/back/images/t03.png" /></span>删除</li>
+        <li><span><img src="/back/images/t04.png"  /></span>统计</li>
+        </ul>
+        <ul class="toolbar1">
+        <li><span><img src="/back/images/t05.png"  /></span>设置</li>
+        </ul>
+    </div>
+</script>
+<script type="text/ng-template" id="add">
+    <div class="formbody">
+    <div class="formtitle"><span>基本信息</span></div>
+    <form id="DataForm">
+        <ul class="forminfo">
+        <li><label>登陆账号</label>
+            <input  ng-model="pojo.name"  type="text" class="dfinput" />
+            <i>登陆用的账号</i>
+        </li>
+        <li><label>登陆密码</label>
+            <input   ng-model="pojo.password"  type="password" class="dfinput" />
+            <i>登陆的密码</i>
+        </li>
+        <li><label>真实姓名</label>
+            <input ng-model="pojo.realName"  type="text" class="dfinput" />
+            <i>真实的姓名</i>
+        </li>
+        <li><label>部门名称</label>
+            <input ng-model="pojo.partment"  type="text" class="dfinput" />
+            <i>填写部门名称</i>
+        </li>
+        <li><label>手机号码</label>
+            <input   ng-model="pojo.tel"  type="text" class="dfinput" />
+            <i>接受短信的手机号码</i>
+        </li>
+        <li><label>&nbsp;</label>
+            <input   ng-click="save()"  type="button" class="btn" value="确认保存"/>
+            <input  ng-click="returnView('add','table');" type="button" class="btn" value="return"/>
+        </li>
+        </ul>
+    </form>
+    </div>
+</script>
+<script type="text/javascript" src="/bower_components/angular/angular.js"></script>
+<script type="text/javascript">
+Array.prototype.remove = function(obj){
+        var flag = false;
+        for(var i=0;i<this.length;i++){
+            if(this[i] == obj){
+                flag = !flag;
+                break;
+            }
+        }
+        if(flag)this.splice(i,1);
+}
+
+var app = angular.module('stuApp',[]);
+app.directive('tsTop',function(){
+    return {
+        restrict:'EAC',
+        templateUrl:'top'
+    }
+})
+app.directive('tsTool',function(){
+    return {
+        restrict:'EAC',
+        templateUrl:'tools'
+    }
+})
+app.directive('tsAdd',function(){
+    return {
+        restrict:'EAC',
+        templateUrl:'add'
+    }
+})
+app.service('$_ctrl',[function(){
+    this._cahce = [];
+    this.$init = function(array){
+        this.$clear();
+        for(var i=0;i<array.length;i++){
+            this._cahce.push(array[i]);
+            this[array[i]] = true;    
+        }
+        return this;
+    };
+    this.$reset = function(array){
+        this.clear();
+        for(var i=0;i<array.length;i++){
+            this._cahce.push(array[i]);
+            this[array[i]] = true;
+        }
+    };
+    this.$add = function(param){
+        this[param]= true;
+    };
+    this.$remove = function(param){
+        delete  this[param];
+    };
+    this.$clear = function(){
+        for(var i=0;i<this._cahce.length;i++){
+            delete this[this._cahce[i]];
+        }
+        this._cahce=[];
+    };
+}]);
+
+app.service('$_data',["$http",
+    function($http){
+        this.save = function(pojo){
+            return $http.post('/angular/saveStu',pojo);
+        };
+        this.remove = function(pojo){
+            return $http.post('/angular/removeStu',pojo);
+        };
+        this.getData = function(search){
+            return $http.post('/angular/stuData',search);
+        }
+    }
+]);
+
+app.controller('main',['$scope','$_ctrl','$_data',
+    function($scope,$_ctrl,$_data){
+        $scope.title = "";
+        $scope.desc = false;
+        $scope.datas = [];
+        $scope.key = "";
+        $_data.getData(null).success(function(data){
+                 $scope.datas = data;
+        });
+        $scope.pojo = {};
+        $scope.show = $_ctrl.$init(['top','tool','table']);
+        $scope.changeView = function(param){
+            $scope.show.$remove('table');
+            $scope.show.$add(param);
+        }
+        $scope.returnView = function(source,taget){
+            $scope.show.$remove(source);
+            $scope.show.$add(taget);
+        }
+        $scope.save = function(){
+            $_data.save($scope.pojo).success(function(data){
+                $scope.datas.push(data);
+                $scope.pojo = {};
+                $scope.returnView('add','table');
+            })
+        }
+        $scope.removeStu = function(pojo){
+            $_data.remove(pojo).success(function(data){
+                if(data == "true"){
+                     $scope.datas.remove(pojo);
+                }
+            });
+        }
+    }
+])
+</script>
+
+</body>
+</html>

@@ -1,5 +1,6 @@
 var express = require('express');
 var merges = require('../self_modules/merges/merges.js');
+var Student = require('../models/student.js');
 var router = express.Router();
 
 
@@ -57,14 +58,27 @@ router.get('/ng',function(req,res){
 	res.render('angular/ng');
 });
 
+/**student list*/
+router.get('/student',function(req,res){
+	res.render("back/student/list");
+});
 
+router.post('/saveStu',function(req,res){
+	merges.save(req,Student,function(err,stu){
+		!err ? res.json(stu) : res.json({err:true});
+	});
+});
 
+router.post('/stuData',function(req,res){
+	merges.getPage(null,req,Student,function(err,stus,pageInfo){
+		!err ? res.json(stus) : res.json({err:true});
+	});
+});
 
-
-
-
-
-
-
+router.post('/removeStu',function(req,res){
+	merges.removeById(req,Student,function(err){
+		!err ? res.send('true') : res.send('false');
+	})
+});
 
 module.exports = router;
