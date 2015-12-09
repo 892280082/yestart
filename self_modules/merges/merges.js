@@ -83,8 +83,7 @@ function removeById(req,constructor,callback){
 }
 
 function getPage(query,req,constructor,callback){
-	var curPage = req.body.curPage || req.params.curPage || 
-	req.query.curPage || 1;
+	var curPage = req.body.curPage || req.params.curPage ||  req.query.curPage || 1;
 	var pageSize = req.body._id || req.params._id || req.query._id || 20;
 	constructor.count(function(err,count){
 		if(err){

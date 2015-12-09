@@ -1,6 +1,6 @@
 var express = require('express');
 var merges = require('../self_modules/merges/merges.js');
-var User = require('../models/user.js');
+var Student = require('../models/student.js');
 var router = express.Router();
 
 
@@ -58,33 +58,28 @@ router.get('/ng',function(req,res){
 	res.render('angular/ng');
 });
 
-/**创穿表单*/
-router.post('/postUser',function(req,res,next){
-	merges.save(req,User,function(err,user){
-		!err ? res.json(user) : res.send('error');
+/**student list*/
+router.get('/student',function(req,res){
+	res.render("back/student/list");
+});
+
+router.post('/saveStu',function(req,res){
+	merges.save(req,Student,function(err,stu){
+		!err ? res.json(stu) : res.json({err:true});
 	});
 });
 
-router.post('/getUsers',function(req,res,next){
-	merges.getPage(null,req,User,function(err,docs){
-		!err ? res.json(docs) : res.json([]);
+router.post('/stuData',function(req,res){
+	merges.getPage(null,req,Student,function(err,stus,pageInfo){
+		!err ? res.json(stus) : res.json({err:true});
 	});
 });
 
-router.post('/removeUser',function(req,res,next){
-	merges.removeById(req,User,function(err){
-		!err ? res.send('true'):res.send('false');
-	});
+router.post('/removeStu',function(req,res){
+	merges.removeById(req,Student,function(err){
+		!err ? res.send('true') : res.send('false');
+	})
 });
-
-
-
-
-
-
-
-
-
 
 
 

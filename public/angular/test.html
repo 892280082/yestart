@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" ng-app='myApp'>
+<head>
+	<meta charset="UTF-8">
+	<title>use angular</title>
+	<style>
+		.frame {
+			padding: 2px 8px;
+			margin: 0px;
+			font-size: 12px;
+			width: 320px;
+			background-color: #eee;
+		}
+		.tip {
+			font-size: 9px;
+			color:#666;
+			margin: 3px 5px;
+		}
+	</style>
+</head>
+<body>
+	<ts-parrent>
+		<div class="tip">{{ ptip }}</div>
+		<ts-child>
+			<div class="tip">{{ ctip }}</div>
+		</ts-child>
+		<button ng-click="click()">change</button>
+	</ts-parrent>
+</body>
+<script type="text/javascript" src="/bower_components/angular/angular.js"></script>
+<script type="text/javascript" src="/bower_components/angular/angular-route.min.js"></script>
+<script type="text/javascript" src="/bower_components/angular/angular-resource.js"></script>
+<script type="text/javascript">
+
+	var app = angular.module('myApp',[]);
+	app.directive('tsParrent',function(){
+		return {
+			restrict:'EAC',
+			controller:function($scope,$compile,$http){
+				this.addChild = function(c){
+					$scope.ptip = 'parrent';
+					$scope.click = function(){
+						$scope.tmp = $scope.ptip;
+						$scope.ptip = c.ctip;
+						c.ctip = $scope.tmp;
+					}
+				}
+			}
+		}
+	})
+
+	app.directive('tsChild',function(){
+		return {
+			restrict:'EAC',
+			require:'^?tsParrent',
+			link:function(scope,iEle,iAttrs,ctrl){
+				scope.ctip = "child",
+				ctrl.addChild(scope);
+			}
+		}
+	})
+
+
+</script>
+<script type="text/ng-template" id="tpl">
+	<h1> this is ng-template </h1>	
+</script>
+</html>
