@@ -4,6 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>student_info_manager</title>
 <%- include ../include/base.html %>
+<link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
 </head>
 <body ng-controller="main">
     <ts-top ng-show="show.top"></ts-top>
@@ -39,8 +40,9 @@
         </tbody>
     </table>
     </div>
-    <ts-page ng-show="show.page"></ts-page>
     <ts-add ng-show="show.add"></ts-add>
+    <tm-pagination conf="paginationConf"></tm-pagination>
+
 <script type="text/ng-template" id="top">
     <div class="place">
         <span>位置：</span>
@@ -125,6 +127,8 @@
     </div>
 </script>
 <script type="text/javascript" src="/bower_components/angular/angular.js"></script>
+<script type="text/javascript" src="/bower_components/angular/tm.pagination.js">   
+</script>
 <script type="text/javascript">
 Array.prototype.remove = function(obj){
         var flag = false;
@@ -136,7 +140,7 @@ Array.prototype.remove = function(obj){
         }
         if(flag)this.splice(i,1);
 }
-var app = angular.module('stuApp',[]);
+var app = angular.module('stuApp',['tm.pagination']);
 app.directive('tsTop',function(){
     return {
         restrict:'EAC',
@@ -253,6 +257,28 @@ app.controller('main',['$scope','$_ctrl','$_data',
                 }
             });
         }
+
+        var GetAllEmployee = function () {
+ 
+            var postData = {
+                pageIndex: $scope.paginationConf.currentPage,
+                pageSize: $scope.paginationConf.itemsPerPage
+            }
+            console.log(postData);
+        }
+        //配置分页基本参数
+        $scope.paginationConf = {
+            currentPage: 1,
+            itemsPerPage: 5
+        };
+        /***************************************************************
+        当页码和页面记录数发生变化时监控后台查询
+        如果把currentPage和itemsPerPage分开监控的话则会触发两次后台事件。 
+        ***************************************************************/
+        $scope.$watch('paginationConf.currentPage + paginationConf.itemsPerPage', GetAllEmployee);
+        
+ 
+
     }
 ])
 </script>

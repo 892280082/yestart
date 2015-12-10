@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+	<meta charset="UTF-8">
+	<title>测试分页</title>
+<link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
+<script type="text/javascript" src="/bower_components/angular/angular.js"></script>
+<script type="text/javascript" src="/bower_components/angular/tm.pagination.js">   
+</script>
+</head>
+<body ng-controller="main">
+    <tm-pagination conf="paginationConf"></tm-pagination>
+</body>
+<script type="text/javascript">
+	var app = angular.module('myApp',['tm.pagination']);
+
+	app.controller('main',['$scope',
+		function($scope){
+        $scope.paginationConf = {
+            currentPage: 1,
+            totalItems: 80,
+            itemsPerPage: 15,
+            pagesLength: 8,
+            perPageOptions: [10, 20],
+            rememberPerPage: 'perPageItems',
+            onChange: function(){
+            	console.log($scope.paginationConf);
+            }
+        };
+
+		}
+	])
+
+</script>
+</html>
