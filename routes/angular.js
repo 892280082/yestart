@@ -71,7 +71,10 @@ router.post('/saveStu',function(req,res){
 
 router.post('/stuData',function(req,res){
 	merges.getPage(null,req,Student,function(err,stus,pageInfo){
-		!err ? res.json(stus) : res.json({err:true});
+		!err ? res.json({
+			'list':stus,
+			'page':pageInfo
+		}) : res.json({err:true});
 	});
 });
 
@@ -81,6 +84,11 @@ router.post('/removeStu',function(req,res){
 	})
 });
 
+router.post('/updateStu',function(req,res,next){
+	merges.updateById(req,Student,function(err){
+		!err ? res.send('true') : res.send('false');
+	});
+});
 
 
 

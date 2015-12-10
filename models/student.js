@@ -8,6 +8,8 @@ function student(){
 	this.realName=String;
 	this.partment=String;
 	this.tel=String;
+	this.fav = Array;
+	this.dtu = Object;
 }
 
 var student_Schema = new mongoose.Schema(new student(),{collection:'students'}) ;
