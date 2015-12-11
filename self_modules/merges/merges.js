@@ -82,9 +82,11 @@ function removeById(req,constructor,callback){
 	});
 }
 
-function getPage(query,req,constructor,callback){
-	var currentPage = req.body.currentPage || req.params.currentPage ||  req.query.currentPage || 1;
-	var itemsPerPage = req.body.itemsPerPage || req.params.itemsPerPage || req.query.itemsPerPage || 3;
+function getPage(query,constructor,callback){
+	var currentPage = query._currentPage;
+	var itemsPerPage = query._itemsPerPage;
+	delete query._currentPage;
+	delete query._itemsPerPage;
 	constructor.count(function(err,totalItems){
 		if(err){
 			return callback(err);
@@ -95,10 +97,16 @@ function getPage(query,req,constructor,callback){
 			'totalItems':totalItems
 		}
 		if(totalItems == 0 ){
-			return 	callback(err,null,pageInfo);
+			return 	callback(err,{
+				'collection':null,
+				'pageInfo':pageInfo
+			});
 		}
 		constructor.find(query).skip((currentPage - 1)*itemsPerPage).limit(itemsPerPage).exec(function(err,docs){ 
-			callback(err,docs,pageInfo);
+			callback(err,{
+				'collection':docs,
+				'pageInfo':pageInfo
+			});
 		});
 	});
 }
@@ -111,7 +119,7 @@ function save(req,constructor,callback){
 	});
 }
 
-function getSearchPojo(req,constructor){
+function getQuery(req,constructor,option){
 	var pojo = getPojo(req,constructor);
 	for(var p in pojo){
 		if(typeof pojo[p] == "function" || pojo[p] == "")
@@ -119,8 +127,12 @@ function getSearchPojo(req,constructor){
 			delete pojo[p];
 			continue;
 		}
-		pojo[p] = {$regex: pojo[p], $options:'i'}
+		if(option[p] == "like"){
+			pojo[p] = {$regex: pojo[p], $options:'i'}
+		}
 	}
+	pojo._currentPage = req.body.currentPage || req.params.currentPage ||  req.query.currentPage || 1;
+	pojo._itemsPerPage = req.body.itemsPerPage || req.params.itemsPerPage || req.query.itemsPerPage || 10;
 	return pojo;
 }
 
@@ -132,7 +144,7 @@ var merges = {
 	'removeById':removeById,
 	'save':save,
 	'getPage':getPage,
-	'getSearchPojo':getSearchPojo
+	'getQuery':getQuery
 }
 
 module.exports = merges;

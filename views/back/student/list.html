@@ -12,7 +12,7 @@
     <div ng-show="show.list">
     <div>
         <input type="text" class="dfinput"   ng-model="searchPojo.name" placeHolder="用户名查询" />
-        <input type="submit" value="查询" class="btn" />
+        <input type="button" value="查询" class="btn"   ng-click="searchList()" />
     </div>
     <table class="tablelist">
        <thead>
@@ -196,36 +196,46 @@ app.controller('main',['$scope','$_ctrl','$_data',
         $scope.title = "";
         $scope.desc = false;
         $scope.datas = [];
-        $scope.pojo = {};
         $scope.show = $_ctrl.$init(['top','tools','list','page']);
 
+        $scope.pojo = {};
 
         $scope.searchPojo ={
-            name:""
+            name:"",
         }
 
         $scope.paginationConf = {
             currentPage: 1,
             totalItems: 80,
-            itemsPerPage: 15,
+            itemsPerPage: 10,
             pagesLength: 8,
             perPageOptions: [10, 20],
             rememberPerPage: 'perPageItems',
             onChange: function(){
                 $scope.searchPojo.currentPage = $scope.paginationConf.currentPage;
-                $scope.searchPojo.itemsPerPage =  $scope.paginationConf.itemsPerPage;
+                $scope.searchPojo.itemsPerPage = $scope.paginationConf.itemsPerPage;
                 $_data.getData($scope.searchPojo).success(function(data){
-                     $scope.datas = data.list;
-                     $scope.paginationConf.currentPage = data.page.currentPage;
-                     $scope.paginationConf.totalItems = data.page.totalItems;
+                     $scope.datas = data.collection;
+                     $scope.paginationConf.currentPage = data.pageInfo.currentPage;
+                     $scope.paginationConf.totalItems = data.pageInfo.totalItems;
                  });
             }
         };
+
+        $scope.searchList = function(){
+            $scope.searchPojo.currentPage = 1;
+            $_data.getData($scope.searchPojo).success(function(data){
+                     $scope.datas = data.collection;
+                     $scope.paginationConf.currentPage = data.pageInfo.currentPage;
+                     $scope.paginationConf.totalItems = data.pageInfo.totalItems;
+            })
+        }
 
         $scope.getDetail = function(stu){
             $scope.pojo = stu;
             $scope.show.$reset(['top','tools','add']);
         }
+
         $scope.save = function(){
             if($scope.pojo._id){
                 $_data.update($scope.pojo).success(function(data){
@@ -240,14 +250,15 @@ app.controller('main',['$scope','$_ctrl','$_data',
                     $scope.datas.push(data);
                     $scope.pojo = {};
                     $scope.show.$reset(['top','tools','list','page']);
-                    $scope.page.count++;
+                    $scope.page.totalItems++;
                 })
             }
         }
+
         $scope.removeStu = function(pojo){
             $_data.remove(pojo).success(function(data){
                 if(data == "true"){
-                     $scope.page.count--;
+                     $scope.page.totalItems--;
                      $scope.datas.remove(pojo);
                 }
             });

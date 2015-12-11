@@ -70,11 +70,11 @@ router.post('/saveStu',function(req,res){
 });
 
 router.post('/stuData',function(req,res){
-	merges.getPage(null,req,Student,function(err,stus,pageInfo){
-		!err ? res.json({
-			'list':stus,
-			'page':pageInfo
-		}) : res.json({err:true});
+	var query = merges.getQuery(req,Student,{
+		name:'like'
+	});
+	merges.getPage(query,Student,function(err,data){
+		!err ? res.json(data) : res.json({err:true});
 	});
 });
 
