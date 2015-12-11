@@ -3,8 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>student_info_manager</title>
-<%- include ../include/base.html %>
-<link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="/back/stylesheets/style.css">
 </head>
 <body ng-controller="main">
     <ts-top ng-show="show.top"></ts-top>
@@ -42,7 +41,7 @@
     </div>
     <ts-add ng-show="show.add"></ts-add>
     <tm-pagination conf="paginationConf"></tm-pagination>
-
+    </body>
 <script type="text/ng-template" id="top">
     <div class="place">
         <span>位置：</span>
@@ -109,23 +108,6 @@
     </form>
     </div>
 </script>
-<script type="text/ng-template" id="page">
-    <div class="pagin">
-        <div class="message">共<i class="blue">{{ page.count }}</i>条记录，
-                            当前显示第&nbsp;<i class="blue">{{ page.curPage }}&nbsp;</i>页</div>
-        <ul class="paginList">
-        <li class="paginItem"><a href="javascript:;"><span class="pagepre"></span></a></li>
-        <li class="paginItem"><a href="javascript:;">1</a></li>
-        <li class="paginItem current"><a href="javascript:;">2</a></li>
-        <li class="paginItem"><a href="javascript:;">3</a></li>
-        <li class="paginItem"><a href="javascript:;">4</a></li>
-        <li class="paginItem"><a href="javascript:;">5</a></li>
-        <li class="paginItem more"><a href="javascript:;">...</a></li>
-        <li class="paginItem"><a href="javascript:;">10</a></li>
-        <li class="paginItem"><a href="javascript:;"><span class="pagenxt"></span></a></li>
-        </ul>
-    </div>
-</script>
 <script type="text/javascript" src="/bower_components/angular/angular.js"></script>
 <script type="text/javascript" src="/bower_components/angular/tm.pagination.js">   
 </script>
@@ -157,12 +139,6 @@ app.directive('tsAdd',function(){
     return {
         restrict:'EAC',
         templateUrl:'add'
-    }
-})
-app.directive('tsPage',function(){
-    return {
-        restrict:'EAC',
-        templateUrl:'page'
     }
 })
 app.service('$_ctrl',[function(){
@@ -223,6 +199,19 @@ app.controller('main',['$scope','$_ctrl','$_data',
         $scope.key = "";
         $scope.pojo = {};
         $scope.show = $_ctrl.$init(['top','tools','list','page']);
+
+        $scope.paginationConf = {
+            currentPage: 1,
+            totalItems: 80,
+            itemsPerPage: 15,
+            pagesLength: 8,
+            perPageOptions: [10, 20],
+            rememberPerPage: 'perPageItems',
+            onChange: function(){
+                console.log($scope.paginationConf);
+            }
+        };
+        
         $_data.getData(null).success(function(data){
                  $scope.datas = data.list;
                  $scope.page = data.page;
@@ -258,30 +247,7 @@ app.controller('main',['$scope','$_ctrl','$_data',
             });
         }
 
-        var GetAllEmployee = function () {
- 
-            var postData = {
-                pageIndex: $scope.paginationConf.currentPage,
-                pageSize: $scope.paginationConf.itemsPerPage
-            }
-            console.log(postData);
-        }
-        //配置分页基本参数
-        $scope.paginationConf = {
-            currentPage: 1,
-            itemsPerPage: 5
-        };
-        /***************************************************************
-        当页码和页面记录数发生变化时监控后台查询
-        如果把currentPage和itemsPerPage分开监控的话则会触发两次后台事件。 
-        ***************************************************************/
-        $scope.$watch('paginationConf.currentPage + paginationConf.itemsPerPage', GetAllEmployee);
-        
- 
-
     }
 ])
 </script>
-
-</body>
 </html>
