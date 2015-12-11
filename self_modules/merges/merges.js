@@ -83,21 +83,21 @@ function removeById(req,constructor,callback){
 }
 
 function getPage(query,req,constructor,callback){
-	var curPage = req.body.curPage || req.params.curPage ||  req.query.curPage || 1;
-	var pageSize = req.body._id || req.params._id || req.query._id || 20;
-	constructor.count(function(err,count){
+	var currentPage = req.body.currentPage || req.params.currentPage ||  req.query.currentPage || 1;
+	var itemsPerPage = req.body.itemsPerPage || req.params.itemsPerPage || req.query.itemsPerPage || 3;
+	constructor.count(function(err,totalItems){
 		if(err){
 			return callback(err);
 		}
 		var pageInfo = {
-			curPage:curPage,
-			pageSize:pageSize,
-			count:count
+			'currentPage':currentPage,
+			'itemsPerPage':itemsPerPage,
+			'totalItems':totalItems
 		}
-		if(count == 0 ){
+		if(totalItems == 0 ){
 			return 	callback(err,null,pageInfo);
 		}
-		constructor.find(query).skip((curPage - 1)*pageSize).limit(pageSize).exec(function(err,docs){ 
+		constructor.find(query).skip((currentPage - 1)*itemsPerPage).limit(itemsPerPage).exec(function(err,docs){ 
 			callback(err,docs,pageInfo);
 		});
 	});

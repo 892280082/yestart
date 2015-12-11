@@ -11,7 +11,7 @@
     <ts-tool ng-show="show.tools"></ts-tool>
     <div ng-show="show.list">
     <div>
-        <input type="text" class="dfinput" ng-model="key"  placeHolder="用户名查询" />
+        <input type="text" class="dfinput"   ng-model="searchPojo.name" placeHolder="用户名查询" />
         <input type="submit" value="查询" class="btn" />
     </div>
     <table class="tablelist">
@@ -27,7 +27,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="stu in datas | orderBy : title : desc | filter: { name:key } ">
+        <tr ng-repeat="stu in datas | orderBy : title : desc | filter: { name: searchPojo.name } ">
             <td>{{ $index +1  }}</td>
             <td ng-click="getDetail(stu);"><a href="#">{{ stu.name }}</a></td>
             <td>{{ stu.password }}</td>
@@ -196,9 +196,13 @@ app.controller('main',['$scope','$_ctrl','$_data',
         $scope.title = "";
         $scope.desc = false;
         $scope.datas = [];
-        $scope.key = "";
         $scope.pojo = {};
         $scope.show = $_ctrl.$init(['top','tools','list','page']);
+
+
+        $scope.searchPojo ={
+            name:""
+        }
 
         $scope.paginationConf = {
             currentPage: 1,
@@ -208,14 +212,16 @@ app.controller('main',['$scope','$_ctrl','$_data',
             perPageOptions: [10, 20],
             rememberPerPage: 'perPageItems',
             onChange: function(){
-                console.log($scope.paginationConf);
+                $scope.searchPojo.currentPage = $scope.paginationConf.currentPage;
+                $scope.searchPojo.itemsPerPage =  $scope.paginationConf.itemsPerPage;
+                $_data.getData($scope.searchPojo).success(function(data){
+                     $scope.datas = data.list;
+                     $scope.paginationConf.currentPage = data.page.currentPage;
+                     $scope.paginationConf.totalItems = data.page.totalItems;
+                 });
             }
         };
-        
-        $_data.getData(null).success(function(data){
-                 $scope.datas = data.list;
-                 $scope.page = data.page;
-        });
+
         $scope.getDetail = function(stu){
             $scope.pojo = stu;
             $scope.show.$reset(['top','tools','add']);
