@@ -35,7 +35,6 @@ app.use(session({
   })
 }));
 
-
 // 下面两段代码设置报错的处理机制
 app.use(function(err, req, res, next) {
   res.status(err.status || 500);

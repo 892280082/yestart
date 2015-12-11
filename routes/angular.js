@@ -90,6 +90,4 @@ router.post('/updateStu',function(req,res,next){
 	});
 });
 
-
-
 module.exports = router;

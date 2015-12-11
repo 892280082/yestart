@@ -4,6 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>student_info_manager</title>
 <link rel="stylesheet" href="/back/stylesheets/style.css">
+<%- include ../include/ueditor.html %>
 </head>
 <body ng-controller="main">
     <ts-top ng-show="show.top"></ts-top>
@@ -40,7 +41,7 @@
     </table>
     </div>
     <ts-add ng-show="show.add"></ts-add>
-    <tm-pagination conf="paginationConf"></tm-pagination>
+    <tm-pagination conf="paginationConf" ng-show="show.page"></tm-pagination>
     </body>
 <script type="text/ng-template" id="top">
     <div class="place">
@@ -107,10 +108,12 @@
         </ul>
     </form>
     </div>
+    <div class="ueditor"  config="config" ng-model="content"></div>
 </script>
 <script type="text/javascript" src="/bower_components/angular/angular.js"></script>
-<script type="text/javascript" src="/bower_components/angular/tm.pagination.js">   
-</script>
+<script type="text/javascript" src="/bower_components/angular/tm.pagination.js"></script>
+<script type="text/javascript" src="/bower_components/angular/angular-ueditor.js"></script>
+<script type="text/javascript" src="angular-ueditor.js"></script>
 <script type="text/javascript">
 Array.prototype.remove = function(obj){
         var flag = false;
@@ -122,7 +125,7 @@ Array.prototype.remove = function(obj){
         }
         if(flag)this.splice(i,1);
 }
-var app = angular.module('stuApp',['tm.pagination']);
+var app = angular.module('stuApp',['tm.pagination','ng.ueditor']);
 app.directive('tsTop',function(){
     return {
         restrict:'EAC',
@@ -141,6 +144,8 @@ app.directive('tsAdd',function(){
         templateUrl:'add'
     }
 })
+
+
 app.service('$_ctrl',[function(){
     this._cahce = [];
     this.$init = function(array){
@@ -203,6 +208,8 @@ app.controller('main',['$scope','$_ctrl','$_data',
         $scope.searchPojo ={
             name:"",
         }
+
+        $scope.conf = {};
 
         $scope.paginationConf = {
             currentPage: 1,
