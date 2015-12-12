@@ -42,7 +42,7 @@
     </div>
     <ts-add ng-show="show.add"></ts-add>
     <tm-pagination conf="paginationConf" ng-show="show.page"></tm-pagination>
-    </body>
+</body>
 <script type="text/ng-template" id="top">
     <div class="place">
         <span>位置：</span>
@@ -71,6 +71,7 @@
 <script type="text/ng-template" id="add">
     <div class="formbody">
     <div class="formtitle"><span>基本信息</span></div>
+    <div class="ueditor" config="config" ng-model="content"></div>
     <form 
         name="subForm"
         ng-submit="save()"
@@ -107,13 +108,11 @@
          </li>
         </ul>
     </form>
-    </div>
-    <div class="ueditor"  config="config" ng-model="content"></div>
+ </div>
 </script>
 <script type="text/javascript" src="/bower_components/angular/angular.js"></script>
 <script type="text/javascript" src="/bower_components/angular/tm.pagination.js"></script>
 <script type="text/javascript" src="/bower_components/angular/angular-ueditor.js"></script>
-<script type="text/javascript" src="angular-ueditor.js"></script>
 <script type="text/javascript">
 Array.prototype.remove = function(obj){
         var flag = false;
@@ -209,7 +208,9 @@ app.controller('main',['$scope','$_ctrl','$_data',
             name:"",
         }
 
-        $scope.conf = {};
+        $scope.conf = {
+
+        };
 
         $scope.paginationConf = {
             currentPage: 1,
