@@ -5,6 +5,13 @@ var router = express.Router();
 
 
 /* login page. */
+
+
+router.get('/*',function(req,res,next){
+	console.log("run to this");
+	next();
+})
+
 router.get('/cached', function(req, res, next) {
   res.render('angular/cached');
 });

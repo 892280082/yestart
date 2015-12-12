@@ -23,7 +23,9 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+
+
+
 app.use(session({
   secret:setttings.cookieSecret,
   key:setttings.db,
@@ -34,6 +36,16 @@ app.use(session({
     port:setttings.port
   })
 }));
+
+
+//页面重定向
+app.get("/",function(req,res){
+  res.redirect("/back");
+})
+app.use('/back', require('./routes/index'));
+app.use('/users', require('./routes/users'));
+app.use('/angular', require('./routes/angular'));
+app.use(express.static(path.join(__dirname, 'public')));
 
 // 下面两段代码设置报错的处理机制
 app.use(function(err, req, res, next) {
@@ -54,14 +66,7 @@ if (app.get('env') === 'development') {
   });
 }
 
-//页面重定向
-app.get("/",function(req,res){
-  res.redirect("/back");
-})
 
-app.use('/back', require('./routes/index'));
-app.use('/users', require('./routes/users'));
-app.use('/angular', require('./routes/angular'));
 
 //ueditor
 app.use("/ueditor/ueditor", ueditor("", function(req, res, next) {
