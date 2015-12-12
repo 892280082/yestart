@@ -5,25 +5,19 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var ueditor = require("ueditor");
-var ejs = require('ejs');
 var setttings = require('./settings');
 var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
 var app = express();
 
 // view engine setup
-app.engine('.html',ejs.__express);
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'html');
 app.set('upload_file','/upload');
 
-// uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-
 
 
 app.use(session({
@@ -38,14 +32,10 @@ app.use(session({
 }));
 
 
-//页面重定向
-app.get("/",function(req,res){
-  res.redirect("/back");
-})
-app.use('/back', require('./routes/index'));
-app.use('/users', require('./routes/users'));
+
+app.use('/back', require('./routes/back'));
 app.use('/angular', require('./routes/angular'));
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'views')));
 
 // 下面两段代码设置报错的处理机制
 app.use(function(err, req, res, next) {
