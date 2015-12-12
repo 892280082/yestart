@@ -1,278 +1,141 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" ng-app="stuApp">
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="myApp">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>student_info_manager</title>
-<link rel="stylesheet" href="/back/stylesheets/style.css">
-<%- include ../include/ueditor.html %>
+<title>学生信息管理页面</title>
+<link href="/back/resource/css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="/back/resource/js/jquery.js" ></script>
+<script type="text/javascript">
+//警告的弹出框
+$(document).ready(function(){
+  $(".click").click(function(){
+  $(".tip").fadeIn(200);
+  });
+  
+  $(".tiptop a").click(function(){
+  $(".tip").fadeOut(200);
+});
+
+  $(".sure").click(function(){
+  $(".tip").fadeOut(100);
+});
+
+  $(".cancel").click(function(){
+  $(".tip").fadeOut(100);
+});
+});
+//列表单复数变色
+$('.tablelist tbody tr:odd').addClass('odd');
+</script>
 </head>
 <body ng-controller="main">
-    <ts-top ng-show="show.top"></ts-top>
-    <div class="rightinfo">
-    <ts-tool ng-show="show.tools"></ts-tool>
-    <div ng-show="show.list">
-    <div>
-        <input type="text" class="dfinput"   ng-model="searchPojo.name" placeHolder="用户名查询" />
-        <input type="button" value="查询" class="btn"   ng-click="searchList()" />
+	<!--头部信息-->
+	<div class="place">
+    <span>位置：</span>
+    <ul class="placeul">
+    <li><a href="/back/page/#">首页</a></li>
+    <li><a href="/back/page/#">数据表</a></li>
+    <li><a href="/back/page/#">基本内容</a></li>
+    </ul>
     </div>
+    
+    <div class="rightinfo">
+
+    <!--工具条-->
+    <div class="tools">
+    	<ul class="toolbar">
+	        <li class="click">
+	        	<span><img src="/back/resource/images/t01.png" /></span>添加
+	        </li>
+	        <li class="click">
+	        	<span><img src="/back/resource/images/t02.png" /></span>修改
+	        </li>
+	        <li>
+	        	<span><img src="/back/resource/images/t03.png" /></span>删除
+	        </li>
+	        <li>
+	        	<span><img src="/back/resource/images/t04.png" /></span>统计
+	        </li>
+        </ul>
+        <ul class="toolbar1">
+        	<li><span><img src="/back/resource/images/t05.png" /></span>设置</li>
+        </ul>
+    </div>
+
+    <!--列表页面-->
     <table class="tablelist">
-       <thead>
-        <tr>
-            <th>序号</th>
-            <th>用户名</th>
-            <th>登陆密码</th>
-            <th ng-click="title='realName';desc=!desc">真实姓名</th>
-            <th>所属部门</th>
-            <th ng-click="title='tel';desc=!desc">手机号码</th>
-            <th>操作</th>
+    	<thead>
+    	<tr>
+        <th><input name="" type="checkbox" value="" checked="checked"/></th>
+        <th>编号<i class="sort"><img src="/back/resource/images/px.gif" /></i></th>
+        <th>标题</th>
+        <th>用户</th>
+        <th>籍贯</th>
+        <th>发布时间</th>
+        <th>是否审核</th>
+        <th>操作</th>
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="stu in datas | orderBy : title : desc | filter: { name: searchPojo.name } ">
-            <td>{{ $index +1  }}</td>
-            <td ng-click="getDetail(stu);"><a href="#">{{ stu.name }}</a></td>
-            <td>{{ stu.password }}</td>
-            <td>{{ stu.realName }}</td>
-            <td>{{ stu.partment }}</td>
-            <td>{{ stu.tel }}</td>
-            <td><a href="#" ng-click="removeStu(stu)">delete</a></td>
-        </tr>
+        <tr>
+        <td><input name="" type="checkbox" value="" /></td>
+        <td>20130908</td>
+        <td>王金平幕僚：马英九声明字字见血 人活着没意思</td>
+        <td>admin</td>
+        <td>江苏南京</td>
+        <td>2013-09-09 15:05</td>
+        <td>已审核</td>
+        <td><a href="/back/page/#" class="tablelink">查看</a>     <a href="/back/page/#" class="tablelink"> 删除</a></td>
+        </tr> 
         </tbody>
     </table>
+    <div class="pagin">
+    	<div class="message">共<i class="blue">1256</i>条记录，当前显示第&nbsp;<i class="blue">2&nbsp;</i>页</div>
+        <ul class="paginList">
+        <li class="paginItem"><a href="/back/page/javascript:;"><span class="pagepre"></span></a></li>
+        <li class="paginItem"><a href="/back/page/javascript:;">1</a></li>
+        <li class="paginItem current"><a href="/back/page/javascript:;">2</a></li>
+        <li class="paginItem"><a href="/back/page/javascript:;">3</a></li>
+        <li class="paginItem"><a href="/back/page/javascript:;">4</a></li>
+        <li class="paginItem"><a href="/back/page/javascript:;">5</a></li>
+        <li class="paginItem more"><a href="/back/page/javascript:;">...</a></li>
+        <li class="paginItem"><a href="/back/page/javascript:;">10</a></li>
+        <li class="paginItem"><a href="/back/page/javascript:;"><span class="pagenxt"></span></a></li>
+        </ul>
     </div>
-    <ts-add ng-show="show.add"></ts-add>
-    <tm-pagination conf="paginationConf" ng-show="show.page"></tm-pagination>
+    </div>
 </body>
-<script type="text/ng-template" id="top">
-    <div class="place">
-        <span>位置：</span>
-        <ul class="placeul">
-            <li><a href="#">首页</a></li>
-            <li><a href="#">数据表</a></li>
-            <li><a href="#">基本内容</a></li>
-        </ul>
-    </div>
+<script type="text/javascript" src="/public/bower_components/angular/angular.js">
 </script>
-<script type="text/ng-template" id="tools">
-        <div class="tools">
-         <ul class="toolbar">
-         <li ng-click="show.$reset(['top','tools','list','page'])"><a href="#" >
-         <span><img src="/back/images/t04.png"  /></span>统计</a></li>
-        <li ng-click="pojo={};show.$reset(['top','tools','add'])"><a href="#" >
-        <span><img src="/back/images/t01.png" /></span>添加</a></li>
-        <li class="click"><span><img src="/back/images/t02.png"  /></span>修改</li>
-        <li><span><img src="/back/images/t03.png" /></span>删除</li>
-        </ul>
-        <ul class="toolbar1">
-        <li><span><img src="/back/images/t05.png"  /></span>设置</li>
-        </ul>
-    </div>
+<script type="text/javascript" src="/public/bower_components/angular/angular-route.min.js"></script>
+<script type="text/javascript" src="/public/bower_components/angular/tm.pagination.js">
 </script>
-<script type="text/ng-template" id="add">
-    <div class="formbody">
-    <div class="formtitle"><span>基本信息</span></div>
-    <div class="ueditor" config="config" ng-model="content"></div>
-    <form 
-        name="subForm"
-        ng-submit="save()"
-        >
-        <ul class="forminfo">
-        <li><label>登陆账号</label>
-            <input  ng-model="pojo.name"  name="t_name" required
-            type="text" class="dfinput"  />
-            <i ng-show="subForm.t_name.$error.required">请输入账号</i>
-        </li>
-        <li><label>登陆密码</label>
-            <input ng-model="pojo.password"  name="t_password"  required 
-            type="password" class="dfinput" />
-            <i ng-show="subForm.t_password.$error.required">请输入密码</i>
-        </li>
-        <li><label>真实姓名</label>
-            <input ng-model="pojo.realName"  name="t_realName" required
-            type="text" class="dfinput"  />
-            <i ng-show="subForm.t_realName.$error.required">请输入姓名</i>
-        </li>
-        <li><label>部门名称</label>
-            <input ng-model="pojo.partment" name="t_partment" required
-             type="text" class="dfinput"  />
-            <i ng-show="subForm.t_partment.$error.required">请输入部门名称</i>
-        </li>
-        <li><label>手机号码</label>
-            <input   ng-model="pojo.tel"  name="t_tel" required
-            type="text" class="dfinput"  />
-            <i ng-show="subForm.t_tel.$error.required">请输入手机号</i>
-        </li>
-        <li><label>&nbsp;</label>
-            <input  type="submit" ng-disabled="subForm.$invalid"
-            class="btn" value="确认保存"/>
-         </li>
-        </ul>
-    </form>
- </div>
-</script>
-<script type="text/javascript" src="/bower_components/angular/angular.js"></script>
-<script type="text/javascript" src="/bower_components/angular/tm.pagination.js"></script>
-<script type="text/javascript" src="/bower_components/angular/angular-ueditor.js"></script>
 <script type="text/javascript">
-Array.prototype.remove = function(obj){
-        var flag = false;
-        for(var i=0;i<this.length;i++){
-            if(this[i] == obj){
-                flag = !flag;
-                break;
-            }
-        }
-        if(flag)this.splice(i,1);
-}
-var app = angular.module('stuApp',['tm.pagination','ng.ueditor']);
-app.directive('tsTop',function(){
-    return {
-        restrict:'EAC',
-        templateUrl:'top'
-    }
-})
-app.directive('tsTool',function(){
-    return {
-        restrict:'EAC',
-        templateUrl:'tools'
-    }
-})
-app.directive('tsAdd',function(){
-    return {
-        restrict:'EAC',
-        templateUrl:'add'
-    }
-})
+	var app = angular.module('myApp',[]);
 
+	app.controller('main',['$scope',
+		function($scope){
+			$scope.name = 'haha';
+		}
+	])
 
-app.service('$_ctrl',[function(){
-    this._cahce = [];
-    this.$init = function(array){
-        this.$clear();
-        for(var i=0;i<array.length;i++){
-            this._cahce.push(array[i]);
-            this[array[i]] = true;    
-        }
-        return this;
-    };
-    this.$reset = function(array){
-        this.$clear();
-        for(var i=0;i<array.length;i++){
-            this._cahce.push(array[i]);
-            this[array[i]] = true;
-        }
-    };
-    this.$add = function(param){
-        this._cahce.push(param);
-        this[param]= true;
-    };
-    this.$remove = function(param){
-        this._cahce.remove(param);
-        delete  this[param];
-    };
-    this.$clear = function(){
-        for(var i=0;i<this._cahce.length;i++){
-            delete this[this._cahce[i]];
-        }
-        this._cahce=[];
-    };
-}]);
-
-app.service('$_data',["$http",
-    function($http){
-        this.save = function(pojo){
-            return $http.post('/angular/saveStu',pojo);
-        };
-        this.remove = function(pojo){
-            return $http.post('/angular/removeStu',pojo);
-        };
-        this.getData = function(search){
-            return $http.post('/angular/stuData',search);
-        };
-        this.update = function(pojo){
-            return $http.post('/angular/updateStu',pojo);
-        }
-    }
-]);
-
-app.controller('main',['$scope','$_ctrl','$_data',
-    function($scope,$_ctrl,$_data){
-        $scope.title = "";
-        $scope.desc = false;
-        $scope.datas = [];
-        $scope.show = $_ctrl.$init(['top','tools','list','page']);
-
-        $scope.pojo = {};
-
-        $scope.searchPojo ={
-            name:"",
-        }
-
-        $scope.conf = {
-
-        };
-
-        $scope.paginationConf = {
-            currentPage: 1,
-            totalItems: 80,
-            itemsPerPage: 10,
-            pagesLength: 8,
-            perPageOptions: [10, 20],
-            rememberPerPage: 'perPageItems',
-            onChange: function(){
-                $scope.searchPojo.currentPage = $scope.paginationConf.currentPage;
-                $scope.searchPojo.itemsPerPage = $scope.paginationConf.itemsPerPage;
-                $_data.getData($scope.searchPojo).success(function(data){
-                     $scope.datas = data.collection;
-                     $scope.paginationConf.currentPage = data.pageInfo.currentPage;
-                     $scope.paginationConf.totalItems = data.pageInfo.totalItems;
-                 });
-            }
-        };
-
-        $scope.searchList = function(){
-            $scope.searchPojo.currentPage = 1;
-            $_data.getData($scope.searchPojo).success(function(data){
-                     $scope.datas = data.collection;
-                     $scope.paginationConf.currentPage = data.pageInfo.currentPage;
-                     $scope.paginationConf.totalItems = data.pageInfo.totalItems;
-            })
-        }
-
-        $scope.getDetail = function(stu){
-            $scope.pojo = stu;
-            $scope.show.$reset(['top','tools','add']);
-        }
-
-        $scope.save = function(){
-            if($scope.pojo._id){
-                $_data.update($scope.pojo).success(function(data){
-                    if(data == "true"){
-                        $scope.show.$reset(['top','tools','list','page']);
-                    }
-                }).error(function(data){
-                    alert("update curse error!");
-                });
-            }else{
-                $_data.save($scope.pojo).success(function(data){
-                    $scope.datas.push(data);
-                    $scope.pojo = {};
-                    $scope.show.$reset(['top','tools','list','page']);
-                    $scope.page.totalItems++;
-                })
-            }
-        }
-
-        $scope.removeStu = function(pojo){
-            $_data.remove(pojo).success(function(data){
-                if(data == "true"){
-                     $scope.page.totalItems--;
-                     $scope.datas.remove(pojo);
-                }
-            });
-        }
-
-    }
-])
 </script>
 </html>
+<!--提示框    <div class="tip">
+	<div class="tiptop"><span>提示信息</span><a></a></div>
+    
+  <div class="tipinfo">
+    <span><img src="/back/resource/images/ticon.png" /></span>
+    <div class="tipright">
+    <p>是否确认对信息的修改 ？</p>
+    <cite>如果是请点击确定按钮 ，否则请点取消。</cite>
+    </div>
+    </div>
+    <div class="tipbtn">
+    <input name="" type="button"  class="sure" value="确定" />&nbsp;
+    <input name="" type="button"  class="cancel" value="取消" />
+    </div>
+</div>
+-->
+
+
