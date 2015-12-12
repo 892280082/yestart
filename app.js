@@ -5,12 +5,16 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var ueditor = require("ueditor");
+var ejs = require('ejs');
 var setttings = require('./settings');
 var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
 var app = express();
 
 // view engine setup
+app.engine('.html',ejs.__express);
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'html');
 app.set('upload_file','/upload');
 
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -31,8 +35,6 @@ app.use(session({
   })
 }));
 
-
-
 app.use('/back', require('./routes/back'));
 app.use('/angular', require('./routes/angular'));
 app.use(express.static(path.join(__dirname, 'views')));
@@ -40,7 +42,7 @@ app.use(express.static(path.join(__dirname, 'views')));
 // 下面两段代码设置报错的处理机制
 app.use(function(err, req, res, next) {
   res.status(err.status || 500);
-  res.render('back/errorStack', {
+  res.render('500', {
     message: err.message,
     error: {}
   });
@@ -49,14 +51,12 @@ app.use(function(err, req, res, next) {
 if (app.get('env') === 'development') {
   app.use(function(err, req, res, next) {
     res.status(err.status || 500);
-    res.render('back/error', {
+    res.render('500', {
       message: err.message,
       error: err
     });
   });
 }
-
-
 
 //ueditor
 app.use("/ueditor/ueditor", ueditor("", function(req, res, next) {
