@@ -1,8 +1,8 @@
 var ueditor = require("ueditor");
 
 
-module.exports = function(app,express,path){ 
 
+module.exports = function(app,express,viewPath){ 
 //开发模式下报错处理机制
 if (app.get('env') === 'development') {
   app.use(function(err, req, res, next) {
@@ -14,13 +14,13 @@ if (app.get('env') === 'development') {
   });
 }
 
-
 //后台路由
 require('./back/back')(app);
 
-
 //配置静态文件目录
-app.use(express.static(path.join(__dirname, 'views')));
+app.use(express.static(viewPath));
+
+
 
 
 
@@ -54,7 +54,7 @@ app.use('/upload/*',function(req,res,next){
 
 //配置404
 app.use(function(req,res){
-  res.send("404 error");
+  res.redirect('/404.html');
 })
 
 

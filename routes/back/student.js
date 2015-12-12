@@ -1,5 +1,5 @@
 var express = require('express');
-var Admin = require('../../models/student.js');
+var Student = require('../../models/student.js');
 var merges = require('../../self_modules/merges/merges.js');
 var router = express.Router();
 
@@ -34,10 +34,5 @@ router.post('/updateStu',function(req,res,next){
 		!err ? res.send('true') : res.send('false');
 	});
 });
-
-router.get('/test',function(req,res){
-	res.send("hahaha");
-});
-
 
 module.exports = router;

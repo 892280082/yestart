@@ -8,6 +8,7 @@ var ejs = require('ejs');
 var setttings = require('./settings');
 var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
+var mongoose = require('mongoose');
 var router = require('./routes/index');
 var app = express();
 
@@ -25,6 +26,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
+//连接数据库
+mongoose.connect('mongodb://localhost/yestart');
+
 //配置第三方session
 app.use(session({
   secret:setttings.cookieSecret,
@@ -38,7 +42,7 @@ app.use(session({
 }));
 
 //配置路由
-router(app,express,path);
+router(app,express,path.join(__dirname, 'views'));
 
 app.listen(3000);
 module.exports = app;

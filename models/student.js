@@ -2,6 +2,7 @@ var crypto = require('crypto');
 var mongoose = require('mongoose');
 var merges = require('../self_modules/merges/merges.js');
 
+
 function student(){
 	this.name=String;
 	this.password=String;

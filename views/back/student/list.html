@@ -66,27 +66,29 @@ $('.tablelist tbody tr:odd').addClass('odd');
     <table class="tablelist">
     	<thead>
     	<tr>
-        <th><input name="" type="checkbox" value="" checked="checked"/></th>
         <th>编号<i class="sort"><img src="/back/resource/images/px.gif" /></i></th>
-        <th>标题</th>
-        <th>用户</th>
-        <th>籍贯</th>
-        <th>发布时间</th>
-        <th>是否审核</th>
+        <th>用户名</th>
+        <th>密码</th>
+        <th>真实姓名</th>
+        <th>部门</th>
+        <th>电话</th>
         <th>操作</th>
         </tr>
         </thead>
         <tbody>
+        <tr ng-repeat="stu in students">
+            <td>{{ $index }}</td>
+            <td>{{ stu.name }}</td>
+            <td>{{ stu.password }}</td>
+            <td>{{ stu.realName }}</td>
+            <td>{{ stu.partment }}</td>
+            <td>{{ stu.tel }}</td>
+            <td>
+                <a href="/back/page/#" class="tablelink">查看</a>     
+                <a href="/back/page/#" class="tablelink"> 删除</a>
+            </td>
+        </tr>
         <tr>
-        <td><input name="" type="checkbox" value="" /></td>
-        <td>20130908</td>
-        <td>王金平幕僚：马英九声明字字见血 人活着没意思</td>
-        <td>admin</td>
-        <td>江苏南京</td>
-        <td>2013-09-09 15:05</td>
-        <td>已审核</td>
-        <td><a href="/back/page/#" class="tablelink">查看</a>     <a href="/back/page/#" class="tablelink"> 删除</a></td>
-        </tr> 
         </tbody>
     </table>
     <div class="pagin">
@@ -113,9 +115,22 @@ $('.tablelist tbody tr:odd').addClass('odd');
 <script type="text/javascript">
 	var app = angular.module('myApp',[]);
 
-	app.controller('main',['$scope',
-		function($scope){
-			$scope.name = 'haha';
+    app.service('stuService',['$http',
+        function($http){
+            this.getData = function(search){
+                return $http.post('/back/student/stuData',search);
+            }
+        }   
+    ])
+
+	app.controller('main',['$scope','stuService',
+		function($scope,stuService){
+            $scope.students = [];
+            stuService.getData(null).success(function(data){
+                $scope.students = data.collection;
+            }).error(function(data){
+                alert("get stu list error!");
+            })
 		}
 	])
 
