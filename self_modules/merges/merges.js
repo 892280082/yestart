@@ -1,4 +1,4 @@
-//获得原始pojo对象
+//根据mongoose对象,获取req中的属性，返回原始对象
 function getPojo(req,constructor){
 	var pojo = new constructor._pojo_constructor();
 	var option = {
@@ -56,6 +56,7 @@ function createModel(origin,func){
 	return func;
 }
 
+//根据对象objectId更新对象信息
 function updateById(req,constructor,callback){
 	var _id = req.body._id || req.params._id || req.query._id;
 	if(!_id){
@@ -71,6 +72,7 @@ function updateById(req,constructor,callback){
 	});
 };
 
+//通过objectId删除对象
 function removeById(req,constructor,callback){
 	var _id = req.body._id || req.params._id || req.query._id;
 	if(!_id){
@@ -82,6 +84,7 @@ function removeById(req,constructor,callback){
 	});
 }
 
+//获取分页信息
 function getPage(query,constructor,callback){
 	var currentPage = query._currentPage;
 	var itemsPerPage = query._itemsPerPage;
@@ -112,7 +115,7 @@ function getPage(query,constructor,callback){
 	});
 }
 
-
+//保存对象，并返回保存后的对象
 function save(req,constructor,callback){
 	var cons_pojo = copy(req,constructor);
 	cons_pojo.save(function(err){
@@ -120,6 +123,7 @@ function save(req,constructor,callback){
 	});
 }
 
+//得到查询对象,并添加分页属性
 function getQuery(req,constructor,option){
 	var pojo = getPojo(req,constructor);
 	for(var p in pojo){
@@ -139,12 +143,19 @@ function getQuery(req,constructor,option){
 
 //提供对外接口
 var merges = {
+	//查询req对象 最终返回mongoose entity实例
 	'copy':copy,
+	//关联scheduleModel对象
 	'create':createModel,
+	//根据对象objectId更新对象信息
 	'updateById':updateById,
+	//通过objectId删除对象
 	'removeById':removeById,
+	//保存对象，并返回保存后的对象
 	'save':save,
+	//获取分页信息
 	'getPage':getPage,
+	//得到查询对象,并添加分页属性
 	'getQuery':getQuery
 }
 

@@ -3,7 +3,6 @@ var Student = require('../../models/student.js');
 var merges = require('../../self_modules/merges/merges.js');
 var router = express.Router();
 
-var backMiddle = require('./back')();
 
 //保存学生信息
 router.post('/saveStu',function(req,res){
@@ -13,7 +12,7 @@ router.post('/saveStu',function(req,res){
 });
 
 //查询学生信息  返回：{学生列表+分页对象}
-router.post('/stuData',backMiddle.tip,function(req,res){
+router.post('/stuData',function(req,res){
 	var query = merges.getQuery(req,Student,{
 		name:'like'
 	});

@@ -25,7 +25,7 @@ app.set('upload_file','/upload');
 
 //配置日志
 app.use(logger('dev'));
-//配置解析请求的中间件
+//配置解析请求参数的中间件
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
