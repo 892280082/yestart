@@ -7,12 +7,12 @@ angular.module('tm.pagination', []).directive('tmPagination',[function(){
         restrict: 'EA',
         template: '<div class="page-list">' +
             '<ul class="pagination" ng-show="conf.totalItems > 0">' +
-            '<li ng-class="{disabled: conf.currentPage == 1}" ng-click="prevPage()"><a href="#"><span>&laquo;</span></a></li>' +
+            '<li ng-class="{disabled: conf.currentPage == 1}" ng-click="prevPage()"><span class="pagepre"></span></li>' +
             '<li ng-repeat="item in pageList track by $index" ng-class="{active: item == conf.currentPage, separate: item == \'...\'}" ' +
             'ng-click="changeCurrentPage(item)">' +
-            '<a href="#"><span>{{ item }}</span></a>' +
+            '<span>{{ item }}</span>' +
             '</li>' +
-            '<li ng-class="{disabled: conf.currentPage == conf.numberOfPages}" ng-click="nextPage()"><a href="#"><span>&raquo;</span></a></li>' +
+            '<li ng-class="{disabled: conf.currentPage == conf.numberOfPages}" ng-click="nextPage()"><span class="pagenxt"></span></li>' +
             '</ul>' +
             '<div class="page-total" ng-show="conf.totalItems > 0">' +
             '第<input type="text" ng-model="jumpPageNum"  ng-keyup="jumpToPage($event)"/>页 ' +

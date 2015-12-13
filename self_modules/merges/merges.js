@@ -91,7 +91,7 @@ function getPage(query,constructor,callback){
 	delete query._currentPage;
 	delete query._itemsPerPage;
 
-	constructor.count(function(err,totalItems){
+	constructor.count(query,function(err,totalItems){
 		if(err){
 			return callback(err);
 		}

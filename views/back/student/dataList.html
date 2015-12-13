@@ -1,0 +1,38 @@
+    <!--查询条件-->
+    <div>
+        <input type="text" class="dfinput"   ng-model="searchPojo.name" placeHolder="用户名查询" />
+        <input type="button" value="查询" class="btn"   ng-click="getSutdent(1)" />
+    </div>
+    <!--列表页面-->
+    <input type="text" ng-model="content"><br>
+    <table class="tablelist">
+    	<thead>
+    	<tr>
+        <th>编号<i class="sort"><img src="/back/resource/images/px.gif" /></i></th>
+        <th>用户名</th>
+        <th>密码</th>
+        <th>真实姓名</th>
+        <th>部门</th>
+        <th>电话</th>
+        <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="stu in students">
+            <td>{{ $index }}</td>
+            <td>{{ stu.name }}</td>
+            <td>{{ stu.password }}</td>
+            <td>{{ stu.realName }}</td>
+            <td>{{ stu.partment }}</td>
+            <td>{{ stu.tel }}</td>
+            <td>
+                <a href="/back/page/#" class="tablelink">查看</a>     
+                <a href="/back/page/#" class="tablelink"> 删除</a>
+            </td>
+        </tr>
+        <tr>
+        </tbody>
+    </table>
+    <!--分页对象-->
+    <tm-pagination conf="paginationConf"></tm-pagination>
+    </div>

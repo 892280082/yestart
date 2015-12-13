@@ -23,7 +23,7 @@ require('./back/back')(app);
 app.use(express.static(viewPath));
 
 //配置ueditor编辑器的后台
-app.use("/ueditor/ueditor", ueditor("", function(req, res, next) {
+app.use("/public/plugin/ueditor/ueditor", ueditor("", function(req, res, next) {
     // ueditor 客户发起上传图片请求
     if (req.query.action === 'uploadimage') {
         var foo = req.ueditor;
@@ -41,7 +41,7 @@ app.use("/ueditor/ueditor", ueditor("", function(req, res, next) {
     // 客户端发起其它请求
     else {
         res.setHeader('Content-Type', 'application/json');
-        res.redirect('/ueditor/nodejs/config.json');
+        res.redirect('/public/plugin/ueditor/nodejs/config.json');
     }
 }));
 
@@ -51,9 +51,9 @@ app.use('/upload/*',function(req,res,next){
 })
 
 //配置404提示页面
-app.use(function(req,res){
-  res.redirect('/404.html');
-})
+// app.use(function(req,res){
+//   res.redirect('/404.html');
+// })
 
 
 };  
