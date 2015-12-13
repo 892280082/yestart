@@ -12,16 +12,20 @@ var mongoose = require('mongoose');
 var router = require('./routes/index');
 var app = express();
 
-// 配置渲染引擎
+//配置服务端口
+app.set('servicePort',3000);
+
+// 配置渲染引擎_dirname全局变量项目在系统的绝对路径
 app.engine('.html',ejs.__express);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'html');
 
-//设置上传目录
+//设置上传下载根目录,是根据系统的绝对路径
 app.set('upload_file','/upload');
 
-//配置解析请求的中间件
+//配置日志
 app.use(logger('dev'));
+//配置解析请求的中间件
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -44,5 +48,10 @@ app.use(session({
 //配置路由
 router(app,express,path.join(__dirname, 'views'));
 
-app.listen(3000);
+//启动http服务
+app.listen(app.get('servicePort'),function(){
+	console.log("http 服务已启动，端口:"+app.get('servicePort'));
+});
+
+//提供对外接口,给第三方插件调用
 module.exports = app;
