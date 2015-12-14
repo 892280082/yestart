@@ -117,6 +117,7 @@ $('.tablelist tbody tr:odd').addClass('odd');
     </form>
     </div>
 </script>
+<script type="text/javascript" src="/public/plugin/util/jsExtend.js"></script>
 <script type="text/javascript" src="/public/bower_components/angular/angular.js">
 </script>
 <script type="text/javascript" src="/public/bower_components/angular/angular-route.min.js"></script>
@@ -124,18 +125,13 @@ $('.tablelist tbody tr:odd').addClass('odd');
 </script>
 <script type="text/javascript" src="/public/bower_components/angular/angular-ueditor.js">
 </script>
+<script type="text/javascript" src="/public/bower_components/angular/angular-showCtrl.js">
+</script>
 <script type="text/javascript">
-Array.prototype.remove = function(obj){
-        var flag = false;
-        for(var i=0;i<this.length;i++){
-            if(this[i] == obj){
-                flag = !flag;
-                break;
-            }
-        }
-        if(flag)this.splice(i,1);
-}
-var app = angular.module('myApp',['tm.pagination','ng.ueditor']);
+var app = angular.module('myApp',['tm.pagination',
+                                                            'ng.ueditor',
+                                                            'service.showCtrl'
+                                                            ]);
 app.directive('tsTop',function(){
     return {
         restrict:'EAC',
@@ -154,37 +150,6 @@ app.directive('tsAdd',function(){
         templateUrl:'add'
     }
 })
-//register service
-app.service('$_ctrl',[function(){
-    this._currentName = "";
-    this._registContent = {};
-    this.$regist = function(name,array,current){
-        this._registContent[name] = array;
-        if(current) this.$set(name);
-    };
-    this.$set = function(name){
-        var array = this._registContent[ this._currentName];
-        if(array){
-             for(var i=0;i<array.length;i++){
-                 delete this[array[i]];
-             }
-        }
-        array = this._registContent[name];
-        if(!array) throw "you  dont regist the name";
-        for(var i=0;i<array.length;i++){
-            this[array[i]] = true;
-        }
-        this._currentName = name;
-    };
-    this.$remove = function(name){
-        delete this._registContent[name];
-    };
-    this.$init = function(){
-        this._registContent = {};
-        this._currentName = "";
-        return this;
-    }
-}]);
 
 app.service('$_data',["$http",
     function($http){
@@ -203,7 +168,7 @@ app.service('$_data',["$http",
     }
 ]);
 
-app.controller('main',['$scope','$_ctrl','$_data',
+app.controller('main',['$scope','showCtrl','$_data',
     function($scope,$_ctrl,$_data){
         $scope.title = "";
         $scope.desc = false;

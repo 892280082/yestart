@@ -32,6 +32,10 @@ app.use("/public/plugin/ueditor/ueditor", ueditor("", function(req, res, next) {
         //你只要输入要保存的地址 。保存操作交给ueditor来做
         res.ue_up(img_url);
     }
+    // ueditor 客户发起上传视频请求
+    else if (req.query.action === 'uploadvideo') {
+       
+    }
     //  客户端发起图片列表请求
     else if (req.query.action === 'listimage') {
         var dir_url = app.get('upload_file') + '/images/ueditor';
