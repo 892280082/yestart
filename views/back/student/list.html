@@ -20,7 +20,7 @@ $('.tablelist tbody tr:odd').addClass('odd');
     <div ng-show="show.list">
     <div>
         <input type="text" class="dfinput"   ng-model="searchPojo.name" placeHolder="用户名查询" />
-        <input type="button" value="查询" class="btn"   ng-click="searchList()" />
+        <input type="button" value="查询" class="btn"   ng-click="getSearchPage(1)" />
     </div>
     <table class="tablelist">
        <thead>
@@ -202,22 +202,20 @@ app.service('$_data',["$http",
         }
     }
 ]);
+
 app.controller('main',['$scope','$_ctrl','$_data',
     function($scope,$_ctrl,$_data){
         $scope.title = "";
         $scope.desc = false;
         $scope.datas = [];
         $scope.show = $_ctrl;
-
-         $scope.show.$regist('list',['top','tools','list','page'],true);
-         $scope.show.$regist('add',['top','tools','add']);
-
         $scope.pojo = {};
         $scope.searchPojo ={
             name:"",
         }
 
-        $scope.conf = {};
+        $scope.show.$regist('list',['top','tools','list','page'],true);
+        $scope.show.$regist('add',['top','tools','add']);
 
         $scope.paginationConf = {
             currentPage: 1,
@@ -227,27 +225,25 @@ app.controller('main',['$scope','$_ctrl','$_data',
             perPageOptions: [10, 20],
             rememberPerPage: 'perPageItems',
             onChange: function(){
-                $scope.searchPojo.currentPage = $scope.paginationConf.currentPage;
                 $scope.searchPojo.itemsPerPage = $scope.paginationConf.itemsPerPage;
-                $_data.getData($scope.searchPojo).success(function(data){
-                     $scope.datas = data.collection;
-                     $scope.paginationConf.currentPage = data.pageInfo.currentPage;
-                     $scope.paginationConf.totalItems = data.pageInfo.totalItems;
-                 });
+                $scope.getSearchPage($scope.paginationConf.currentPage);
             }
         };
-        $scope.searchList = function(){
-            $scope.searchPojo.currentPage = 1;
+
+        $scope.getSearchPage = function(currentPage){
+            $scope.searchPojo.currentPage = currentPage;
             $_data.getData($scope.searchPojo).success(function(data){
                      $scope.datas = data.collection;
                      $scope.paginationConf.currentPage = data.pageInfo.currentPage;
                      $scope.paginationConf.totalItems = data.pageInfo.totalItems;
             })
         }
+
         $scope.getDetail = function(stu){
             $scope.pojo = stu;
             $scope.show.$set('add');
         }
+
         $scope.save = function(){
             if($scope.pojo._id){
                 $_data.update($scope.pojo).success(function(data){
@@ -259,13 +255,13 @@ app.controller('main',['$scope','$_ctrl','$_data',
                 });
             }else{
                 $_data.save($scope.pojo).success(function(data){
-                    $scope.datas.push(data);
                     $scope.pojo = {};
                     $scope.show.$set('list');
                     $scope.paginationConf.totalItems++;
                 })
             }
         }
+
         $scope.removeStu = function(pojo){
             $_data.remove(pojo).success(function(data){
                 if(data == "true"){
@@ -274,6 +270,7 @@ app.controller('main',['$scope','$_ctrl','$_data',
                 }
             });
         }
+
     }
 ])
 </script>

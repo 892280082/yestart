@@ -1,5 +1,5 @@
 var ueditor = require("ueditor");
-
+var backRoute = require('./back/index');
 
 
 module.exports = function(app,express,viewPath){ 
@@ -15,7 +15,7 @@ if (app.get('env') === 'development') {
 }
 
 //加载back模块路由
-require('./back/back')(app);
+backRoute(app);
 
 //配置静态文件目录的处理中间件
 //若自定义路由配置在此中间件前,express可以控制用户对静态文件的访问。
