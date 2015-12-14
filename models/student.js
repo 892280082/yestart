@@ -9,6 +9,7 @@ function student(){
 	this.realName=String;
 	this.partment=String;
 	this.tel=String;
+	this.content = String;
 	this.fav = Array;
 	this.dtu = Object;
 }

@@ -9,24 +9,6 @@
 <script type="text/javascript" charset="utf-8" src="/public/plugin/ueditor/ueditor.all.min.js"> </script>
 <script type="text/javascript" charset="utf-8" src="/public/plugin/ueditor/lang/zh-cn/zh-cn.js"> </script>
 <script type="text/javascript">
-//警告的弹出框
-$(document).ready(function(){
-  $(".click").click(function(){
-  $(".tip").fadeIn(200);
-  });
-  
-  $(".tiptop a").click(function(){
-  $(".tip").fadeOut(200);
-});
-
-  $(".sure").click(function(){
-  $(".tip").fadeOut(100);
-});
-
-  $(".cancel").click(function(){
-  $(".tip").fadeOut(100);
-});
-});
 //列表单复数变色
 $('.tablelist tbody tr:odd').addClass('odd');
 </script>
@@ -46,9 +28,9 @@ $('.tablelist tbody tr:odd').addClass('odd');
             <th>序号</th>
             <th>用户名</th>
             <th>登陆密码</th>
-            <th ng-click="title='realName';desc=!desc">真实姓名</th>
+            <th ng-click="title='realName';desc=!desc">真实姓名<img src="/back/resource/images/px.gif"></th>
             <th>所属部门</th>
-            <th ng-click="title='tel';desc=!desc">手机号码</th>
+            <th ng-click="title='tel';desc=!desc">手机号码<img src="/back/resource/images/px.gif"></th>
             <th>操作</th>
         </tr>
         </thead>
@@ -64,11 +46,8 @@ $('.tablelist tbody tr:odd').addClass('odd');
         </tr>
         </tbody>
     </table>
-    <br /><input type="button" value="toShow" ng-click="changeShow()" />
-     <div  ng-show="showEeditor" style="width:700px;height:700px;float:left"  class="ueditor" config="config"ng-model="content"></div>
-
     </div>
-    <ts-add ng-show="show.add"></ts-add>
+    <ts-add ng-if="show.add"></ts-add>
     <tm-pagination conf="paginationConf" ng-show="show.page"></tm-pagination>
     </body>
 <script type="text/ng-template" id="top">
@@ -84,9 +63,9 @@ $('.tablelist tbody tr:odd').addClass('odd');
 <script type="text/ng-template" id="tools">
         <div class="tools">
          <ul class="toolbar">
-         <li ng-click="show.$reset(['top','tools','list','page'])"><a href="#" >
+         <li ng-click="show.$set('list')"><a href="#" >
          <span><img src="/back/resource/images/t04.png"/></span>统计</a></li>
-        <li ng-click="pojo={};show.$reset(['top','tools','add'])"><a href="#" >
+        <li ng-click="pojo={};show.$set('add')"a href="#" >
         <span><img src="/back/resource/images/t01.png" /></span>添加</a></li>
         <li class="click"><span><img src="/back/resource/images/t02.png"  /></span>修改</li>
         <li><span><img src="/back/resource/images/t03.png" /></span>删除</li>
@@ -129,6 +108,7 @@ $('.tablelist tbody tr:odd').addClass('odd');
             type="text" class="dfinput"  />
             <i ng-show="subForm.t_tel.$error.required">请输入手机号</i>
         </li>
+        <div  style="width:700px;height:500px;float:left"  class="ueditor" config="config"ng-model="pojo.content"></div>
         <li><label>&nbsp;</label>
             <input  type="submit" ng-disabled="subForm.$invalid"
             class="btn" value="确认保存"/>
@@ -136,7 +116,6 @@ $('.tablelist tbody tr:odd').addClass('odd');
         </ul>
     </form>
     </div>
-   
 </script>
 <script type="text/javascript" src="/public/bower_components/angular/angular.js">
 </script>
@@ -175,38 +154,38 @@ app.directive('tsAdd',function(){
         templateUrl:'add'
     }
 })
+//register service
 app.service('$_ctrl',[function(){
-    this._cahce = [];
-    this.$init = function(array){
-        this.$clear();
-        for(var i=0;i<array.length;i++){
-            this._cahce.push(array[i]);
-            this[array[i]] = true;    
-        }
-        return this;
+    this._currentName = "";
+    this._registContent = {};
+    this.$regist = function(name,array,current){
+        this._registContent[name] = array;
+        if(current) this.$set(name);
     };
-    this.$reset = function(array){
-        this.$clear();
+    this.$set = function(name){
+        var array = this._registContent[ this._currentName];
+        if(array){
+             for(var i=0;i<array.length;i++){
+                 delete this[array[i]];
+             }
+        }
+        array = this._registContent[name];
+        if(!array) throw "you  dont regist the name";
         for(var i=0;i<array.length;i++){
-            this._cahce.push(array[i]);
             this[array[i]] = true;
         }
+        this._currentName = name;
     };
-    this.$add = function(param){
-        this._cahce.push(param);
-        this[param]= true;
+    this.$remove = function(name){
+        delete this._registContent[name];
     };
-    this.$remove = function(param){
-        this._cahce.remove(param);
-        delete  this[param];
-    };
-    this.$clear = function(){
-        for(var i=0;i<this._cahce.length;i++){
-            delete this[this._cahce[i]];
-        }
-        this._cahce=[];
-    };
+    this.$init = function(){
+        this._registContent = {};
+        this._currentName = "";
+        return this;
+    }
 }]);
+
 app.service('$_data',["$http",
     function($http){
         this.getData = function(search){
@@ -228,17 +207,17 @@ app.controller('main',['$scope','$_ctrl','$_data',
         $scope.title = "";
         $scope.desc = false;
         $scope.datas = [];
-        $scope.show = $_ctrl.$init(['top','tools','list','page']);
+        $scope.show = $_ctrl;
+
+         $scope.show.$regist('list',['top','tools','list','page'],true);
+         $scope.show.$regist('add',['top','tools','add']);
+
         $scope.pojo = {};
         $scope.searchPojo ={
             name:"",
         }
-        $scope.conf = {};
 
-        $scope.showEeditor=true;
-        $scope.changeShow = function(){
-            $scope.showEeditor = !$scope.showEeditor;
-        }
+        $scope.conf = {};
 
         $scope.paginationConf = {
             currentPage: 1,
@@ -267,13 +246,13 @@ app.controller('main',['$scope','$_ctrl','$_data',
         }
         $scope.getDetail = function(stu){
             $scope.pojo = stu;
-            $scope.show.$reset(['top','tools','add']);
+            $scope.show.$set('add');
         }
         $scope.save = function(){
             if($scope.pojo._id){
                 $_data.update($scope.pojo).success(function(data){
                     if(data == "true"){
-                        $scope.show.$reset(['top','tools','list','page']);
+                        $scope.show.$set('list');
                     }
                 }).error(function(data){
                     alert("update curse error!");
@@ -282,15 +261,15 @@ app.controller('main',['$scope','$_ctrl','$_data',
                 $_data.save($scope.pojo).success(function(data){
                     $scope.datas.push(data);
                     $scope.pojo = {};
-                    $scope.show.$reset(['top','tools','list','page']);
-                    $scope.page.totalItems++;
+                    $scope.show.$set('list');
+                    $scope.paginationConf.totalItems++;
                 })
             }
         }
         $scope.removeStu = function(pojo){
             $_data.remove(pojo).success(function(data){
                 if(data == "true"){
-                     $scope.page.totalItems--;
+                     $scope.paginationConf.totalItems--;
                      $scope.datas.remove(pojo);
                 }
             });

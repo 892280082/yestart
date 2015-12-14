@@ -6,7 +6,7 @@ var router = express.Router();
 
 //保存学生信息
 router.post('/saveStu',function(req,res){
-	merges.save(req,function(err,stu){
+	merges.save(req,Student,function(err,stu){
 		!err ? res.json(stu) : res.json({err:true});
 	});
 });
