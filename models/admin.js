@@ -1,7 +1,6 @@
 var crypto = require('crypto');
 var mongoose = require('mongoose');
 var merges = require('../self_modules/merges/merges.js');
-mongoose.connect('mongodb://localhost/yestart');
 
 function admin(){
 	this.name=String;
