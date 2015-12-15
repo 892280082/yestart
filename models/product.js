@@ -21,7 +21,7 @@ ProductSchema.static('pushTypeArrayByTitle',function(title,pojo,callback){
 
 var  Product = mongoose.model("Product", ProductSchema);
 
-
+//id:{type:Schema.Types.ObjectId,ref:"模型名"}
 
 // Product.say("you are my friend");
 /**
