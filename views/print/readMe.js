@@ -1,0 +1,19 @@
+productCollection = {
+	title:String,
+	typeArray:[
+		{
+			'cateName':String
+			'productArray':[
+				{
+					id:ObjectId();
+					name:String;
+					Content:String;
+					createDate:Date;
+					picture:String;
+					price:Number;
+					unit:String;
+				}
+			]
+		}
+	]
+}
