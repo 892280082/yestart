@@ -2,9 +2,21 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 mongoose.connect('mongodb://localhost/yestart')
 
-var ProductSchema = new Schema({ 
-	title : { type : String},
-	typeArray : { type : Array }
+var  pro  =  new  Schema({ 
+	name:String,
+	Content:String,
+	createDate:Date,
+	picture:String,
+	price:Number,
+	unit:String
+});
+
+var ProductSchema = new Schema({
+	title : String,
+	typeArray : [{
+		'cateName':String,
+		'productArray':[pro]
+	}]
 });
 
 ProductSchema.static('pushTypeArrayByTitle',function(title,pojo,callback){
@@ -18,6 +30,34 @@ ProductSchema.static('pushTypeArrayByTitle',function(title,pojo,callback){
 		callback(err);
 	})
 })
+
+ProductSchema.static('pushProtoArray',function(title,cateName,pro){
+	this.update({
+		'title':title,
+		'typeArray.cateName':cateName,
+	},{
+		'$push':{ 'typeArray.$.productArray':pro}
+	},function(err,docs){
+		console.log(err);
+		!err ? console.log("update ok!") : console.log("update error");
+	})
+})
+
+ProductSchema.static('removePro',function(title,cateName,name,callback){
+	this.update({
+		'title':title,
+		'typeArray.cateName':cateName
+	},{
+		'$pull':{
+			'typeArray.$.productArray':{
+				'name':name
+			}
+		}
+	},function(err){
+		callback(err);
+	})
+})
+
 
 var  Product = mongoose.model("Product", ProductSchema);
 
@@ -53,19 +93,50 @@ productCollection = {
 // p.save(function(err){
 // 	console.log(err);
 // })
-var typecate = {
-	'cateName':'fffffff',
-	'productArray':[]
-}
+// var typecate = {
+// 	'cateName':'fffffff',
+// 	'productArray':[]
+// }
+
+// Product.pushTypeArrayByTitle('yinshua',typecate,function(err){
+// 	console.log(err);
+// })
 
 
+// var pojo = {
+// 	name:"bbbbb",
+// 	Content:"bbbbb",
+// 	createDate:new Date(),
+// 	picture:"aaaaaaaa",
+// 	price:17.5,
+// 	unit:"ge",
+// 	extend:'if i dont show,you were ok'
+// } 
 
-Product.pushTypeArrayByTitle('yinshua',typecate,function(err){
+
+// Product.pushProtoArray('yinshua','fffffff',pojo);
+
+// Product.update({
+// 		"title":'yinshua',
+// 		'typeArray.cateName' : 'fffffff'
+// 		},{
+// 		"$pull":{  
+// 			"typeArray.$.productArray": {
+// 				_id:"5671257a486bf7082ef12a3e"
+// 			}
+// 		}
+// 		},function(err){
+// 			!err ? console.log("remove ok") : console.log(err);
+// 		}
+// 	)
+
+Product.removePro("yinshua","fffffff",'bbbbb',function(err){
 	console.log(err);
 })
 
 Product.find(function(err,docs){
 	console.log(docs);
+	// console.log(docs[0].typeArray);
 })
 
 // Product.remove(function(err,docs){
