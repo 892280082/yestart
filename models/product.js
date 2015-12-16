@@ -4,15 +4,18 @@ mongoose.connect('mongodb://localhost/yestart')
 
 var  pro  =  new  Schema({ 
 	name:String,
-	Content:String,
-	createDate:Date,
+	content:String,
+	createDate:{ type: Date, default: Date.now },
 	picture:String,
 	price:Number,
-	unit:String
+	unit:String,
+	show:Boolean,
 });
 
 var ProductSchema = new Schema({
 	title : String,
+	show: Boolean,
+	sort: Number,
 	typeArray : [{
 		'cateName':String,
 		'productArray':[pro]
@@ -70,15 +73,17 @@ productCollection = {
 	typeArray:[
 		{
 			'cateName':String
+			'show':boolean
 			'productArray':[
 				{
-					id:ObjectId();
-					name:String;
-					Content:String;
-					createDate:Date;
-					picture:String;
-					price:Number;
-					unit:String;
+					_id:ObjectId,
+					name:String,
+					Content:String,
+					createDate:Date,
+					picture:String,
+					price:Number,
+					'show':boolean,
+					unit:String,
 				}
 			]
 		}
@@ -106,7 +111,6 @@ productCollection = {
 // var pojo = {
 // 	name:"bbbbb",
 // 	Content:"bbbbb",
-// 	createDate:new Date(),
 // 	picture:"aaaaaaaa",
 // 	price:17.5,
 // 	unit:"ge",
@@ -130,13 +134,26 @@ productCollection = {
 // 		}
 // 	)
 
-Product.removePro("yinshua","fffffff",'bbbbb',function(err){
-	console.log(err);
-})
+// Product.removePro("yinshua","fffffff",'bbbbb',function(err){
+// 	console.log(err);
+// })
+
 
 Product.find(function(err,docs){
-	console.log(docs);
+	// console.log(docs);
 	// console.log(docs[0].typeArray);
+	var pojo = docs[0];
+	var _id = pojo._id;
+
+	for(var p in pojo){
+		console.log(p);
+	}
+
+	pojo.fav = "i like eat food";
+	console.log(pojo);
+	Product.update({ _id:_id},pojo,function(err){
+		console.log(err);
+	})
 })
 
 // Product.remove(function(err,docs){
