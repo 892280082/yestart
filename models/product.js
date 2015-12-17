@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-mongoose.connect('mongodb://localhost/yestart')
+// mongoose.connect('mongodb://localhost/yestart')
 
 var  pro  =  new  Schema({ 
 	name:String,
@@ -22,44 +22,6 @@ var ProductSchema = new Schema({
 	}]
 });
 
-ProductSchema.static('pushTypeArrayByTitle',function(title,pojo,callback){
-	this.update({
-		'title':title
-	},{
-		'$push':{
-			'typeArray':pojo
-		}
-	},function(err){
-		callback(err);
-	})
-})
-
-ProductSchema.static('pushProtoArray',function(title,cateName,pro){
-	this.update({
-		'title':title,
-		'typeArray.cateName':cateName,
-	},{
-		'$push':{ 'typeArray.$.productArray':pro}
-	},function(err,docs){
-		console.log(err);
-		!err ? console.log("update ok!") : console.log("update error");
-	})
-})
-
-ProductSchema.static('removePro',function(title,cateName,name,callback){
-	this.update({
-		'title':title,
-		'typeArray.cateName':cateName
-	},{
-		'$pull':{
-			'typeArray.$.productArray':{
-				'name':name
-			}
-		}
-	},function(err){
-		callback(err);
-	})
-})
 
 
 var  Product = mongoose.model("Product", ProductSchema);
@@ -145,15 +107,7 @@ Product.find(function(err,docs){
 	var pojo = docs[0];
 	var _id = pojo._id;
 
-	for(var p in pojo){
-		console.log(p);
-	}
 
-	pojo.fav = "i like eat food";
-	console.log(pojo);
-	Product.update({ _id:_id},pojo,function(err){
-		console.log(err);
-	})
 })
 
 // Product.remove(function(err,docs){

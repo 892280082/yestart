@@ -11,7 +11,6 @@ var MongoStore = require('connect-mongo')(session);
 var mongoose = require('mongoose');
 var router = require('./routes/index');
 var app = express();
-
 //配置服务端口
 app.set('servicePort',3000);
 

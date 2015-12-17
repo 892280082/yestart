@@ -318,3 +318,7 @@ p { padding:0; margin:0; padding-bottom:15px}
 .map_li { width:900px; margin:0 auto}
 .map_li ul li { float:left; width:25%; height:30px; line-height:30px; border-bottom:1px #ccc dashed}
 .map_li h3 { clear:both; padding-top:20px; padding-bottom:5px; margin:0; font-weight:bold}
+
+.classlist .focus {
+	background: #ececec;
+}

@@ -1,8 +1,40 @@
 var ueditor = require("ueditor");
+var multer = require ( 'multer' ); 
 var backRoute = require('./back/index');
-
+var  upload = multer({
+    storage: multer.diskStorage({
+        destination: function (req, file, cp) {
+            var fileType = file.mimetype.split("/")[0];
+            if(fileType == "image"){
+                cp(null, '/upload/images');
+            }else if(fileType == "video"){
+                cp(null, '/upload/video');
+            }else{
+                 cp(null, '/upload/file');
+            }
+        },
+        filename: function (req, file, cp) {
+            var fileType =  file.originalname.split(".").pop();
+            var fileTemp = "" +  (new Date()).valueOf()+parseInt(Math.random()*10000)+"."+fileType;
+            console.log(fileTemp);
+            cp(null,fileTemp);
+        }
+    })
+});
 
 module.exports = function(app,express,viewPath){ 
+
+//peizhishangchuan
+app.post('/upload/images',upload.single('fileName'),function(req,res,next){
+    res.send(req.file);
+    next();
+});
+
+//处理下载请求
+app.use('/upload/*',function(req,res,next){
+    res.download(req.baseUrl);
+})
+
 //开发模式下报错处理机制,将错误信息渲染到500.html页面
 if (app.get('env') === 'development') {
   app.use(function(err, req, res, next) {
@@ -49,15 +81,12 @@ app.use("/public/plugin/ueditor/ueditor", ueditor("", function(req, res, next) {
     }
 }));
 
-//处理下载请求
-app.use('/upload/*',function(req,res,next){
-  res.download(req.baseUrl);
-})
+
 
 //配置404提示页面
-// app.use(function(req,res){
-//   res.redirect('/404.html');
-// })
+app.use(function(req,res){
+    res.redirect('/404.html');
+})
 
 
 };  

@@ -409,3 +409,8 @@ color: #EB5409;}
 .page-total .ng-pristine{border:1px solid #ececec;height:28px;width:30px; text-align: center;margin:0 5px;background:#fff;}
 .page-total select.ng-valid-parse{width:30px;border:1px solid #e1e1e1;opacity:100;height:28px;background:#fff;}
 .ng-isolate-scope { float:right;}
+
+/**zidingyi click*/
+.classlist .focus {
+	background: #ececec;
+}

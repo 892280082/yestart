@@ -6,6 +6,7 @@ app.get('/back',function(req,res,next){
 
 //后台路由->学生信息管理
 app.use('/back/student', require('./student'));
+app.use('/back/print', require('./print'));
 
 
 }
