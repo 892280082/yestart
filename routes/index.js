@@ -27,8 +27,7 @@ module.exports = function(app,express,viewPath){
 
 //peizhishangchuan
 app.post('/upload',upload.single('fileName'),function(req,res,next){
-    res.send(req.file);
-    next();
+    res.json(req.file);
 });
 
 //处理下载请求
