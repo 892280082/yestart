@@ -27,6 +27,7 @@ module.exports = function(app,express,viewPath){
 
 //peizhishangchuan
 app.post('/upload',upload.single('fileName'),function(req,res,next){
+    req.file.path = req.file.path.replace("upload", "download");
     res.json(req.file);
 });
 
@@ -85,9 +86,9 @@ app.use("/public/plugin/ueditor/ueditor", ueditor("", function(req, res, next) {
 
 
 //配置404提示页面
-app.use(function(req,res){
-    res.redirect('/404.html');
-})
+// app.use(function(req,res){
+//     res.redirect('/404.html');
+// })
 
 
 };  

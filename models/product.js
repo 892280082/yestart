@@ -15,7 +15,8 @@ var  pro  =  new  Schema({
 var ProductSchema = new Schema({
 	title : String,
 	show: Boolean,
-	sort: Number,
+	picUrl:String,
+	sort: {type:Number,default:1},
 	typeArray : [{
 		'cateName':String,
 		'productArray':[pro]
@@ -23,8 +24,9 @@ var ProductSchema = new Schema({
 });
 
 
+var  Product = mongoose.model("Products", ProductSchema);
 
-var  Product = mongoose.model("Product", ProductSchema);
+module.exports = Product;
 
 //id:{type:Schema.Types.ObjectId,ref:"模型名"}
 
@@ -101,14 +103,14 @@ productCollection = {
 // })
 
 
-Product.find(function(err,docs){
-	// console.log(docs);
-	// console.log(docs[0].typeArray);
-	var pojo = docs[0];
-	var _id = pojo._id;
+// Product.find(function(err,docs){
+// 	// console.log(docs);
+// 	// console.log(docs[0].typeArray);
+// 	var pojo = docs[0];
+// 	var _id = pojo._id;
 
 
-})
+// })
 
 // Product.remove(function(err,docs){
 // 	!err ? console.log("remove ok") :

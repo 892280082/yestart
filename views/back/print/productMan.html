@@ -6,7 +6,7 @@
 <link href="/back/resource/css/style.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="/back/resource/js/jquery.js" ></script>
 </head>
-<body ng-controller="main">
+<body ng-controller="main" uploader="uploader">
 <div class="place" >
     <span>位置：</span>
     <ul class="placeul">
@@ -16,20 +16,21 @@
     </ul>
     </div>
     <div class="rightinfo">
-    <ts-tool ng-show="show.tools"></ts-tool>
-    <ts-list  ng-show="show.list"></ts-list>
-    <ts-add ng-show="show.add"></ts-add>
+        <ts-tool ng-show="show.tools"></ts-tool>
+        <ts-list  ng-show="show.list"></ts-list>
+        <ts-add ng-show="show.add"></ts-add>
     </div>
 </body>
 <script type="text/ng-template" id="tools">
     <div class="tools">
        <ul class="toolbar">
-	        <li class="click"><span><img src="/back/resource/images/t01.png" /></span>添加</li>
-	        <li class="click" ng-show="temp" >
+	        <li ng-click="upPojo={};show.$set('add')"><span><img src="/back/resource/images/t01.png" /></span>添加</li>
+	        <li  ng-click="upPojo = temp;show.$set('add')" ng-show="temp" >
 	        	<span><img src="/back/resource/images/t02.png" /></span>修改</li>
-	        <li ng-show="temp">
+	        <li ng-click="remove(temp)" ng-show="temp">
 	        	<span><img src="/back/resource/images/t03.png" /></span>删除</li>
-	        <li><span><img src="/back/resource/images/t04.png" /></span>统计</li>
+            <li ng-click="doSort(temp,-1)" ng-show="temp"><span</span>升序</li>
+	        <li ng-click="doSort(temp,1)" ng-show="temp"><span</span>降序</li>
         </ul>
         <ul class="toolbar1">
         <li><span><img src="/back/resource/images/t05.png" /></span>设置</li>
@@ -38,13 +39,12 @@
 </script>
 <script type="text/ng-template" id="list">
     <ul class="classlist"
-           ng-repeat="data in datas | orderBy : 'sort' : asc"
-    >
+           ng-repeat="data in datas | orderBy : 'sort' : asc">
     	<li     ng-click="li_click($index,data)"  ng-class="{focus:$index==focus}">
-		<span><img src="/back/resource/images/001.jpg" /></span>
+		<span><img src="{{ data.picUrl }}" width="106px" height="126px" /></span>
 		<div class="lright">
 		<h2>{{ data.title }}</h2>
-		<p>课程数：{{ data.sort  }}<br />已完成：{{ data.show }}<br />学习中：6章</p>
+		<p>排序：{{ data.sort  }}<br />是否显示：{{ data.show }}<br />学习中：6章</p>
 		<a class="enter">进入课程</a>
 		</div>
     	</li>
@@ -52,58 +52,145 @@
     <div class="clear"></div>
 </script>
 <script type="text/ng-template" id="add">
+    <div class="tools">
+       <ul class="toolbar">
+            <li ng-click="show.$set('list')"><span><img src="/back/resource/images/t04.png" /></span>统计</li>
+        </ul>
+    </div>
+    <div class="formbody">
+    <div class="formtitle"><span>基本信息</span></div>
+    <form 
+        name="subForm"
+        ng-submit="save()"
+        >
+        <ul class="forminfo">
+        <li><label>标题</label>
+            <input  ng-model="upPojo.title"  name="t_name" required
+            type="text" class="dfinput"  />
+            <i ng-show="subForm.t_name.$error.required">请输入账号</i>
+        </li>
+        <li><label>是否显示</label>
+            <input type="checkbox" ng-model="upPojo.show" ng-true-value="true" ng-false-value="false" />
+        </li>
+        <li><label>封面图片</label>
+             <input type="file" nv-file-select="" uploader="uploader" /><br/>
+             <img src="{{upPojo.picUrl}}" width="140px" height="140px" ng-if="upPojo.picUrl"/>
+        </li>
+        <li><label>&nbsp;</label>
+            <input  type="submit" ng-disabled="subForm.$invalid"
+            class="btn" value="确认保存"/>
+         </li>
+        </ul>
+    </form>
+    </div>
 </script>
 <script type="text/javascript" src="/public/plugin/util/jsExtend.js"></script>
 <script type="text/javascript" src="/public/bower_components/angular/angular.js">
 </script>
-<script type="text/javascript" src="/public/bower_components/angular/angular-route.min.js"></script>
-<script type="text/javascript" src="/public/bower_components/angular/tm.pagination.js">
-</script>
-<script type="text/javascript" src="/public/bower_components/angular/angular-ueditor.js">
-</script>
-<script type="text/javascript" src="/public/bower_components/angular/angular-showCtrl.js">
-</script>
+<script type="text/javascript" src="/public/bower_components/angular/tm.pagination.js"></script>
+<script type="text/javascript" src="/public/bower_components/angular/angular-ueditor.js"></script>
+<script type="text/javascript" src="/public/bower_components/angular/angular-showCtrl.js"></script>
+<script type="text/javascript" src="/public/bower_components/angular/angular-file-upload.min.js"></script>
 <script type="text/javascript">
-var app = angular.module('myApp',['tm.pagination',
-                                                            'ng.ueditor',
-                                                            'service.showCtrl'
-                                                            ]);
-app.directive('tsTool',function(){
-    return {
-        restrict:'EAC',
-        templateUrl:'tools'
-    }
-})
-app.directive('tsList',function(){
-    return {
-        restrict:'EAC',
-        templateUrl:'list'
-    }
-})
-app.directive('tsAdd',function(){
-    return {
-        restrict:'EAC',
-        templateUrl:'add'
-    }
-})
+    var app = angular.module('myApp',['tm.pagination',
+                                      'ng.ueditor',
+                                      'service.showCtrl',
+                                      'angularFileUpload'
+                                      ]);
+    app.directive('tsTool'
+    ,function(){
+        return {
+            restrict:'EAC',
+            templateUrl:'tools'
+        }
+    })
+    app.directive('tsList'
+    ,function(){
+        return {
+            restrict:'EAC',
+            templateUrl:'list'
+        }
+    })
+    app.directive('tsAdd'
+    ,function(){
+        return {
+            restrict:'EAC',
+            templateUrl:'add'
+        }
+    })
 
-app.controller('main',['$scope','showCtrl'
-,function($scope,showCtrl){
-	$scope.show = showCtrl;
-	$scope.show.$regist('list',['tools','list'],true);
-	$scope.show.$regist('add',['add']);
-	$scope.temp = null;
-	$scope.datas = [
-			{title:'kexue1',sort:1,show:true},
-			{title:'kexue3',sort:3,show:true},
-			{title:'kexue2',sort:2,show:true},
-			{title:'kexue5',sort:5,show:true},
-			{title:'kexue4',sort:4,show:true}
-		]
-	$scope.li_click = function(index,pojo){
-		$scope.focus = index;
-		$scope.temp = pojo;
-	}
-}])
+    app.service("dataService",["$http"
+    ,function($http){
+        this.saveTitle = function(pojo){
+            return $http.post("/back/print/saveTitle",{"upPojo":pojo});
+        },
+        this.getList = function(search){
+            return $http.post("/back/print/getList",{"searchPojo":search});
+        },
+        this.update = function(pojo){
+            return $http.post("/back/print/updatePro",{"updatePojo":pojo});
+        },
+        this.remove = function(_id){
+            return $http.post("/back/print/removePro",{"_id":_id});      
+        }
+    }]);
+
+    app.controller('main',['$scope','showCtrl','dataService','FileUploader'
+    ,function($scope,showCtrl,dataService,FileUploader){
+        /*********************注册**************************/
+    	$scope.show = showCtrl;
+    	$scope.show.$regist('list',['tools','list'],true);
+    	$scope.show.$regist('add',['add']);
+        //替换变量和点击变化效果
+    	$scope.temp = null;
+        $scope.li_click = function(index,pojo){
+            $scope.focus = index;
+            $scope.temp = pojo;
+        }
+        /*********************add 上传方法**************************/
+        $scope.upPojo = {};
+        var uploader = $scope.uploader = new FileUploader({
+            url: '/upload',
+            alias:'fileName'
+        });
+        uploader.onAfterAddingFile = function(item) {
+           item.upload();
+        };
+        uploader.onCompleteItem = function(fileItem, response, status, headers) {
+            $scope.upPojo.picUrl = response.path;
+        };
+        /************************数据层************************/
+        $scope.save = function(){
+            if(!$scope.upPojo._id){
+                dataService.saveTitle($scope.upPojo).success(function(data){
+                     $scope.datas.push(data);
+                });
+            }else{
+                dataService.update($scope.upPojo).success(function(data){
+                    console.log(data);
+                });
+            }
+            $scope.show.$set('list');
+        }
+        //数据获取
+        dataService.getList(null).success(function(data){
+            $scope.datas = data;
+        });
+        //删除
+        $scope.remove = function(pojo){
+            dataService.remove(pojo._id).success(function(data){
+                if(data == "true"){
+                    $scope.datas.remove(pojo);
+                }
+            });
+            $scope.temp = null;
+        }
+        //排序
+        $scope.doSort = function(pojo,number){
+            pojo.sort+=number;
+            dataService.update(pojo).success(function(data){
+            });
+        }
+    }])
 </script>
 </html>
