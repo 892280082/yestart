@@ -19,6 +19,10 @@
         <ts-tool ng-show="show.tools"></ts-tool>
         <ts-list  ng-show="show.list"></ts-list>
         <ts-add ng-show="show.add"></ts-add>
+        <div ng-controller="proOption">
+            <ts-proList></ts-proList>
+            <ts-ProAdd></ts-tsProAdd>
+        </div>
     </div>
 </body>
 <script type="text/ng-template" id="tools">
@@ -41,11 +45,11 @@
     <ul class="classlist"
            ng-repeat="data in datas | orderBy : 'sort' : asc">
     	<li     ng-click="li_click($index,data)"  ng-class="{focus:$index==focus}">
-		<span><img src="{{ data.picUrl }}" width="106px" height="126px" /></span>
+		<span><img ng-src="{{data.picUrl}}" width="106px" height="126px" /></span>
 		<div class="lright">
 		<h2>{{ data.title }}</h2>
 		<p>排序：{{ data.sort  }}<br />是否显示：{{ data.show }}<br />学习中：6章</p>
-		<a class="enter">进入课程</a>
+		<a class="enter" ng-href="./proOption.html?">操作</a>
 		</div>
     	</li>
     </ul>
@@ -72,6 +76,9 @@
         <li><label>是否显示</label>
             <input type="checkbox" ng-model="upPojo.show" ng-true-value="true" ng-false-value="false" />
         </li>
+        <li><label>顺序</label>
+            <input type="text" ng-model="upPojo.sort" />
+        </li>
         <li><label>封面图片</label>
              <input type="file" nv-file-select="" uploader="uploader" /><br/>
              <img src="{{upPojo.picUrl}}" width="140px" height="140px" ng-if="upPojo.picUrl"/>
@@ -83,6 +90,12 @@
         </ul>
     </form>
     </div>
+</script>
+<script type="text/ng-template" id="proList">
+    <h1>haha</h1>
+</script>
+<script type="text/ng-template" id="proAdd">
+    <h1>add</h1>
 </script>
 <script type="text/javascript" src="/public/plugin/util/jsExtend.js"></script>
 <script type="text/javascript" src="/public/bower_components/angular/angular.js">
@@ -103,19 +116,29 @@
             restrict:'EAC',
             templateUrl:'tools'
         }
-    })
-    app.directive('tsList'
+    }).directive('tsList'
     ,function(){
         return {
             restrict:'EAC',
             templateUrl:'list'
         }
-    })
-    app.directive('tsAdd'
+    }).directive('tsAdd'
     ,function(){
         return {
             restrict:'EAC',
             templateUrl:'add'
+        }
+    }).directive('tsProList'
+    ,function(){
+        return {
+            restrict:'EAC',
+            templateUrl:'proList'
+        }
+    }).directive('tsProAdd'
+    ,function(){
+        return {
+            restrict:'EAC',
+            templateUrl:'proAdd'
         }
     })
 
@@ -191,6 +214,9 @@
             dataService.update(pojo).success(function(data){
             });
         }
-    }])
+    }]).controller("proOption",["$scope","showCtrl"
+    ,function($scope,showCtrl){
+        
+    }]);
 </script>
 </html>

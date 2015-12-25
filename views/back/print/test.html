@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+	<meta charset="UTF-8">
+	<title>test</title>
+</head>
+<body>
+<div class="frame">
+	<ts-tplscipt></ts-tplscipt>
+	<div class="tip">{{content}}</div>
+</div>	
+<script type="text/ng-template" id="tpl">
+<div>
+	<button>单击按钮</button>
+	<p>haha</p>
+</div>
+</script>
+</body>
+<script type="text/javascript" src="/public/bower_components/angular/angular.js">
+</script>
+<script type="text/javascript">
+	var app =angular.module("myApp",[]);
+
+	app.directive("tsTplscipt",function(){
+		return {
+			restrict:'EAC',
+			templateUrl:'tpl',
+			replace:true,
+			link:function(scope,iEle,iAttrs){				
+				iEle.bind('click',function(){
+					scope.$apply(function(){
+						scope.content = "这是点击后的内容";
+					})
+				});
+			}
+		}
+	});
+	
+</script>
+</html>
