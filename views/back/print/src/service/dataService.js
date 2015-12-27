@@ -1,5 +1,9 @@
-module.exports = function(app){
-    app.service("dataService",["$http"
+/**
+*@version 1.1
+*@auther yq
+*@work 提供后台数据接口
+*/
+    angular.module('service.dataService',[]).service("dataService",["$http"
     ,function($http){
         this.saveTitle = function(pojo){
             return $http.post("/back/print/saveTitle",{"upPojo":pojo});
@@ -14,5 +18,3 @@ module.exports = function(app){
             return $http.post("/back/print/removePro",{"_id":_id});      
         }
     }]);
-    return app;
-}

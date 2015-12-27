@@ -2,8 +2,7 @@
 *@name : service.showCtrl
 *@Version 0.0.1
 **/
-module.exports = function(app){
-    app.service('showCtrl',[function(){
+angular.module('service.showCtrl',[]).service('showCtrl',[function(){
     this._currentName = "";
     this._registContent = {};
     this.$regist = function(name,array,current){
@@ -32,6 +31,4 @@ module.exports = function(app){
         this._currentName = "";
         return this;
     }
-    }]);
-    return app; 
-}
+}])

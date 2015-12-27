@@ -1,11 +1,18 @@
 require("../../public/plugin/util/jsExtend");
-require("../../public/bower_components/angular/angular-file-upload.min.js");
 var angular = require("angular");
-var showCtrl = require("./src/service/showCtrl");
-var dataService = require("./src/service/dataService");
-var main = require("./src/controller/main");
+/***加载显示插件****/
+require("./src/service/showCtrl");
+/**加载上传插件*/
+require("../../public/bower_components/angular/angular-file-upload.min.js");
+/**加载后台数据接口*/
+require("./src/service/dataService");
+/**加载主程序人口*/
+require("./src/controller/main");
 
-var app = angular.module('myApp',['angularFileUpload']);
+var app = angular.module('myApp',['angularFileUpload',
+                                  'service.showCtrl',
+                                  'service.dataService',
+                                  'controller.main']);
 
 app.directive('tsTool'
 ,function(){
@@ -38,11 +45,5 @@ app.directive('tsTool'
         templateUrl:'proAdd'
     }
 });
-
-
-showCtrl(app);
-dataService(app);
-main(app);
-
 
 
