@@ -1,0 +1,9 @@
+{
+	"spm":{
+		"build":{
+			"global":{
+				"angular":"angular"
+			}
+		}
+	}
+}
