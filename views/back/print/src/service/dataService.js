@@ -17,4 +17,14 @@
         this.remove = function(_id){
             return $http.post("/back/print/removePro",{"_id":_id});      
         }
+        this.pushTypeArray = function(pojo){
+            return $http.post("/back/print/pushTypeArray",{
+                "pushPojo":pojo
+            });
+        },
+        this.pullTypeArray = function(search){
+            return $http.post("/back/print/pullTypeArray",{
+                "pullPojo":search
+            });
+        }
     }]);

@@ -4,6 +4,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>无标题文档</title>
 <link href="/back/resource/css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" charset="utf-8" src="/public/plugin/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="/public/plugin/ueditor/ueditor.all.min.js"> </script>
+<script type="text/javascript" charset="utf-8" src="/public/plugin/ueditor/lang/zh-cn/zh-cn.js"> </script>
 </head>
 <body ng-controller="main" uploader="uploader">
 <div class="place" >
@@ -15,9 +18,15 @@
     </ul>
     </div>
     <div class="rightinfo">
+        <!--主要列表-->
         <ts-tool ng-show="show.tools"></ts-tool>
         <ts-list  ng-show="show.list"></ts-list>
         <ts-add ng-show="show.add"></ts-add>
+        <!--次级分类-->
+        <ts-dealpro ng-if="show.dealpro" ></ts-dealpro>
+        <!--详细产品-->
+        <ts-prolist ng-if="show.prolist"></ts-prolist>
+        <ts-proadd ng-if="show.proadd"></ts-proadd>
     </div>
 </body>
 <script type="text/ng-template" id="tools">
@@ -43,8 +52,9 @@
 		<span><img ng-src="{{data.picUrl}}" width="106px" height="126px" /></span>
 		<div class="lright">
 		<h2>{{ data.title }}</h2>
-		<p>排序：{{ data.sort  }}<br />是否显示：{{ data.show }}<br />学习中：6章</p>
-		<a class="enter" ng-href="./proOption.html?">操作</a>
+		<p>排序：{{ data.sort  }}<br />是否显示：{{ data.show }}<br />
+            分类数量：{{ data.typeArray.length }}条</p>
+		<a class="enter" ng-click="showTypeArray(data);show.$set('dealpro')">操作</a>
 		</div>
     	</li>
     </ul>
@@ -86,12 +96,127 @@
     </form>
     </div>
 </script>
-<script type="text/ng-template" id="proList">
-    <h1>haha</h1>
+<script type="text/ng-template" id="dealpro">
+    <div class="tools">
+         <ul class="toolbar">
+              <li>
+                <input type="text" class="dfinput" ng-model="_pushTypePojo.pojo.cateName"/>
+              </li>
+              <li ng-click="addTypeCate()">
+                <span><img src="/back/resource/images/t01.png"/>
+                </span>添加
+              </li>
+            <li ng-click="show.$set('list')">
+                <a>
+                    <span><img src="/back/resource/images/t04.png"/></span>返回
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div>
+         <table class="tablelist">
+            <thead>
+                <th>序号</th>
+                <th>名称</th>
+                <th>操作</th>
+            </thead>
+            <tbody>
+                <tr ng-repeat="proType in typeArray">
+                    <td>{{ $index + 1}}</td>
+                    <td ng-click="show.$set('prolist')">
+                        {{ proType.cateName }}
+                    </td>
+                    <td><a ng-click="removeCate(proType)">delete<a></td>
+                </tr>
+            </tbody>
+         </table>
+    </div>
 </script>
-<script type="text/ng-template" id="proAdd">
-    <h1>add</h1>
+<script type="text/ng-template" id="prolist">
+    <div class="tools">
+       <ul class="toolbar">
+            <li ng-click="show.$set('proadd')">
+                <span><img src="/back/resource/images/t01.png" /></span>添加
+            </li>
+        </ul>
+        <ul class="toolbar1">
+        <li ng-click="show.$set('dealpro')"><span><img src="/back/resource/images/t04.png" /></span>返回
+        </li>
+        </ul>
+    </div>
+    <div>
+    <table class="imgtable">
+        <thead>
+            <tr>
+                <th width="100px;">产品图</th>
+                <th>标题</th>
+                <th>价格</th>
+                <th>单位</th>
+                <th>是否显示</th>
+                <th>点击数</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="imgtd"><img src="/back/resource/images/img11.png" /></td>
+                <td><a href="/back/page/#">非常不错的国外后台模板，支持HTML5</a><p>发布时间：2013-10-12 09:25:18</p></td>
+                <td>后台界面<p>ID: 82122</p></td>
+                <td>开放浏览</td>
+                <td>admin</td>
+                <td>已审核</td>
+                <td>128</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
 </script>
-<script type="text/javascript" src="/public/bower_components/angular/angular.js"></script>
+<script type="text/ng-template" id="proadd">
+    <div class="tools">
+       <ul class="toolbar">
+            <li ng-click="show.$set('prolist')">
+                <span><img src="/back/resource/images/t04.png" />
+            </span>返回</li>
+        </ul>
+    </div>
+    <div class="formbody">
+    <div class="formtitle"><span>基本信息</span></div>
+    <form 
+        name="subForm"
+        ng-submit="saveDealPro()"
+        >
+        <ul class="forminfo">
+        <li><label>名称</label>
+            <input  ng-model="dealProduct.name"  name="t_name" required
+            type="text" class="dfinput"  />
+            <i ng-show="subForm.t_name.$error.required">请输入名称</i>
+        </li>
+        <li><label>封面图片</label>
+             <input type="file" nv-file-select="" uploader="uploader" /><br/>
+             <img ng-src="{{dealProduct.picture}}" width="140px" height="140px" ng-if="dealProduct.picture"/>
+        </li>
+        <li><label>价格</label>
+            <input  ng-model="dealProduct.price"  name="t_price" required
+            type="text" class="dfinput"  />
+            <i ng-show="subForm.t_price.$error.required">请输入价格</i>
+        </li>
+        <li><label>单位</label>
+            <input  ng-model="dealProduct.unit"  name="t_unit" required
+            type="text" class="dfinput"  />
+            <i ng-show="subForm.t_unit.$error.required">请输入单位</i>
+        </li>
+        <li><label>是否显示</label>
+            <input type="checkbox" ng-model="dealProduct.show" ng-true-value="true" ng-false-value="false" />
+        </li>
+        <div  style="width:700px;height:500px;float:left"  class="ueditor" config="config" ng-model="dealProduct.content"></div>
+        <li><label>&nbsp;</label>
+            <input  type="submit" ng-disabled="subForm.$invalid"
+            class="btn" value="确认保存"/>
+         </li>
+        </ul>
+    </form>
+    </div>
+</script>
+<script type="text/javascript" src="/public/bower_components/angular/angular.min.js"></script>
 <script type="text/javascript" src="./dist/index.js"></script>
 </html>

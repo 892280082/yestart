@@ -31,6 +31,11 @@ app.post('/upload',upload.single('fileName'),function(req,res,next){
     res.json(req.file);
 });
 
+//处理ueditor 下载请求
+app.use(app.get('upload_file')+'/images/ueditor*',function(req,res,next){
+    res.download(req.baseUrl);
+})
+
 //处理下载请求
 app.use('/download/*',function(req,res,next){
     var directURl = req.baseUrl.replace("download", "upload");
@@ -58,7 +63,7 @@ app.use(express.static(viewPath));
 
 //配置ueditor编辑器的后台
 app.use("/public/plugin/ueditor/ueditor", ueditor("", function(req, res, next) {
-    // ueditor 客户发起上传图片请求
+    // ueditor 发起上传图片请求
     if (req.query.action === 'uploadimage') {
         var foo = req.ueditor;
         var imgname = req.ueditor.filename;

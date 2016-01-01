@@ -3,12 +3,19 @@
 *@auther yq
 *@version 1.0.1
 */
-angular.module("controller.main",[]).controller('main',['$scope','showCtrl','dataService','FileUploader'
+angular.module("controller.main",[
+                                    "ng.ueditor"
+                                ])
+.controller('main',['$scope','showCtrl','dataService','FileUploader'
 ,function($scope,showCtrl,dataService,FileUploader){
     /*********************注册**************************/
     $scope.show = showCtrl;
     $scope.show.$regist('list',['tools','list'],true);
     $scope.show.$regist('add',['add']);
+    $scope.show.$regist('dealpro',['dealpro']);
+    $scope.show.$regist('prolist',['prolist']);
+    $scope.show.$regist('proadd',['proadd']);
+    
     //替换变量和点击变化效果
     $scope.temp = null;
     $scope.li_click = function(index,pojo){
@@ -26,6 +33,7 @@ angular.module("controller.main",[]).controller('main',['$scope','showCtrl','dat
     };
     uploader.onCompleteItem = function(fileItem, response, status, headers) {
         $scope.upPojo.picUrl = response.path;
+        $scope.dealProduct.picture = response.path;
     };
     /************************数据层************************/
     $scope.save = function(){
@@ -59,4 +67,60 @@ angular.module("controller.main",[]).controller('main',['$scope','showCtrl','dat
         dataService.update(pojo).success(function(data){
         });
     }
+    //产品列表
+    $scope.typeArray = [];
+    $scope._pushTypePojo = {
+        "_id":"",
+        "pojo":{
+            "cateName":"",
+            "productArray":[]
+        }
+    };
+    $scope.showTypeArray = function(cate){
+        $scope._pushTypePojo._id = cate._id;
+        $scope.typeArray = cate.typeArray;
+    }
+    $scope.removeCate = function(type){
+        var pojo = {
+            "_id":$scope._pushTypePojo._id,
+            "_cateId":type._id
+          }
+          dataService.pullTypeArray(pojo)
+          .success(function(msg){
+            if(msg){
+                $scope.typeArray.remove(type);
+            }else{
+                console.log("删除错误");
+            }
+          });
+    }
+    $scope.addTypeCate = function(){
+        dataService.pushTypeArray($scope._pushTypePojo)
+        .success(function(data){
+            if(data){
+                $scope.typeArray.push(data);
+                $scope._pushTypePojo.pojo.cateName = "";
+            }
+        });
+    }
+
+    //详细产品信息
+    $scope.dealProduct = {
+        name:"",
+        content:"",
+        picture:"",
+        price:0,
+        unit:"个",
+        show:true,
+    }
+
+    $scope.saveDealPro = function(){    //保存产品信息
+        console.log($scope.dealProduct);
+    }
+
+
+
+
+
+
 }]);

@@ -41,6 +41,22 @@ router.post('/removePro',function(req,res,next){
 	})
 });
 
+//添加组别
+router.post("/pushTypeArray",function(req,res){
+	var pushPojo = req.body.pushPojo;
+	Product.pushTypeArray(pushPojo._id,pushPojo.pojo,function(err,pojo){
+		!err ? res.json(pojo) : res.json(false);
+	});
+});
+
+//删除组别
+router.post("/pullTypeArray",function(req,res){
+	var pullPojo = req.body.pullPojo;
+	Product.pullTypeArray(pullPojo._id,pullPojo._cateId,function(err){
+		!err ? res.json(true) : res.json(false);
+	});
+});
+
 
 
 
