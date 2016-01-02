@@ -50,6 +50,31 @@ ProductSchema.static("pullTypeArray",function(_id,_cateId,callback){
 	});
 });
 
+//productArray 插入数据
+ProductSchema.static("pushProductArray",function(_id,_cateId,pojo,callback){
+	pojo._id = objectid();
+	this.update({
+		"_id":_id,
+		"typeArray._id":_cateId,
+	},{
+		"$push":{ "typeArray.$.productArray":pojo}
+	},function(err){
+		callback(err,pojo);
+	})
+})
+//productArray 删除数据
+ProductSchema.static("pullProductArray"
+	,function(_id,_cateId,_ProId,callback){
+		this.update({
+			"_id":_id,
+			"typeArray._id":_cateId,
+		},{
+			"$pull":{ "typeArray.$.productArray" : { "_id": _ProId} }
+		},function(err){
+			callback(err);
+		})
+})
+
 var  Product = mongoose.model("Products", ProductSchema);
 
 module.exports = Product;

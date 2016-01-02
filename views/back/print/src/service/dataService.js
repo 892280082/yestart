@@ -26,5 +26,15 @@
             return $http.post("/back/print/pullTypeArray",{
                 "pullPojo":search
             });
-        }
+        },
+        this.pushProductArray = function(pojo){
+            return $http.post("/back/print/pushProductArray",{
+                "upPojo":pojo
+            });
+        },
+        this.pullProductArray = function(pojo){
+            return $http.post("/back/print/pullProductArray",{
+                "pullPojo":pojo
+            });
+        };
     }]);

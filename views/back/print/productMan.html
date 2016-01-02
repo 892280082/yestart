@@ -106,7 +106,9 @@
                 <span><img src="/back/resource/images/t01.png"/>
                 </span>添加
               </li>
-            <li ng-click="show.$set('list')">
+        </ul>
+        <ul class="toolbar1">
+             <li ng-click="show.$set('list')">
                 <a>
                     <span><img src="/back/resource/images/t04.png"/></span>返回
                 </a>
@@ -118,14 +120,16 @@
             <thead>
                 <th>序号</th>
                 <th>名称</th>
+                <th>产品数量</th>
                 <th>操作</th>
             </thead>
             <tbody>
                 <tr ng-repeat="proType in typeArray">
                     <td>{{ $index + 1}}</td>
-                    <td ng-click="show.$set('prolist')">
+                    <td ng-click="toTypeArray(proType)">
                         {{ proType.cateName }}
                     </td>
+                    <td> {{ proType.productArray.length }} </td>
                     <td><a ng-click="removeCate(proType)">delete<a></td>
                 </tr>
             </tbody>
@@ -135,7 +139,9 @@
 <script type="text/ng-template" id="prolist">
     <div class="tools">
        <ul class="toolbar">
-            <li ng-click="show.$set('proadd')">
+            <li ng-click="
+            pushProductPojo.pojo = {};
+            show.$set('proadd')">
                 <span><img src="/back/resource/images/t01.png" /></span>添加
             </li>
         </ul>
@@ -158,14 +164,18 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td class="imgtd"><img src="/back/resource/images/img11.png" /></td>
-                <td><a href="/back/page/#">非常不错的国外后台模板，支持HTML5</a><p>发布时间：2013-10-12 09:25:18</p></td>
-                <td>后台界面<p>ID: 82122</p></td>
-                <td>开放浏览</td>
-                <td>admin</td>
-                <td>已审核</td>
-                <td>128</td>
+            <tr ng-repeat="dealPro in tempProType.productArray">
+                <td class="imgtd" ng-click="editProduct(dealPro)">
+                <img width=100 height=70 
+                ng-src="{{ dealPro.picture }}"></td>
+                <td>{{ dealPro.name }}</td>
+                <td>{{ dealPro.price }}元</td>
+                <td>{{ dealPro.unit }}</td>
+                <td>{{ dealPro.show ? '显示' : '隐藏'}}</td>
+                <td>{{ dealPro.clickCount ?  dealPro.clickCount : 0 }}</td>
+                <td ng-click="pullProductArray(dealPro)">
+                    <a>delete</a>
+                </td>
             </tr>
         </tbody>
     </table>
@@ -187,28 +197,34 @@
         >
         <ul class="forminfo">
         <li><label>名称</label>
-            <input  ng-model="dealProduct.name"  name="t_name" required
+            <input  ng-model="pushProductPojo.pojo.name"  
+            name="t_name" required
             type="text" class="dfinput"  />
             <i ng-show="subForm.t_name.$error.required">请输入名称</i>
         </li>
         <li><label>封面图片</label>
              <input type="file" nv-file-select="" uploader="uploader" /><br/>
-             <img ng-src="{{dealProduct.picture}}" width="140px" height="140px" ng-if="dealProduct.picture"/>
+             <img ng-src="{{ pushProductPojo.pojo.picture}}" width="140px" height="140px" ng-if="pushProductPojo.pojo.picture"/>
         </li>
         <li><label>价格</label>
-            <input  ng-model="dealProduct.price"  name="t_price" required
-            type="text" class="dfinput"  />
+            <input  ng-model="pushProductPojo.pojo.price"  
+             name="t_price" required
+            type="text" class="dfinput" />
             <i ng-show="subForm.t_price.$error.required">请输入价格</i>
         </li>
         <li><label>单位</label>
-            <input  ng-model="dealProduct.unit"  name="t_unit" required
+            <input  ng-model="pushProductPojo.pojo.unit"  
+            name="t_unit" required
             type="text" class="dfinput"  />
             <i ng-show="subForm.t_unit.$error.required">请输入单位</i>
         </li>
         <li><label>是否显示</label>
-            <input type="checkbox" ng-model="dealProduct.show" ng-true-value="true" ng-false-value="false" />
+            <input type="checkbox" ng-model="pushProductPojo.pojo.show" 
+            ng-true-value="true" ng-false-value="false" />
         </li>
-        <div  style="width:700px;height:500px;float:left"  class="ueditor" config="config" ng-model="dealProduct.content"></div>
+        <div  style="width:700px;height:500px;float:left"  
+            class="ueditor" config="config" 
+            ng-model="pushProductPojo.pojo.content"></div>
         <li><label>&nbsp;</label>
             <input  type="submit" ng-disabled="subForm.$invalid"
             class="btn" value="确认保存"/>

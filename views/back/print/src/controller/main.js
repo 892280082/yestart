@@ -33,7 +33,7 @@ angular.module("controller.main",[
     };
     uploader.onCompleteItem = function(fileItem, response, status, headers) {
         $scope.upPojo.picUrl = response.path;
-        $scope.dealProduct.picture = response.path;
+        $scope.pushProductPojo.pojo.picture = response.path;
     };
     /************************数据层************************/
     $scope.save = function(){
@@ -104,23 +104,53 @@ angular.module("controller.main",[
         });
     }
 
-    //详细产品信息
-    $scope.dealProduct = {
-        name:"",
-        content:"",
-        picture:"",
-        price:0,
-        unit:"个",
-        show:true,
+    $scope.toTypeArray = function(proType){
+             $scope.pushProductPojo._cateId = proType._id;
+             $scope.tempProType = proType;
+             $scope.show.$set('prolist')
     }
 
+    /******************详细产品信息*****************/
+    $scope.tempProType = {};
+
+    $scope.pushProductPojo = {
+        "_id":"",
+        "_cateId":"",
+        "pojo":{}
+    }
+    //保存产品
     $scope.saveDealPro = function(){    //保存产品信息
-        console.log($scope.dealProduct);
+        $scope.pushProductPojo._id = $scope._pushTypePojo._id;
+        dataService.pushProductArray($scope.pushProductPojo)
+        .success(function(data){
+            if(data){
+                $scope.tempProType.productArray.push(data);
+                $scope.show.$set("prolist");
+                $scope.pushProductPojo.pojo = {};
+            }
+        })
     }
-
-
-
-
+    //删除产品
+    $scope.pullProductArray = function(product){
+        var pullPojo ={
+            "_id":$scope._pushTypePojo._id,
+            "_cateId":$scope.pushProductPojo._cateId,
+            "_productId":product._id,
+        }
+        dataService.pullProductArray(pullPojo)
+        .success(function(data){
+            if(data){
+                $scope.tempProType.productArray.remove(product);
+            }{
+                console.log("删除错误");
+            }
+        });
+    }
+    //修改产品
+    $scope.editProduct = function(product){
+        $scope.pushProductPojo.pojo = product;
+        $scope.show.$set("proadd");
+    }
 
 
 }]);

@@ -57,6 +57,22 @@ router.post("/pullTypeArray",function(req,res){
 	});
 });
 
+router.post("/pushProductArray",function(req,res){
+	var upPojo  = req.body.upPojo;
+	Product.pushProductArray(upPojo._id,upPojo._cateId,upPojo.pojo,
+		function(err,pojo){
+		!err ? res.json(pojo) : res.json(false);
+		});
+});
+
+router.post("/pullProductArray",function(req,res){
+	var pullPojo = req.body.pullPojo;
+	Product.pullProductArray(pullPojo._id,pullPojo._cateId,pullPojo._productId
+		,function(err){
+			!err ? res.json(true) : res.json(false);
+		})
+})
+
 
 
 
