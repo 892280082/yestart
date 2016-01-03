@@ -37,4 +37,9 @@
                 "pullPojo":pojo
             });
         };
+        this.editTypeProPro = function(pojo){
+            return $http.post("/back/print/editTypeProPro",{
+                "editPojo":pojo
+            });
+        };
     }]);

@@ -4,28 +4,27 @@ var backRoute = require('./back/index');
 
 
 module.exports = function(app,express,viewPath){ 
-
     var  upload = multer({
     storage: multer.diskStorage({
-        destination: function (req, file, cp) {
+        destination: function (req, file, cb) {
             var fileType = file.mimetype.split("/")[0];
             if(fileType == "image"){
-                cp(null, app.get('upload_file')+'/images');
+                cb(null, app.get('upload_file')+'/images');
             }else if(fileType == "video"){
-                cp(null, app.get('upload_file')+'/video');
+                cb(null, app.get('upload_file')+'/video');
             }else{
-                 cp(null, app.get('upload_file')+'/file');
+                 cb(null, app.get('upload_file')+'/file');
             }
         },
-        filename: function (req, file, cp) {
+        filename: function (req, file, cb) {
             var fileType =  file.originalname.split(".").pop();
             var fileTemp = "" +  (new Date()).valueOf()+parseInt(Math.random()*10000)+"."+fileType;
-            cp(null,fileTemp);
+            cb(null,fileTemp);
         }
     })
 });
 
-//peizhishangchuan
+//配置上传请求
 app.post('/upload',upload.single('fileName'),function(req,res,next){
     req.file.path = req.file.path.replace("upload", "download");
     res.json(req.file);
@@ -70,10 +69,6 @@ app.use("/public/plugin/ueditor/ueditor", ueditor("", function(req, res, next) {
         var img_url =  app.get('upload_file') + '/images/ueditor';
         //你只要输入要保存的地址 。保存操作交给ueditor来做
         res.ue_up(img_url);
-    }
-    // ueditor 客户发起上传视频请求
-    else if (req.query.action === 'uploadvideo') {
-       
     }
     //  客户端发起图片列表请求
     else if (req.query.action === 'listimage') {

@@ -15,6 +15,13 @@ angular.module("controller.main",[
     $scope.show.$regist('dealpro',['dealpro']);
     $scope.show.$regist('prolist',['prolist']);
     $scope.show.$regist('proadd',['proadd']);
+    //页面信息
+    $scope.loadPageInfo = {
+        top:"商品管理",
+        name:"",
+        cateName:"",
+        proName:""
+    }
     
     //替换变量和点击变化效果
     $scope.temp = null;
@@ -79,6 +86,7 @@ angular.module("controller.main",[
     $scope.showTypeArray = function(cate){
         $scope._pushTypePojo._id = cate._id;
         $scope.typeArray = cate.typeArray;
+        $scope.loadPageInfo.name = cate.title;
     }
     $scope.removeCate = function(type){
         var pojo = {
@@ -105,9 +113,10 @@ angular.module("controller.main",[
     }
 
     $scope.toTypeArray = function(proType){
-             $scope.pushProductPojo._cateId = proType._id;
-             $scope.tempProType = proType;
-             $scope.show.$set('prolist')
+        $scope.loadPageInfo.cateName = proType.cateName;
+        $scope.pushProductPojo._cateId = proType._id;
+        $scope.tempProType = proType;
+        $scope.show.$set('prolist')
     }
 
     /******************详细产品信息*****************/
@@ -119,16 +128,26 @@ angular.module("controller.main",[
         "pojo":{}
     }
     //保存产品
-    $scope.saveDealPro = function(){    //保存产品信息
+    $scope.saveDealPro = function(){    //保存或更新
         $scope.pushProductPojo._id = $scope._pushTypePojo._id;
-        dataService.pushProductArray($scope.pushProductPojo)
-        .success(function(data){
-            if(data){
-                $scope.tempProType.productArray.push(data);
-                $scope.show.$set("prolist");
-                $scope.pushProductPojo.pojo = {};
-            }
-        })
+        if(!$scope.pushProductPojo.pojo._id){ //保存产品信息
+            dataService.pushProductArray($scope.pushProductPojo)
+            .success(function(data){
+                if(data){
+                    $scope.tempProType.productArray.push(data);
+                    $scope.show.$set("prolist");
+                    $scope.pushProductPojo.pojo = {};
+                }
+            });
+        }else{      //更新产品信息
+            dataService.editTypeProPro($scope.pushProductPojo)
+            .success(function(data){
+                if(data){
+                    $scope.show.$set("prolist");
+                    $scope.pushProductPojo.pojo = {};
+                }
+            });
+        }
     }
     //删除产品
     $scope.pullProductArray = function(product){
@@ -148,6 +167,7 @@ angular.module("controller.main",[
     }
     //修改产品
     $scope.editProduct = function(product){
+        $scope.loadPageInfo.proName = product.name;
         $scope.pushProductPojo.pojo = product;
         $scope.show.$set("proadd");
     }

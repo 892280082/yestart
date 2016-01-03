@@ -12,9 +12,10 @@
 <div class="place" >
     <span>位置：</span>
     <ul class="placeul">
-    <li><a href="/back/page/#">首页</a></li>
-    <li><a href="/back/page/#">模块设计</a></li>
-    <li><a href="/back/page/#">图片</a></li>
+    <li><a href="/back/page/#">{{ loadPageInfo.top }}</a></li>
+    <li><a href="/back/page/#">{{ loadPageInfo.name }}</a></li>
+    <li><a href="/back/page/#">{{ loadPageInfo.cateName }}</a></li>
+    <li><a href="/back/page/#">{{ loadPageInfo.proName }}</a></li>
     </ul>
     </div>
     <div class="rightinfo">
@@ -62,7 +63,7 @@
 </script>
 <script type="text/ng-template" id="add">
     <div class="tools">
-       <ul class="toolbar">
+       <ul class="toolbar1">
             <li ng-click="show.$set('list')"><span><img src="/back/resource/images/t04.png" /></span>统计</li>
         </ul>
     </div>
@@ -108,7 +109,7 @@
               </li>
         </ul>
         <ul class="toolbar1">
-             <li ng-click="show.$set('list')">
+             <li ng-click="loadPageInfo.name=null;show.$set('list')">
                 <a>
                     <span><img src="/back/resource/images/t04.png"/></span>返回
                 </a>
@@ -146,7 +147,10 @@
             </li>
         </ul>
         <ul class="toolbar1">
-        <li ng-click="show.$set('dealpro')"><span><img src="/back/resource/images/t04.png" /></span>返回
+        <li ng-click="
+                loadPageInfo.cateName = null;
+                show.$set('dealpro')">
+            <span><img src="/back/resource/images/t04.png" /></span>返回
         </li>
         </ul>
     </div>
@@ -183,8 +187,10 @@
 </script>
 <script type="text/ng-template" id="proadd">
     <div class="tools">
-       <ul class="toolbar">
-            <li ng-click="show.$set('prolist')">
+       <ul class="toolbar1">
+            <li ng-click="
+            loadPageInfo.proName = null;
+            show.$set('prolist')">
                 <span><img src="/back/resource/images/t04.png" />
             </span>返回</li>
         </ul>

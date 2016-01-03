@@ -71,7 +71,15 @@ router.post("/pullProductArray",function(req,res){
 		,function(err){
 			!err ? res.json(true) : res.json(false);
 		})
-})
+});
+
+router.post("/editTypeProPro",function(req,res){
+	var editPojo = req.body.editPojo;
+	Product.editTypeProPro(editPojo._id,editPojo._cateId,editPojo.pojo
+		,function(err){
+			!err ? res.json(true) : res.json(false);
+		})
+});
 
 
 
