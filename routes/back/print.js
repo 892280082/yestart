@@ -85,17 +85,54 @@ router.post("/editTypeProPro",function(req,res){
 router.post("/savePhoto",function(req,res){
 	var photo = new Photo(req.body.savePojo);
 	photo.save(function(err){
-		!err ? res.json(true) : res.json(false);
+		!err ? res.json(photo) : res.json(false);
 	});
 });
 
 router.post("/getPhotos",function(req,res){
-	var searchPojo = new Photo(req.body.searchPojo);
-	Photo.find(searchPojo,function(err,docs){
-		console.log(docs);
+	Photo.find(req.body.searchPojo,function(err,docs){
 		!err ? res.json(docs) : res.json(false);
 	});
 });
+
+router.post("/removePhoto",function(req,res){
+	var _id = req.body._id;
+	Photo.remove({"_id":_id},function(err,info){
+		!err ? res.json(true) : res.json(false);
+	});
+});
+
+router.post("/push_typeArray",function(req,res){
+	var pushPojo = req.body.pushPojo;
+	Photo.push_typeArray(pushPojo._id,pushPojo.pojo
+	,function(err,info,pojo){
+		!err ? res.json(pojo) : res.json(false);
+	});
+});
+
+
+router.post("/update_typeArray",function(req,res){
+	var updatePojo = req.body.updatePojo;
+	Photo.update_typeArray(updatePojo._id,updatePojo.pojo
+	,function(err,info){
+		!err ? res.json(true):res.json(false);
+	});
+});
+
+router.post("/pull_typeArray",function(req,res){
+	var pullPojo = req.body.pullPojo;
+	Photo.pull_typeArray(pullPojo._id,pullPojo.typeArrayId
+	,function(err,info){
+		!err ? res.json(true):res.json(false);
+	});
+});
+
+
+
+
+
+
+
 
 
 

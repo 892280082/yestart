@@ -28,7 +28,14 @@ app.directive('tsPhotolist'
         restrict:'EAC',
         templateUrl:'catelist'
     }
-});
+}).directive('tsPhotoadd'
+,function(){
+    return {
+        restrict:'EAC',
+        templateUrl:'photoadd'
+    }
+})
+
 
 
 

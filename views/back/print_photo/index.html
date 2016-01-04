@@ -7,15 +7,6 @@
 <script type="text/javascript" charset="utf-8" src="/public/plugin/ueditor/ueditor.config.js"></script>
 <script type="text/javascript" charset="utf-8" src="/public/plugin/ueditor/ueditor.all.min.js"> </script>
 <script type="text/javascript" charset="utf-8" src="/public/plugin/ueditor/lang/zh-cn/zh-cn.js"> </script>
-<script language="javascript">
-$(function(){	
-	//导航切换
-	$(".imglist li").click(function(){
-		$(".imglist li.selected").removeClass("selected")
-		$(this).addClass("selected");
-	})	
-})	
-</script>
 </head>
 <body ng-controller="main">
 <div class="place">
@@ -27,8 +18,9 @@ $(function(){
     </ul>
  </div>
    <div class="rightinfo">
-   	<ts-catelist  ng-if="show.catelist"></ts-catelist>
-   	<ts-photolist ng-if="show.photolist"></ts-photolist>
+   	  <ts-catelist  ng-if="show.catelist"></ts-catelist>
+   	  <ts-photolist ng-if="show.photolist"></ts-photolist>
+      <ts-photoadd ng-if="show.photoadd"></ts-photoadd>
    </div>
    <!--  cate type -->
 <script type="text/ng-template" id="catelist">
@@ -58,11 +50,14 @@ $(function(){
             <tbody>
                 <tr ng-repeat="data in datas">
                     <td>{{ $index + 1}}</td>
-                    <td>
+                    <td ng-click="viewPhotolist(data)"
+                    >
                         {{ data.cate }}
                     </td>
                     <td> {{ data.edit ? '是' : '否' }} </td>
-                    <td><a>delete<a></td>
+                    <td>{{ data.typeArray.length }}</td>
+                    <td ng-click="removePhoto(data)"
+                    ><a>delete<a></td>
                 </tr>
             </tbody>
          </table>
@@ -72,22 +67,72 @@ $(function(){
 <script type="text/ng-template" id="photolist">
     <div class="tools">
         <ul class="toolbar">
-        	<li class="click"><span><img src="/back/resource/images/t01.png" /></span>添加</li>
+        	<li ng-click="viewPhotoadd()"
+          class="click">
+          <span><img src="/back/resource/images/t01.png" /></span>添加</li>
         </ul>
         <ul class="toolbar1">
-       	 <li><span><img src="/back/resource/images/t04.png" />返回</span></li>
+       	 <li ng-click="show.$set('catelist')"
+         ><span><img src="/back/resource/images/t04.png"/>返回</span></li>
         </ul>
     </div>
-    <ul class="imglist">
-	    <li >
-	    	<span><img src="/back/resource/images/img01.png" /></span>
-	    	<h2><a href="/back/page/#">软件界面设计下载</a></h2>
+    <ul 
+    class="imglist">
+	    <li ng-repeat="photo in tempPhoto.typeArray">
+	    	<span><img 
+          width="168"
+          height="128"
+          ng-src="{{ photo.picUrl }}" /></span>
+	    	<h2><a>{{ photo.name }}</a></h2>
 	    	<p>
-		    	<a href="/back/page/#">编辑</a>&nbsp;&nbsp;&nbsp;&nbsp;
-		    	<a href="/back/page/#">删除</a>
+		    	<a ng-click="viewPhotoadd(photo)"
+          >编辑</a>&nbsp;&nbsp;&nbsp;&nbsp;
+		    	<a ng-click="pull_typeArray(photo)">删除</a>
 	    	</p>
 	    </li>
     </ul>
+</script>
+<script type="text/ng-template" id="photoadd">
+    <div class="tools">
+       <ul class="toolbar1">
+            <li ng-click="show.$set('photolist')">
+                <span><img src="/back/resource/images/t04.png" />
+            </span>返回</li>
+        </ul>
+    </div>
+    <div class="formbody">
+    <div class="formtitle"><span>基本信息</span></div>
+    <form 
+        name="subForm"
+        ng-submit="saveOrUpPhoto()"
+        >
+        <ul class="forminfo">
+        <li><label>名称</label>
+            <input  ng-model="upPhoto.name"  
+            name="t_name" required
+            type="text" class="dfinput"  />
+            <i ng-show="subForm.t_name.$error.required">请输入名称</i>
+        </li>
+        <li><label>封面图片</label>
+             <input type="file" nv-file-select="" uploader="uploader" /><br/>
+             <img ng-src="{{ upPhoto.picUrl}}" width="160px" height="140px" ng-if="upPhoto.picUrl"/>
+        </li>
+        <li><label>是否显示</label>
+            <input type="checkbox" ng-model="upPhoto.show" 
+            ng-true-value="true" ng-false-value="false" />
+        </li>
+        <div  
+            ng-if="tempPhoto.edit"
+            style="width:700px;height:500px;float:left"  
+            class="ueditor" config="config" 
+            ng-model="upPhoto.content"></div>
+        <li><label>&nbsp;</label>
+            <input  type="submit" ng-disabled="subForm.$invalid"
+            class="btn" value="确认保存"/>
+         </li>
+        </ul>
+    </form>
+    </div>
 </script>
 <script type="text/javascript" src="/public/bower_components/angular/angular.min.js"></script>
 <script type="text/javascript" src="./dist/index.js"></script>
