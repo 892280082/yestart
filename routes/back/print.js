@@ -1,6 +1,7 @@
 var express = require('express');
 var merges = require('../../self_modules/merges/merges.js');
 var Product = require('../../models/product.js');
+var Photo = require('../../models/photo.js');
 var router = express.Router();
 
 //保存产品分类
@@ -80,6 +81,24 @@ router.post("/editTypeProPro",function(req,res){
 			!err ? res.json(true) : res.json(false);
 		})
 });
+
+router.post("/savePhoto",function(req,res){
+	var photo = new Photo(req.body.savePojo);
+	photo.save(function(err){
+		!err ? res.json(true) : res.json(false);
+	});
+});
+
+router.post("/getPhotos",function(req,res){
+	var searchPojo = new Photo(req.body.searchPojo);
+	Photo.find(searchPojo,function(err,docs){
+		console.log(docs);
+		!err ? res.json(docs) : res.json(false);
+	});
+});
+
+
+
 
 
 

@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="myApp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<link href="/back/resource/css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" charset="utf-8" src="/public/plugin/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="/public/plugin/ueditor/ueditor.all.min.js"> </script>
+<script type="text/javascript" charset="utf-8" src="/public/plugin/ueditor/lang/zh-cn/zh-cn.js"> </script>
+<script language="javascript">
+$(function(){	
+	//导航切换
+	$(".imglist li").click(function(){
+		$(".imglist li.selected").removeClass("selected")
+		$(this).addClass("selected");
+	})	
+})	
+</script>
+</head>
+<body ng-controller="main">
+<div class="place">
+    <span>位置：</span>
+    <ul class="placeul">
+    <li><a href="/back/page/#">首页</a></li>
+    <li><a href="/back/page/#">模块设计</a></li>
+    <li><a href="/back/page/#">图片</a></li>
+    </ul>
+ </div>
+   <div class="rightinfo">
+   	<ts-catelist  ng-if="show.catelist"></ts-catelist>
+   	<ts-photolist ng-if="show.photolist"></ts-photolist>
+   </div>
+   <!--  cate type -->
+<script type="text/ng-template" id="catelist">
+   <div class="tools">
+         <ul class="toolbar">
+              <li>
+                分类名<input type="text" class="dfinput" ng-model="photoPojo.cate"/>
+              </li>
+              <li>
+                编辑:<input  type="checkbox"  ng-true-value="true" ng-false-value="false"  ng-model="photoPojo.edit" />
+              </li>
+              <li ng-click="savePhoto()">
+                <span><img src="/back/resource/images/t01.png"/>
+                </span>添加
+              </li>
+        </ul>
+    </div>
+    <div>
+         <table class="tablelist">
+            <thead>
+                <th>序号</th>
+                <th>类别</th>
+                <th>编辑</th>
+                <th>数量</th>
+                <th>操作</th>
+            </thead>
+            <tbody>
+                <tr ng-repeat="data in datas">
+                    <td>{{ $index + 1}}</td>
+                    <td>
+                        {{ data.cate }}
+                    </td>
+                    <td> {{ data.edit ? '是' : '否' }} </td>
+                    <td><a>delete<a></td>
+                </tr>
+            </tbody>
+         </table>
+    </div>
+</script>
+  <!-- picture list-->
+<script type="text/ng-template" id="photolist">
+    <div class="tools">
+        <ul class="toolbar">
+        	<li class="click"><span><img src="/back/resource/images/t01.png" /></span>添加</li>
+        </ul>
+        <ul class="toolbar1">
+       	 <li><span><img src="/back/resource/images/t04.png" />返回</span></li>
+        </ul>
+    </div>
+    <ul class="imglist">
+	    <li >
+	    	<span><img src="/back/resource/images/img01.png" /></span>
+	    	<h2><a href="/back/page/#">软件界面设计下载</a></h2>
+	    	<p>
+		    	<a href="/back/page/#">编辑</a>&nbsp;&nbsp;&nbsp;&nbsp;
+		    	<a href="/back/page/#">删除</a>
+	    	</p>
+	    </li>
+    </ul>
+</script>
+<script type="text/javascript" src="/public/bower_components/angular/angular.min.js"></script>
+<script type="text/javascript" src="./dist/index.js"></script>
+</body>
+</html>

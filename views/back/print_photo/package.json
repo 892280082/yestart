@@ -1,0 +1,12 @@
+{
+  "spm": {
+    "dependencies": {
+      "moment": "~2.11.0"
+    },
+  "build":{
+	"global":{
+		"angular":"angular"
+	}
+    }
+  }
+}

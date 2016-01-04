@@ -1,64 +1,52 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="app">
 <head>
-	<meta charset="UTF-8">
-	<title>show</title>
+ <meta charset="UTF-8">
+ <title>show</title>
+ <style type="text/css">
+  .progressOut {
+   width: 600px;height: 30px;background: red;
+  }
+  .progressIn { background: green;height:100%;}
+ </style>
 </head>
 <script type="text/javascript" src="/public/bower_components/angular/angular.js">
 </script>
 <script type="text/javascript" src="/public/bower_components/angular/angular-file-upload.min.js">
 </script>
 <body>
-
 <!-- 1. nv-file-drop="" uploader="{Object}" options="{Object}" filters="{String}" -->
     <body ng-controller="AppController" nv-file-drop="" uploader="uploader" filters="queueLimit, customFilter">
-
-        <div class="container">
-
-            <div class="navbar navbar-default">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="https://github.com/nervgh/angular-file-upload">Angular File Upload</a>
-                </div>
-                <div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
-                        <li class="active dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Demos <b class="caret"></b></a>
-                            <ul class="dropdown-menu">
-                                <li class="active"><a href="#">Simple example</a></li>
-                                <li><a href="../image-preview">Uploads only images (with canvas preview)</a></li>
-                                <li><a href="../without-bootstrap">Without bootstrap example</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="https://github.com/nervgh/angular-file-upload">View on Github</a></li>
-                        <li><a href="https://raw.githubusercontent.com/nervgh/angular-file-upload/master/dist/angular-file-upload.min.js">Download</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-3">
+        <div>
+            <div >
+                <div >
                     <h3>Select files</h3>
                     <div ng-show="uploader.isHTML5">
                         <!-- 3. nv-file-over uploader="link" over-class="className" -->
-                        <div class="well my-drop-zone" nv-file-over="" uploader="uploader">
+                        <!--设置拖拽空间-->
+                        <div nv-file-over="" uploader="uploader">
                             Base drop zone
                         </div>
                         <!-- Example: nv-file-drop="" uploader="{Object}" options="{Object}" filters="{String}" -->
                         <div nv-file-drop="" uploader="uploader" options="{ url: '/foo' }">
-                            <div nv-file-over="" uploader="uploader" over-class="another-file-over-class" class="well my-drop-zone">
+                            <div nv-file-over="" uploader="uploader"  >
                                 Another drop zone with its own settings
                             </div>
                         </div>
                     </div>
-                    <!-- Example: nv-file-select="" uploader="{Object}" options="{Object}" filters="{String}" -->
+                    <!--设置上传的Input
+                        multiple 代表多选的   Single 代表单选
+                    -->
                     Multiple
                     <input type="file" nv-file-select="" uploader="uploader" multiple  /><br/>
                     Single
                     <input type="file" nv-file-select="" uploader="uploader" />
                 </div>
-                <div class="col-md-9" style="margin-bottom: 40px">
+
+                <div  style="margin-bottom: 40px">
                     <h3>Upload queue</h3>
                     <p>Queue length: {{ uploader.queue.length }}</p>
-                    <table class="table">
+                    <table>
                         <thead>
                             <tr>
                                 <th width="50%">Name</th>
@@ -73,57 +61,53 @@
                                 <td><strong>{{ item.file.name }}</strong></td>
                                 <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
                                 <td ng-show="uploader.isHTML5">
-                                    <div class="progress" style="margin-bottom: 0;">
-                                        <div class="progress-bar" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
+                                    <div class="progressOut" >
+                                        <div class="progressIn" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
                                     </div>
                                 </td>
                                 <td class="text-center">
-                                    <span ng-show="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
-                                    <span ng-show="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
-                                    <span ng-show="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
+                                    <span ng-show="item.isSuccess"><i ></i></span>
+                                    <span ng-show="item.isCancel"><i ></i></span>
+                                    <span ng-show="item.isError"><i ></i></span>
                                 </td>
                                 <td nowrap>
-                                    <button type="button" class="btn btn-success btn-xs" ng-click="item.upload()" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
-                                        <span class="glyphicon glyphicon-upload"></span> Upload
+                                    <button type="button" ng-click="item.upload()" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
+                                        <span ></span> Upload
                                     </button>
-                                    <button type="button" class="btn btn-warning btn-xs" ng-click="item.cancel()" ng-disabled="!item.isUploading">
-                                        <span class="glyphicon glyphicon-ban-circle"></span> Cancel
+                                    <button type="button"  ng-click="item.cancel()" ng-disabled="!item.isUploading">
+                                        <span></span> Cancel
                                     </button>
-                                    <button type="button" class="btn btn-danger btn-xs" ng-click="item.remove()">
-                                        <span class="glyphicon glyphicon-trash"></span> Remove
+                                    <button type="button"  ng-click="item.remove()">
+                                        <span ></span> Remove
                                     </button>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
-
                     <div>
                         <div>
                             Queue progress:
-                            <div class="progress" style="">
-                                <div class="progress-bar" role="progressbar" ng-style="{ 'width': uploader.progress + '%' }"></div>
+                            <div>
+                                <div role="progressbar" ng-style="{ 'width': uploader.progress + '%' }"></div>
                             </div>
                         </div>
-                        <button type="button" class="btn btn-success btn-s" ng-click="uploader.uploadAll()" ng-disabled="!uploader.getNotUploadedItems().length">
+                        <button type="button"  ng-click="uploader.uploadAll()" ng-disabled="!uploader.getNotUploadedItems().length">
                             <span class="glyphicon glyphicon-upload"></span> Upload all
                         </button>
-                        <button type="button" class="btn btn-warning btn-s" ng-click="uploader.cancelAll()" ng-disabled="!uploader.isUploading">
-                            <span class="glyphicon glyphicon-ban-circle"></span> Cancel all
+                        <button type="button"ng-click="uploader.cancelAll()" ng-disabled="!uploader.isUploading">
+                            <span ></span> Cancel all
                         </button>
-                        <button type="button" class="btn btn-danger btn-s" ng-click="uploader.clearQueue()" ng-disabled="!uploader.queue.length">
-                            <span class="glyphicon glyphicon-trash"></span> Remove all
+                        <button type="button" ng-click="uploader.clearQueue()" ng-disabled="!uploader.queue.length">
+                            <span ></span> Remove all
                         </button>
-                    </div>
+                    </div>`
                 </div>
             </div>
         </div>
+        <div><img src="{{ uploadUrl }}" alt=""></div>
 </body>
 <script type="text/javascript">
-
-
-
    var app =  angular.module('app', ['angularFileUpload'])
-
 
     app.controller('AppController', ['$scope', 'FileUploader', function($scope, FileUploader) {
        var uploader = $scope.uploader = new FileUploader({
@@ -133,50 +117,95 @@
 
         // FILTERS
         uploader.filters.push({
-            name: 'fileName',
+            name: 'queueLimit',
             fn: function(item /*{File|FileLikeObject}*/, options) {
                 return this.queue.length < 10;
             }
         });
 
-        // CALLBACKS
+
+        //步骤
+        //1.导入angular-file-upload.min.js
+        //2.module引入angularFileUpload
+        //3.服务里注入 FileUploader
+
+        //指令解释
+        //nv-file-drop 是否启动拖拽
+        //uploader 配置上传的容器
+        //filters 配置拦截器可配置多个
+
+        // uploader的属性的解释
+        // @parm     @typo    @annotation
+        // uploader.isHTML5 Boolean 浏览器是否支持html5
+        // uploader.queue  Array 代表加载的文件上传数组
+        // uploader.progress Number 队列的上传进度 1~100
+        // uploader.uploadAll() Function 上传队列的方法
+        // uploader.cancelAll() Function 取消队列上传的方法
+        // uploader.clearQueue() Function 删除队列
+
+        // Item的属性的解释
+        // Item = uploader.queue[0]
+        // Item   Object 代表需要上传的文件对象
+        // Item.isSuccess  Boolean 文件是否上传成功
+        // item.isCancel  Boolean 文件是否取消
+        // item.isError  Boolean 文件是否错误
+        // item.isReady  Boolean 文件是否已准备就绪
+        // item.isUploading  Boolean 文件是否正在上传
+        // item.progress Number 文件的上传进度 1~100
+        // item.upload() Function 文件上传方法
+        // item.cancel() Function 文件取消上传方法
+        // item.remove() Function 将文件从队列中删除的方法
+
+        // 回调方法
+        // 当加载文件失败时
         // uploader.onWhenAddingFileFailed = function(item /*{File|FileLikeObject}*/, filter, options) {
         //     console.info('onWhenAddingFileFailed', item, filter, options);
         // };
+        // //加载单个文件之后
         // uploader.onAfterAddingFile = function(fileItem) {
         //     console.info('onAfterAddingFile', fileItem);
         // };
+        // //加载所有文件之后
         // uploader.onAfterAddingAll = function(addedFileItems) {
         //     console.info('onAfterAddingAll', addedFileItems);
         // };
+        // //上传单个文件之前
         // uploader.onBeforeUploadItem = function(item) {
         //     console.info('onBeforeUploadItem', item);
         // };
+        // //单个文件上传中
         // uploader.onProgressItem = function(fileItem, progress) {
         //     console.info('onProgressItem', fileItem, progress);
         // };
+        // //所有文件上传中
         // uploader.onProgressAll = function(progress) {
         //     console.info('onProgressAll', progress);
         // };
-        uploader.onSuccessItem = function(fileItem, response, status, headers) {
-            console.info('onSuccessItem', fileItem, response, status, headers);
-        };
+        // //当单个文件上传成功后
+        // uploader.onSuccessItem = function(fileItem, response, status, headers) {
+        //     console.info('onSuccessItem', fileItem, response, status, headers);
+        // };
+        // //当单个文件上传上传错误
         // uploader.onErrorItem = function(fileItem, response, status, headers) {
         //     console.info('onErrorItem', fileItem, response, status, headers);
         // };
+        // //取消单个文件
         // uploader.onCancelItem = function(fileItem, response, status, headers) {
         //     console.info('onCancelItem', fileItem, response, status, headers);
         // };
+        //单个文件上传成功后
         uploader.onCompleteItem = function(fileItem, response, status, headers) {
+         console.log("single file upload ok!!!");
             console.info('onCompleteItem', fileItem, response, status, headers);
+            // alert(response.originalname);
+            // alert(response.filename);
         };
+        // //所有上传成功后
         // uploader.onCompleteAll = function() {
         //     console.info('onCompleteAll');
         // };
 
         // console.info('uploader', uploader);
     }]);
-
-
 </script>
 </html>

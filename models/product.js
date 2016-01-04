@@ -100,24 +100,3 @@ var  Product = mongoose.model("Products", ProductSchema);
 module.exports = Product;
 
 
-
-// { _id: '567aaf4da285f5dd1c1ceee9',
-//   _cateId: '5688f07afdd92ed207000002',
-//   pojo: 
-//    { name: '彩色DM宣传单页印刷制作123',
-//      picture: '/download/images/14518150828546138.jpg',
-//      price: 300,
-//      unit: '个',
-//      show: true,
-//      content: '<p><img src="/upload/images/ueditor/682946855839076352.png" style=""/></p><p><img src="/upload/images/ueditor/683149049699897344.png" style=""/></p><p><br/></p><p>这是产品图片<br/></p>',
-//      _id: '5688f0c5fdd92ed207000003',
-//      clickCount: 0,
-//      createDate: '2016-01-03T09:58:29.482Z' } }
-
-
-// db.products.find({ 
-// "_id" : ObjectId("567aaf4da285f5dd1c1ceee9"),
-// "typeArray._id" : ObjectId("5688f07afdd92ed207000002"),
-// "typeArray.productArray._id" : ObjectId("5688f0c5fdd92ed207000003"),
-// });
-
