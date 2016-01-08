@@ -2,6 +2,7 @@ var express = require('express');
 var merges = require('../../self_modules/merges/merges.js');
 var Product = require('../../models/product.js');
 var Photo = require('../../models/photo.js');
+var Article = require('../../models/article.js');
 var router = express.Router();
 
 //保存产品分类
@@ -126,6 +127,30 @@ router.post("/pull_typeArray",function(req,res){
 		!err ? res.json(true):res.json(false);
 	});
 });
+
+router.post("/getArticles",function(req,res){
+	Article.find(req.body.searchPojo,function(err,docs){
+		!err ? res.json(docs) : res.json(false);
+	});
+});
+
+router.post("/saveArticle",function(req,res){
+	var article = new Article(req.body.savePojo);
+	article.save(function(err){
+		!err ? res.json(article) : res.json(false);
+	});
+});
+
+router.post("/removeArticle",function(req,res){
+	var _id = req.body._id;
+	Article.remove({
+		'_id':_id
+	},function(err,info){
+		!err ? res.json(info) : res.json(false);
+	});
+});
+
+
 
 
 

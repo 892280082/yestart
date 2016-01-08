@@ -1,0 +1,139 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="myApp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<link href="/back/resource/css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" charset="utf-8" src="/public/plugin/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="/public/plugin/ueditor/ueditor.all.min.js"> </script>
+<script type="text/javascript" charset="utf-8" src="/public/plugin/ueditor/lang/zh-cn/zh-cn.js"> </script>
+</head>
+<body ng-controller="main">
+<div class="place">
+    <span>位置：</span>
+    <ul class="placeul">
+    <li><a href="/back/page/#">首页</a></li>
+    <li><a href="/back/page/#">模块设计</a></li>
+    <li><a href="/back/page/#">图片</a></li>
+    </ul>
+ </div>
+   <div class="rightinfo">
+   	  <ts-catelist  ng-if="show.catelist"></ts-catelist>
+   	  <ts-articlelist ng-if="show.articlelist"></ts-articlelist>
+      <ts-articleadd ng-if="show.articleadd"></ts-articleadd>
+   </div>
+   <!--  cate type -->
+<script type="text/ng-template" id="catelist">
+   <div class="tools">
+         <ul class="toolbar">
+              <li>
+                分类名:<input type="text" class="dfinput" ng-model="articlePojo.name"/>
+              </li>
+              <li>
+               封面 :<input  type="checkbox"  ng-true-value="true" ng-false-value="false" 
+                                                                   ng-model="articlePojo.picture"   />
+              </li>
+              <li ng-click="saveArticle()">
+                <span><img src="/back/resource/images/t01.png"/>
+                </span>添加
+              </li>
+        </ul>
+    </div>
+    <div>
+         <table class="tablelist">
+            <thead>
+                <th>序号</th>
+                <th>类别</th>
+                <th>封面</th>
+                <th>数量</th>
+                <th>操作</th>
+            </thead>
+            <tbody>
+                <tr ng-repeat="data in datas">
+                    <td>{{ $index + 1}}</td>
+                    <td ng-click="viewArticlelist(data)">
+                        {{ data.name }}
+                    </td>
+                    <td> {{ data.picture ? '有' : '无' }} </td>
+                    <td>{{ data.typeArray.length }}</td>
+                    <td><a ng-click="removeArticle(data)">delete<a></td>
+                </tr>
+            </tbody>
+         </table>
+    </div>
+</script>
+  <!-- picture list-->
+<script type="text/ng-template" id="articlelist">
+    <div class="tools">
+        <ul class="toolbar">
+        	<li ng-click="viewarticleadd()"
+          class="click">
+          <span><img src="/back/resource/images/t01.png" /></span>添加</li>
+        </ul>
+        <ul class="toolbar1">
+       	 <li ng-click="show.$set('catelist')"
+         ><span><img src="/back/resource/images/t04.png"/>返回</span></li>
+        </ul>
+    </div>
+    <ul 
+    class="imglist">
+	    <li ng-repeat="article in temparticle.typeArray">
+	    	<span><img 
+          width="168"
+          height="128"
+          ng-src="{{ article.picUrl }}" /></span>
+	    	<h2><a>{{ article.name }}</a></h2>
+	    	<p>
+		    	<a ng-click="viewarticleadd(article)"
+          >编辑</a>&nbsp;&nbsp;&nbsp;&nbsp;
+		    	<a ng-click="pull_typeArray(article)">删除</a>
+	    	</p>
+	    </li>
+    </ul>
+</script>
+<script type="text/ng-template" id="articleadd">
+    <div class="tools">
+       <ul class="toolbar1">
+            <li ng-click="show.$set('articlelist')">
+                <span><img src="/back/resource/images/t04.png" />
+            </span>返回</li>
+        </ul>
+    </div>
+    <div class="formbody">
+    <div class="formtitle"><span>基本信息</span></div>
+    <form 
+        name="subForm"
+        ng-submit="saveOrUparticle()"
+        >
+        <ul class="forminfo">
+        <li><label>名称</label>
+            <input  ng-model="uparticle.name"  
+            name="t_name" required
+            type="text" class="dfinput"  />
+            <i ng-show="subForm.t_name.$error.required">请输入名称</i>
+        </li>
+        <li><label>封面图片</label>
+             <input type="file" nv-file-select="" uploader="uploader" /><br/>
+             <img ng-src="{{ uparticle.picUrl}}" width="160px" height="140px" ng-if="uparticle.picUrl"/>
+        </li>
+        <li><label>是否显示</label>
+            <input type="checkbox" ng-model="uparticle.show" 
+            ng-true-value="true" ng-false-value="false" />
+        </li>
+        <div  
+            ng-if="temparticle.edit"
+            style="width:700px;height:500px;float:left"  
+            class="ueditor" config="config" 
+            ng-model="uparticle.content"></div>
+        <li><label>&nbsp;</label>
+            <input  type="submit" ng-disabled="subForm.$invalid"
+            class="btn" value="确认保存"/>
+         </li>
+        </ul>
+    </form>
+    </div>
+</script>
+<script type="text/javascript" src="/public/bower_components/angular/angular.min.js"></script>
+<script type="text/javascript" src="./dist/index.js"></script>
+</body>
+</html>

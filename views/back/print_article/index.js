@@ -17,11 +17,11 @@ var app = angular.module('myApp',[
                                   'service.dataService',
                                   'controller.main']);
 
-app.directive('tsPhotolist'
+app.directive('tsarticlelist'
 ,function(){
     return {
         restrict:'EAC',
-        templateUrl:'photolist'
+        templateUrl:'articlelist'
     }
 }).directive('tsCatelist'
 ,function(){
@@ -29,11 +29,11 @@ app.directive('tsPhotolist'
         restrict:'EAC',
         templateUrl:'catelist'
     }
-}).directive('tsPhotoadd'
+}).directive('tsarticleadd'
 ,function(){
     return {
         restrict:'EAC',
-        templateUrl:'photoadd'
+        templateUrl:'articleadd'
     }
 })
 
