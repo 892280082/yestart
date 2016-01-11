@@ -23,30 +23,14 @@
 <div class="nav">
   <ul>
     <li class="nav_sy"><a href="#">快马首页</a></li>
-    <li class="nav_2"><a href="#">宣传品印刷</a>
-      <h3><a href="#">画册</a><a href="#">说明书</a><a href="#">楼书</a><a href="#">封套</a><a href="#">海报</a><a href="#">单页折页</a></h3>
-    </li>
-    <li><a href="#">书刊印刷</a>
-      <h3><a href="#">图书</a><a href="#">汇编</a><a href="#">精装书</a><a href="#">家谱</a><a href="#">培训教材</a><a href="#">年鉴</a><a href="#">期刊杂志</a></h3>
-    </li>
-    <li class="nav_2"><a href="#">包装品印刷</a>
-      <h3><a href="#">蔬果包装</a><a href="#">鸡蛋包装</a><a href="#">干货包装</a><a href="#">杂粮包装</a><a href="#">红酒包装</a><a href="#">礼品包装</a><a href="#">白酒包装</a><a href="#">糕点包装</a><a href="#">茶叶包装</a><a href="#">喜糖包装</a></h3>
-    </li>
-    <li class="nav_2"><a href="#">纸袋印刷</a>
-      <h3><a href="#">广告纸袋</a><a href="#">礼品袋</a><a href="#">无纺布袋</a><a href="#">牛皮袋</a><a href="#">购物袋</a><a href="#">资料袋</a></h3>
-    </li>
-    <li><a href="#">促销品印刷</a>
-      <h3><a href="#">春联</a><a href="#">大礼包</a><a href="#">扑克牌</a><a href="#">易事贴</a><a href="#">纸杯</a><a href="#">抽纸</a></h3>
-    </li>
-    <li class="nav_2"><a href="#">纸制品印刷</a>
-      <h3><a href="#">不干胶</a><a href="#">台历</a><a href="#">挂历</a><a href="#">门票</a><a href="#">请柬</a><a href="#">菜谱</a></h3>
-    </li>
-    <li><a href="#">办公用品</a>
-      <h3><a href="#">笔记本</a><a href="#">便签</a><a href="#">无碳票据</a><a href="#">报表</a><a href="#">信封信纸</a><a href="#">档案盒</a><a href="#">练习本</a></h3>
-    </li>
-    <li><a href="#">关于快马</a>
-      <h3><a href="#">公司简介</a><a href="#">快马资质</a><a href="#">设备展示</a><a href="#">合作客户</a><a href="#">中标项目</a><a href="#">解决方案</a><a href="#">联系方式</a></h3>
-    </li>
+     <%  productDocs.forEach(function(product){  %>
+         <li class="nav_2"><a href="#"><%- product.title %></a>
+          <h3>
+         <%   product.typeArray.forEach(function(cate){    %>
+               <a href="#"><%-  cate.cateName %></a>
+        <%  }); %>
+        </li>
+      <% }); %>
     <li><a href="#" rel="nofollow">在线下单</a></li>
   </ul>
 </div>
@@ -54,9 +38,12 @@
 <div class="banner">
   <div class="bd">
     <ul style="position: relative; width: 1000px; height: 366px;">
-      <li style="position: absolute; width: 1000px; left: 0px; top: 0px; display: none;"><a href="#" title="幻灯三"><img src="images/huandeng_3.jpg" width="1000" height="360" ></a></li>
-      <li style="position: absolute; width: 1000px; left: 0px; top: 0px; display: none;"><a href="#" title="幻灯二"><img src="images/huandeng_2.jpg" width="1000" height="360" ></a></li>
-      <li style="position: absolute; width: 1000px; left: 0px; top: 0px; display: list-item;"><a href="#" title="幻灯一"><img src="images/huandeng_1.jpg" width="1000" height="360" ></a></li>
+      <li style="position: absolute; width: 1000px; left: 0px; top: 0px; display: list-item;"><a href="#" title="幻灯一">
+            <img src="images/huandeng_1.jpg" width="1000" height="360" ></a></li>
+      <li style="position: absolute; width: 1000px; left: 0px; top: 0px; display: none;"><a href="#" title="幻灯二">
+            <img src="images/huandeng_2.jpg" width="1000" height="360" ></a></li>
+      <li style="position: absolute; width: 1000px; left: 0px; top: 0px; display: none;"><a href="#" title="幻灯三">
+            <img src="images/huandeng_3.jpg" width="1000" height="360" ></a></li>
     </ul>
   </div>
   <div class="w100">
@@ -66,7 +53,9 @@
         <li class="">&nbsp;</li>
         <li class="on">&nbsp;</li>
       </ul>
-      <a class="next"></a><a class="prev"></a> </div>
+       <a class="next"></a>
+      <a class="prev"></a>
+     </div>
   </div>
   <div class="index_gjc">
     <div class="ft"><b>热门关键词：</b><a href="#">家谱印刷</a> <a href="#">画册印刷</a> <a href="#">印刷公司</a> <a href="#">包装盒印刷</a> <a href="#">合肥印刷</a> </div>
@@ -89,157 +78,40 @@
 <div class="index_cp index_sc"> 
   <script>
 $(function() {
-
     $(".fl_sli").mousemove(function() {
         $(this).addClass("lm1_at");
     });
   $('.fl_sli').mouseleave(function(){
         $(this).removeClass("lm1_at");
   });
-
 });
 </script>
   <div class="ft cp_l index_xd">
     <div class="fl_sli">
-      <h2><a href="#">宣传品印刷</a></h2>
-      <h3>&nbsp;</h3>
-      <ul>
-        <li><a href="#">画册</a></li>
-        <li><a href="#">说明书</a></li>
-        <li><a href="#">楼书</a></li>
-        <li><a href="#">封套</a></li>
-        <li><a href="#">海报</a></li>
-        <li><a href="#">单页折页</a></li>
-      </ul>
-      <div id="clear"></div>
-    </div>
-    <div class="fl_sli">
-      <h2><a href="#">促销品印刷</a></h2>
-      <h3>&nbsp;</h3>
-      <ul>
-        <li><a href="#">春联</a></li>
-        <li><a href="#">大礼包</a></li>
-        <li><a href="#">扑克牌</a></li>
-        <li><a href="#">易事贴</a></li>
-        <li><a href="#">纸杯</a></li>
-        <li><a href="#">抽纸</a></li>
-      </ul>
-      <div id="clear"></div>
-    </div>
-    <div class="fl_sli">
-      <h2><a href="#">办公品印刷</a></h2>
-      <h3>&nbsp;</h3>
-      <ul>
-        <li><a href="#">笔记本</a></li>
-        <li><a href="#">便签</a></li>
-        <li><a href="#">无碳票据</a></li>
-        <li><a href="#">报表</a></li>
-        <li><a href="#">信封信纸</a></li>
-        <li><a href="#">档案盒</a></li>
-        <li><a href="#">练习本</a></li>
-      </ul>
-      <div id="clear"></div>
-    </div>
-    <div class="fl_sli">
-      <h2><a href="#">包装品印刷</a></h2>
-      <h3>&nbsp;</h3>
-      <ul>
-        <li><a href="#">蔬果包装</a></li>
-        <li><a href="#">鸡蛋包装</a></li>
-        <li><a href="#">干货包装</a></li>
-        <li><a href="#">杂粮包装</a></li>
-        <li><a href="#">红酒包装</a></li>
-        <li><a href="#">礼品包装</a></li>
-        <li><a href="#">白酒包装</a></li>
-        <li><a href="#">糕点包装</a></li>
-        <li><a href="#">茶叶包装</a></li>
-        <li><a href="#">喜糖包装</a></li>
-        <li><a href="#">月饼包装</a></li>
-        <li><a href="#">医药包装</a></li>
-        <li><a href="#">粽子包装</a></li>
-      </ul>
-      <div id="clear"></div>
-    </div>
-    <div class="fl_sli">
-      <h2><a href="#">纸袋印刷</a></h2>
-      <h3>&nbsp;</h3>
-      <ul>
-        <li><a href="#">广告纸袋</a></li>
-        <li><a href="#">礼品袋</a></li>
-        <li><a href="#">无纺布袋</a></li>
-        <li><a href="#">牛皮袋</a></li>
-        <li><a href="#">购物袋</a></li>
-        <li><a href="#">资料袋</a></li>
-      </ul>
-      <div id="clear"></div>
-    </div>
-    <div class="fl_sli">
-      <h2><a href="#">书刊印刷</a></h2>
-      <h3>&nbsp;</h3>
-      <ul>
-        <li><a href="#">图书</a></li>
-        <li><a href="#">汇编</a></li>
-        <li><a href="#">精装书</a></li>
-        <li><a href="#">家谱</a></li>
-        <li><a href="#">培训教材</a></li>
-        <li><a href="#">年鉴</a></li>
-        <li><a href="#">期刊杂志</a></li>
-      </ul>
-      <div id="clear"></div>
-    </div>
-    <div class="fl_sli">
-      <h2><a href="#">春联大礼包</a></h2>
-      <h3>&nbsp;</h3>
-      <ul>
-        <li><a href="#">不干胶</a></li>
-        <li><a href="#">台历</a></li>
-        <li><a href="#">挂历</a></li>
-        <li><a href="#">门票</a></li>
-        <li><a href="#">请柬</a></li>
-        <li><a href="#">菜谱</a></li>
-      </ul>
-      <div id="clear"></div>
+         <%  productDocs.forEach(function(product){  %>
+           <h2><a href="#"><%- product.title %></a></h2>
+           <h3>&nbsp;</h3>
+            <ul>
+                <%   product.typeArray.forEach(function(cate){    %>
+                  <li><a href="#"><%-  cate.cateName %></a></li>
+                <%  }); %>
+           </ul>
+           <div id="clear"></div>
+      <% }); %>
     </div>
   </div>
   <div class="fr cp_r">
     <div class="cp_sli">
       <ul>
-        <li><a href="#" title="彩色DM宣传单页印刷制作"><img src="images/danye_011_yinshua.jpg" width="172" height="126" ></a>
-          <h3><a href="#">彩色DM宣传单页印刷制作</a></h3>
-        </li>
-        <li><a href="#" title="土鸡蛋包装盒"><img src="images/jidanbaozhuang_003_yinshua.jpg" width="172" height="126" ></a>
-          <h3><a href="#">土鸡蛋包装盒</a></h3>
-        </li>
-        <li><a href="#" title="草莓包装盒"><img src="images/shuguobaozhuang_001_yinshua.jpg" width="172" height="126" ></a>
-          <h3><a href="#">草莓包装盒</a></h3>
-        </li>
-        <li><a href="#" title="水果礼盒"><img src="images/shuguobaozhuang_012_yinshua.jpg" width="172" height="126" ></a>
-          <h3><a href="#">水果礼盒</a></h3>
-        </li>
-        <li><a href="#" title="精装画册印刷"><img src="images/huace_005_yinshua.jpg" width="172" height="126" ></a>
-          <h3><a href="#">精装画册印刷</a></h3>
-        </li>
-        <li><a href="#" title="彩色宣传画册印刷"><img src="images/huace_011_yinshua.jpg" width="172" height="126" ></a>
-          <h3><a href="#">彩色宣传画册印刷</a></h3>
-        </li>
-        <li><a href="#" title="合肥画册印刷"><img src="images/huace_012_yinshua.jpg" width="172" height="126" ></a>
-          <h3><a href="#">合肥画册印刷</a></h3>
-        </li>
-        <li><a href="#" title="集团周年纪念画册"><img src="images/huace_003_yinshua.jpg" width="172" height="126" ></a>
-          <h3><a href="#">集团周年纪念画册</a></h3>
-        </li>
-        <li><a href="#" title="购物纸袋定制"><img src="images/gouwudai_005_yinshua.jpg" width="172" height="126" ></a>
-          <h3><a href="#">购物纸袋定制</a></h3>
-        </li>
-        <li><a href="#" title="广告环保袋"><img src="images/guanggaodai_002_yinshua.jpg" width="172" height="126" ></a>
-          <h3><a href="#">广告环保袋</a></h3>
-        </li>
-        <li><a href="#" title="精装书定制印刷"><img src="images/jingzhuangshu_004_yinshua.jpg" width="172" height="126" ></a>
-          <h3><a href="#">精装书定制印刷</a></h3>
-        </li>
-        <li><a href="#" title="图书定做"><img src="images/tushu_004_yinshua.jpg" width="172" height="126" ></a>
-          <h3><a href="#">图书定做</a></h3>
-        </li>
+       <%   photoDocs.forEach(function(photo){  %>
+        <%          if(photo.cate == '产品展示'){  %>
+        <%                  photo.typeArray.forEach(function(p){  %>
+                                  <li><a href="#" title="<%-  p.name %>">
+                                          <img src="<%-  p.picUrl %>" width="172" height="126" ></a>
+                                  <h3><a href="#"><%-  p.name %></a></h3>
+         <%                 }); %>
+        <%          } %>
+        <%  }); %>
       </ul>
     </div>
     <div id="clear"></div>
@@ -250,42 +122,13 @@ $(function() {
   <div class="dkh_bd">
     <div class="tempWrap" style="overflow:hidden; position:relative; width:954px">
       <ul style="width: 3816px; position: relative; overflow: hidden; padding: 0px; margin: 0px; left: -1810px;">
-        <li style="float: left; width: 106px;"><img src="images/jiudian.png" width="98" height="62" ></li>
-        <li style="float: left; width: 106px;"><img src="images/zhonghang.png" width="98" height="62" ></li>
-        <li style="float: left; width: 106px;"><img src="images/yidong.png" width="98" height="62" ></li>
-        <li style="float: left; width: 106px;"><img src="images/nonghang.png" width="98" height="62" ></li>
-        <li style="float: left; width: 106px;"><img src="images/meiling.png" width="98" height="62" ></li>
-        <li style="float: left; width: 106px;"><img src="images/meidi.png" width="98" height="62" ></li>
-        <li style="float: left; width: 106px;"><img src="images/jianhang.png" width="98" height="62" ></li>
-        <li style="float: left; width: 106px;"><img src="images/haier.png" width="98" height="62" ></li>
-        <li style="float: left; width: 106px;"><img src="images/guojiadianwang.png" width="98" height="62" ></li>
-        <li style="float: left; width: 106px;"><img src="images/gonghang.png" width="98" height="62" ></li>
-        <li style="float: left; width: 106px;"><img src="images/geli.png" width="98" height="62" ></li>
-        <li style="float: left; width: 106px;"><img src="images/dianxin.png" width="98" height="62" ></li>
-        <li style="float: left; width: 106px;"><img src="images/jiudian.png" width="98" height="62" ></li>
-        <li style="float: left; width: 106px;"><img src="images/zhonghang.png" width="98" height="62" ></li>
-        <li style="float: left; width: 106px;"><img src="images/yidong.png" width="98" height="62" ></li>
-        <li style="float: left; width: 106px;"><img src="images/nonghang.png" width="98" height="62" ></li>
-        <li style="float: left; width: 106px;"><img src="images/meiling.png" width="98" height="62" ></li>
-        <li style="float: left; width: 106px;"><img src="images/meidi.png" width="98" height="62" ></li>
-        <li style="float: left; width: 106px;"><img src="images/jianhang.png" width="98" height="62" ></li>
-        <li style="float: left; width: 106px;"><img src="images/haier.png" width="98" height="62" ></li>
-        <li style="float: left; width: 106px;"><img src="images/guojiadianwang.png" width="98" height="62" ></li>
-        <li style="float: left; width: 106px;"><img src="images/gonghang.png" width="98" height="62" ></li>
-        <li style="float: left; width: 106px;"><img src="images/geli.png" width="98" height="62" ></li>
-        <li style="float: left; width: 106px;"><img src="images/dianxin.png" width="98" height="62" ></li>
-        <li style="float: left; width: 106px;"><img src="images/jiudian.png" width="98" height="62" ></li>
-        <li style="float: left; width: 106px;"><img src="images/zhonghang.png" width="98" height="62" ></li>
-        <li style="float: left; width: 106px;"><img src="images/yidong.png" width="98" height="62" ></li>
-        <li style="float: left; width: 106px;"><img src="images/nonghang.png" width="98" height="62" ></li>
-        <li style="float: left; width: 106px;"><img src="images/meiling.png" width="98" height="62" ></li>
-        <li style="float: left; width: 106px;"><img src="images/meidi.png" width="98" height="62" ></li>
-        <li style="float: left; width: 106px;"><img src="images/jianhang.png" width="98" height="62" ></li>
-        <li style="float: left; width: 106px;"><img src="images/haier.png" width="98" height="62" ></li>
-        <li style="float: left; width: 106px;"><img src="images/guojiadianwang.png" width="98" height="62" ></li>
-        <li style="float: left; width: 106px;"><img src="images/gonghang.png" width="98" height="62" ></li>
-        <li style="float: left; width: 106px;"><img src="images/geli.png" width="98" height="62" ></li>
-        <li style="float: left; width: 106px;"><img src="images/dianxin.png" width="98" height="62" ></li>
+        <%   photoDocs.forEach(function(photo){  %>
+        <%          if(photo.cate == '大客户列表'){  %>
+        <%                  photo.typeArray.forEach(function(p){  %>
+                                   <li style="float: left; width: 106px;"><img src="<%-  p.picUrl %>" width="98" height="62" ></li>
+         <%                 }); %>
+        <%          } %>
+        <%  }); %>
       </ul>
     </div>
   </div>
@@ -326,78 +169,16 @@ $(function() {
   <div class="ft jj_ry">
     <div class="tempWrap" style="overflow:hidden; position:relative; height:528px">
       <ul style="height: 4224px; position: relative; padding: 0px; margin: 0px; top: -1408px;">
-        <li style="height: 176px;"><img src="images/公司印刷经营许可证-2.jpg" width="172" height="126" >
-          <h3>印刷经营许可证</h3>
-        </li>
-        <li style="height: 176px;"><img src="images/1-1402251220230-L.jpg" width="172" height="126" >
-          <h3>诚信经营示范单位</h3>
-        </li>
-        <li style="height: 176px;"><img src="images/1-1402251221480-L.jpg" width="172" height="126" >
-          <h3>信用等级认证证书</h3>
-        </li>
-        <li style="height: 176px;"><img src="images/1-1402251222250-L.jpg" width="172" height="126" >
-          <h3>重合同守信用企业认证证书</h3>
-        </li>
-        <li style="height: 176px;"><img src="images/1-1402251223595_L.jpg" width="172" height="126" >
-          <h3>全国重合同守信用企业</h3>
-        </li>
-        <li style="height: 176px;"><img src="images/1-1402251223180-L.jpg" width="172" height="126" >
-          <h3>快马商标注册证</h3>
-        </li>
-        <li style="height: 176px;"><img src="images/1-1404041020220-L.jpg" width="172" height="126" >
-          <h3>安全生产标准化</h3>
-        </li>
-        <li style="height: 176px;"><img src="images/anquanzhengshu.jpg" width="172" height="126" >
-          <h3>安全证书</h3>
-        </li>
-        <li style="height: 176px;"><img src="images/公司印刷经营许可证-2.jpg" width="172" height="126" >
-          <h3>印刷经营许可证</h3>
-        </li>
-        <li style="height: 176px;"><img src="images/1-1402251220230-L.jpg" width="172" height="126" >
-          <h3>诚信经营示范单位</h3>
-        </li>
-        <li style="height: 176px;"><img src="images/1-1402251221480-L.jpg" width="172" height="126" >
-          <h3>信用等级认证证书</h3>
-        </li>
-        <li style="height: 176px;"><img src="images/1-1402251222250-L.jpg" width="172" height="126" >
-          <h3>重合同守信用企业认证证书</h3>
-        </li>
-        <li style="height: 176px;"><img src="images/1-1402251223595_L.jpg" width="172" height="126" >
-          <h3>全国重合同守信用企业</h3>
-        </li>
-        <li style="height: 176px;"><img src="images/1-1402251223180-L.jpg" width="172" height="126" >
-          <h3>快马商标注册证</h3>
-        </li>
-        <li style="height: 176px;"><img src="images/1-1404041020220-L.jpg" width="172" height="126" >
-          <h3>安全生产标准化</h3>
-        </li>
-        <li style="height: 176px;"><img src="images/anquanzhengshu.jpg" width="172" height="126" >
-          <h3>安全证书</h3>
-        </li>
-        <li style="height: 176px;"><img src="images/公司印刷经营许可证-2.jpg" width="172" height="126" >
-          <h3>印刷经营许可证</h3>
-        </li>
-        <li style="height: 176px;"><img src="images/1-1402251220230-L.jpg" width="172" height="126" >
-          <h3>诚信经营示范单位</h3>
-        </li>
-        <li style="height: 176px;"><img src="images/1-1402251221480-L.jpg" width="172" height="126" >
-          <h3>信用等级认证证书</h3>
-        </li>
-        <li style="height: 176px;"><img src="images/1-1402251222250-L.jpg" width="172" height="126" >
-          <h3>重合同守信用企业认证证书</h3>
-        </li>
-        <li style="height: 176px;"><img src="images/1-1402251223595_L.jpg" width="172" height="126" >
-          <h3>全国重合同守信用企业</h3>
-        </li>
-        <li style="height: 176px;"><img src="images/1-1402251223180-L.jpg" width="172" height="126" >
-          <h3>快马商标注册证</h3>
-        </li>
-        <li style="height: 176px;"><img src="images/1-1404041020220-L.jpg" width="172" height="126" >
-          <h3>安全生产标准化</h3>
-        </li>
-        <li style="height: 176px;"><img src="images/anquanzhengshu.jpg" width="172" height="126" >
-          <h3>安全证书</h3>
-        </li>
+        <%   photoDocs.forEach(function(photo){  %>
+        <%          if(photo.cate == '荣誉资质'){  %>
+        <%                  photo.typeArray.forEach(function(p){  %>
+                                      <li style="height: 176px;">
+                                            <img src="<%-  p.picUrl %>" width="172" height="126" >
+                                             <h3><%-  p.name %></h3>
+                                       </li>
+         <%                 }); %>
+        <%          } %>
+        <%  }); %>
       </ul>
     </div>
   </div>
@@ -425,78 +206,16 @@ $(function() {
       <div class="sb_li">
         <div class="tempWrap" style="overflow:hidden; position:relative; width:756px">
           <ul style="width: 4536px; position: relative; overflow: hidden; padding: 0px; margin: 0px; left: -1553.202px;">
-            <li style="float: left; width: 189px;"><a href="#" title="10(柯达CTP).gif"><img src="images/10(柯达CTP).gif" width="172" height="126" ></a>
-              <h3><a href="#">10(柯达CTP).gif</a></h3>
-            </li>
-            <li style="float: left; width: 189px;"><a href="#" title="9高速切纸机"><img src="images/9高速切纸机.gif" width="172" height="126" ></a>
-              <h3><a href="#">9高速切纸机</a></h3>
-            </li>
-            <li style="float: left; width: 189px;"><a href="#" title="5全自动高精覆膜机"><img src="images/5全自动高精覆膜机.gif" width="172" height="126" ></a>
-              <h3><a href="#">5全自动高精覆膜机</a></h3>
-            </li>
-            <li style="float: left; width: 189px;"><a href="#" title="3(马天尼 胶装联动线)"><img src="images/3(马天尼 胶装联动线).gif" width="172" height="126" ></a>
-              <h3><a href="#">3(马天尼 胶装联动线)</a></h3>
-            </li>
-            <li style="float: left; width: 189px;"><a href="#" title="2小森四色印刷机"><img src="images/2小森四色印刷机.gif" width="172" height="126" ></a>
-              <h3><a href="#">2小森四色印刷机</a></h3>
-            </li>
-            <li style="float: left; width: 189px;"><a href="#" title="1(海德堡四色印刷机)"><img src="images/1(海德堡四色印刷机).gif" width="172" height="126" ></a>
-              <h3><a href="#">1(海德堡四色印刷机)</a></h3>
-            </li>
-            <li style="float: left; width: 189px;"><a href="#" title="12纸箱生产线-全自动裱纸机"><img src="images/12纸箱生产线-全自动裱纸机.gif" width="172" height="126" ></a>
-              <h3><a href="#">12纸箱生产线-全自动裱纸机</a></h3>
-            </li>
-            <li style="float: left; width: 189px;"><a href="#" title="11自动手提袋制筒机"><img src="images/11自动手提袋制筒机.gif" width="172" height="126" ></a>
-              <h3><a href="#">11自动手提袋制筒机</a></h3>
-            </li>
-            <li style="float: left; width: 189px;"><a href="#" title="10(柯达CTP).gif"><img src="images/10(柯达CTP).gif" width="172" height="126" ></a>
-              <h3><a href="#">10(柯达CTP).gif</a></h3>
-            </li>
-            <li style="float: left; width: 189px;"><a href="#" title="9高速切纸机"><img src="images/9高速切纸机.gif" width="172" height="126" ></a>
-              <h3><a href="#">9高速切纸机</a></h3>
-            </li>
-            <li style="float: left; width: 189px;"><a href="#" title="5全自动高精覆膜机"><img src="images/5全自动高精覆膜机.gif" width="172" height="126" ></a>
-              <h3><a href="#">5全自动高精覆膜机</a></h3>
-            </li>
-            <li style="float: left; width: 189px;"><a href="#" title="3(马天尼 胶装联动线)"><img src="images/3(马天尼 胶装联动线).gif" width="172" height="126" ></a>
-              <h3><a href="#">3(马天尼 胶装联动线)</a></h3>
-            </li>
-            <li style="float: left; width: 189px;"><a href="#" title="2小森四色印刷机"><img src="images/2小森四色印刷机.gif" width="172" height="126" ></a>
-              <h3><a href="#">2小森四色印刷机</a></h3>
-            </li>
-            <li style="float: left; width: 189px;"><a href="#" title="1(海德堡四色印刷机)"><img src="images/1(海德堡四色印刷机).gif" width="172" height="126" ></a>
-              <h3><a href="#">1(海德堡四色印刷机)</a></h3>
-            </li>
-            <li style="float: left; width: 189px;"><a href="#" title="12纸箱生产线-全自动裱纸机"><img src="images/12纸箱生产线-全自动裱纸机.gif" width="172" height="126" ></a>
-              <h3><a href="#">12纸箱生产线-全自动裱纸机</a></h3>
-            </li>
-            <li style="float: left; width: 189px;"><a href="#" title="11自动手提袋制筒机"><img src="images/11自动手提袋制筒机.gif" width="172" height="126" ></a>
-              <h3><a href="#">11自动手提袋制筒机</a></h3>
-            </li>
-            <li style="float: left; width: 189px;"><a href="#" title="10(柯达CTP).gif"><img src="images/10(柯达CTP).gif" width="172" height="126" ></a>
-              <h3><a href="#">10(柯达CTP).gif</a></h3>
-            </li>
-            <li style="float: left; width: 189px;"><a href="#" title="9高速切纸机"><img src="images/9高速切纸机.gif" width="172" height="126" ></a>
-              <h3><a href="#">9高速切纸机</a></h3>
-            </li>
-            <li style="float: left; width: 189px;"><a href="#" title="5全自动高精覆膜机"><img src="images/5全自动高精覆膜机.gif" width="172" height="126" ></a>
-              <h3><a href="#">5全自动高精覆膜机</a></h3>
-            </li>
-            <li style="float: left; width: 189px;"><a href="#" title="3(马天尼 胶装联动线)"><img src="images/3(马天尼 胶装联动线).gif" width="172" height="126" ></a>
-              <h3><a href="#">3(马天尼 胶装联动线)</a></h3>
-            </li>
-            <li style="float: left; width: 189px;"><a href="#" title="2小森四色印刷机"><img src="images/2小森四色印刷机.gif" width="172" height="126" ></a>
-              <h3><a href="#">2小森四色印刷机</a></h3>
-            </li>
-            <li style="float: left; width: 189px;"><a href="#" title="1(海德堡四色印刷机)"><img src="images/1(海德堡四色印刷机).gif" width="172" height="126" ></a>
-              <h3><a href="#">1(海德堡四色印刷机)</a></h3>
-            </li>
-            <li style="float: left; width: 189px;"><a href="#" title="12纸箱生产线-全自动裱纸机"><img src="images/12纸箱生产线-全自动裱纸机.gif" width="172" height="126" ></a>
-              <h3><a href="#">12纸箱生产线-全自动裱纸机</a></h3>
-            </li>
-            <li style="float: left; width: 189px;"><a href="#" title="11自动手提袋制筒机"><img src="images/11自动手提袋制筒机.gif" width="172" height="126" ></a>
-              <h3><a href="#">11自动手提袋制筒机</a></h3>
-            </li>
+            <%   photoDocs.forEach(function(photo){  %>
+            <%          if(photo.cate == '设备展示'){  %>
+            <%                  photo.typeArray.forEach(function(p){  %>
+                                          <li style="float: left; width: 189px;"><a href="#" title="<%- p.name %>">
+                                                <img src="<%- p.picUrl %>" width="172" height="126" ></a>
+                                                <h3><a href="#"><%- p.name %></a></h3>
+                                         </li>
+             <%                 }); %>
+            <%          } %>
+            <%  }); %>
           </ul>
         </div>
       </div>

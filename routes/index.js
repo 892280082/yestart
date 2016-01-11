@@ -60,6 +60,8 @@ backRoute(app);
 //若在此中间件后配置,无法控制用户对静态资源的访问
 app.use(express.static(viewPath));
 
+app.use("/print",require('./print/index'));
+
 //配置ueditor编辑器的后台
 app.use("/public/plugin/ueditor/ueditor", ueditor("", function(req, res, next) {
     // ueditor 发起上传图片请求
@@ -82,13 +84,8 @@ app.use("/public/plugin/ueditor/ueditor", ueditor("", function(req, res, next) {
         res.redirect('/public/plugin/ueditor/nodejs/config.json');
     }
 }));
-
-
-
 //配置404提示页面
 // app.use(function(req,res){
 //     res.redirect('/404.html');
 // })
-
-
 };  
