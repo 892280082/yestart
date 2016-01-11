@@ -65,11 +65,11 @@ angular.module("controller.main",[
     $scope.viewArticlelist = function(pojo){
         $scope.temparticle = pojo;
         $scope.show.$set("articlelist");
-    }
-    $scope.viewarticleadd = function(pojo){
-        pojo ? $scope.uparticle = pojo : $scope.uparticle = {}; 
+    };
+    $scope.viewArticleadd = function(pojo){
+        pojo ? $scope.uparticle = pojo : $scope.uparticle = {};
         $scope.show.$set("articleadd");
-    }
+    };
     $scope.saveOrUparticle =function(){
         if(!$scope.uparticle._id){
             dataService.push_typeArray(

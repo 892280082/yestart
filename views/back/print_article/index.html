@@ -20,7 +20,7 @@
    <div class="rightinfo">
    	  <ts-catelist  ng-if="show.catelist"></ts-catelist>
    	  <ts-articlelist ng-if="show.articlelist"></ts-articlelist>
-      <ts-articleadd ng-if="show.articleadd"></ts-articleadd>
+         <ts-articleadd ng-if="show.articleadd"></ts-articleadd>
    </div>
    <!--  cate type -->
 <script type="text/ng-template" id="catelist">
@@ -66,30 +66,35 @@
 <script type="text/ng-template" id="articlelist">
     <div class="tools">
         <ul class="toolbar">
-        	<li ng-click="viewarticleadd()"
-          class="click">
+          <li ng-click="viewArticleadd()"  class="click">
           <span><img src="/back/resource/images/t01.png" /></span>添加</li>
         </ul>
         <ul class="toolbar1">
-       	 <li ng-click="show.$set('catelist')"
-         ><span><img src="/back/resource/images/t04.png"/>返回</span></li>
+       	 <li ng-click="show.$set('catelist')">
+                  <span><img src="/back/resource/images/t04.png"/>返回</span>
+              </li>
         </ul>
     </div>
-    <ul 
-    class="imglist">
-	    <li ng-repeat="article in temparticle.typeArray">
-	    	<span><img 
-          width="168"
-          height="128"
-          ng-src="{{ article.picUrl }}" /></span>
-	    	<h2><a>{{ article.name }}</a></h2>
-	    	<p>
-		    	<a ng-click="viewarticleadd(article)"
-          >编辑</a>&nbsp;&nbsp;&nbsp;&nbsp;
-		    	<a ng-click="pull_typeArray(article)">删除</a>
-	    	</p>
-	    </li>
-    </ul>
+    <table class="tablelist">
+            <thead>
+                <th>序号</th>
+                <th>标题</th>
+                <th>发布时间</th>
+                <th>审核</th>
+                <th>操作</th>
+            </thead>
+            <tbody>
+                <tr ng-repeat="article in temparticle.typeArray">
+                    <td>{{ $index + 1}}</td>
+                    <td ng-click="viewArticleadd(article);">
+                        {{ article.title }}
+                    </td>
+                    <td>{{  article.createDate | date:'yyyy-MM-dd' }}</td>
+                    <td> {{ article.show ? '通过' : '无' }} </td>
+                    <td><a ng-click="pull_typeArray(article)">delete<a></td>
+                </tr>
+            </tbody>
+      </table>
 </script>
 <script type="text/ng-template" id="articleadd">
     <div class="tools">
@@ -106,13 +111,15 @@
         ng-submit="saveOrUparticle()"
         >
         <ul class="forminfo">
-        <li><label>名称</label>
-            <input  ng-model="uparticle.name"  
+        <li><label>标题</label>
+            <input  ng-model="uparticle.title"  
             name="t_name" required
             type="text" class="dfinput"  />
-            <i ng-show="subForm.t_name.$error.required">请输入名称</i>
+            <i ng-show="subForm.t_name.$error.required">请输入标题</i>
         </li>
-        <li><label>封面图片</label>
+        <li
+        ng-if="temparticle.picture"
+        ><label>封面图片</label>
              <input type="file" nv-file-select="" uploader="uploader" /><br/>
              <img ng-src="{{ uparticle.picUrl}}" width="160px" height="140px" ng-if="uparticle.picUrl"/>
         </li>
@@ -120,8 +127,7 @@
             <input type="checkbox" ng-model="uparticle.show" 
             ng-true-value="true" ng-false-value="false" />
         </li>
-        <div  
-            ng-if="temparticle.edit"
+        <div 
             style="width:700px;height:500px;float:left"  
             class="ueditor" config="config" 
             ng-model="uparticle.content"></div>

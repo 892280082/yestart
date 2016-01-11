@@ -111,6 +111,14 @@ router.post("/push_typeArray",function(req,res){
 	});
 });
 
+router.post("/ar_push_typeArray",function(req,res){
+	var pushPojo = req.body.pushPojo;
+	Article.push_typeArray(pushPojo._id,pushPojo.pojo
+	,function(err,info,pojo){
+		!err ? res.json(pojo) : res.json(false);
+	});
+});
+
 
 router.post("/update_typeArray",function(req,res){
 	var updatePojo = req.body.updatePojo;
@@ -150,14 +158,14 @@ router.post("/removeArticle",function(req,res){
 	});
 });
 
-
-
-
-
-
-
-
-
+router.post("/ar_update_typeArray",function(req,res){
+	var updatePojo = req.body.updatePojo;
+	console.log(req.body.updatePojo);
+	Article.update_typeArray(updatePojo._id,updatePojo.pojo
+	,function(err,info){
+		!err ? res.json(true):res.json(false);
+	});
+});
 
 
 

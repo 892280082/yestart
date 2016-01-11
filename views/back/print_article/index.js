@@ -17,7 +17,7 @@ var app = angular.module('myApp',[
                                   'service.dataService',
                                   'controller.main']);
 
-app.directive('tsarticlelist'
+app.directive('tsArticlelist'
 ,function(){
     return {
         restrict:'EAC',
@@ -29,7 +29,7 @@ app.directive('tsarticlelist'
         restrict:'EAC',
         templateUrl:'catelist'
     }
-}).directive('tsarticleadd'
+}).directive('tsArticleadd'
 ,function(){
     return {
         restrict:'EAC',

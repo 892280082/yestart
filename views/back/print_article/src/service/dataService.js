@@ -19,7 +19,7 @@
         		"_id":_id,
         		"pojo":pojo
         	}
-        	return $http.post("/back/print/push_typeArray",{
+        	return $http.post("/back/print/ar_push_typeArray",{
         		"pushPojo":pushPojo
         	});
         },
@@ -28,7 +28,7 @@
         		"_id":_id,
         		"pojo":pojo
         	}
-        	return $http.post("/back/print/update_typeArray",{
+        	return $http.post("/back/print/ar_update_typeArray",{
         		"updatePojo":updatePojo
         	});
         },
