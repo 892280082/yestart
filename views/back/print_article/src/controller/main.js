@@ -71,12 +71,14 @@ angular.module("controller.main",[
         $scope.show.$set("articleadd");
     };
     $scope.saveOrUparticle =function(){
+        $scope.uparticle.typeArray = [];
         if(!$scope.uparticle._id){
             dataService.push_typeArray(
                 $scope.temparticle._id,
                 $scope.uparticle)
             .success(function(data){
                 if(data){
+                    data.createDate = new Date();
                     $scope.temparticle.typeArray.push(data);
                     $scope.show.$set("articlelist");
                 }else{
