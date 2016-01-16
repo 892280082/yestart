@@ -71,7 +71,6 @@ angular.module("controller.main",[
         $scope.show.$set("articleadd");
     };
     $scope.saveOrUparticle =function(){
-        $scope.uparticle.typeArray = [];
         if(!$scope.uparticle._id){
             dataService.push_typeArray(
                 $scope.temparticle._id,

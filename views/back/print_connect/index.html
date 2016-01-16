@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+	<meta charset="UTF-8">
+	<title>联系内容</title>
+	<link href="/back/resource/css/style.css" rel="stylesheet" type="text/css" />
+</head>
+<body ng-controller="main">
+    <div class="formbody">
+    <div class="formtitle"><span>公司信息</span></div>
+    <form 
+        name="subForm"
+        ng-submit="saveOrUpdate()"
+        >
+        <ul class="forminfo">
+        <li><label>公司名称</label>
+            <input  ng-model="connect.name"  
+            name="t_name" required
+            type="text" class="dfinput"  />
+            <i ng-show="subForm.t_name.$error.required">请输入名称</i>
+        </li>
+        <li><label>公司电话</label>
+            <input  ng-model="connect.tel"  
+            name="t_tel" required
+            type="text" class="dfinput"  />
+            <i ng-show="subForm.t_tel.$error.required">请输入公司电话</i>
+         </li>
+        <li><label>公司传真</label>
+            <input  ng-model="connect.czTel"  
+            name="t_czTel" required
+            type="text" class="dfinput"  />
+            <i ng-show="subForm.t_czTel.$error.required">请输入公司传真</i>
+         </li>
+        <li><label>公司QQ</label>
+            <input  ng-model="connect.QQ"  
+            name="t_QQ" required
+            type="text" class="dfinput"  />
+            <i ng-show="subForm.t_QQ.$error.required">请输入公司QQ</i>
+         </li>
+        <li><label>公司邮箱</label>
+            <input  ng-model="connect.email"  
+            name="t_email" required
+            type="text" class="dfinput"  />
+            <i ng-show="subForm.t_email.$error.required">请输入公司邮箱</i>
+         </li>
+         <li><label>公司地址</label>
+            <input  ng-model="connect.address"  
+            name="t_address" required
+            type="text" class="dfinput"  />
+            <i ng-show="subForm.t_address.$error.required">请输入公司地址</i>
+         </li>
+         <li><label>公司厂址</label>
+            <input  ng-model="connect.comAddress"  
+            name="t_comAddress" required
+            type="text" class="dfinput"  />
+            <i ng-show="subForm.t_comAddress.$error.required">请输入公司厂址</i>
+         </li>
+        <li><label>&nbsp;</label>
+            <input  type="submit" ng-disabled="subForm.$invalid"
+            class="btn" value="确认保存"/>
+         </li>
+        </ul>
+    </form>
+    </div>
+</body>
+<script type="text/javascript" src="/public/bower_components/angular/angular.min.js"></script>
+<script type="text/javascript">
+	var app = angular.module('myApp',[]);
+
+	app.service("dataService",['$http',
+	function($http){
+		this.getData = function(){
+			return $http.post("/back/print/getConectInfo",null);
+		};
+		this.update = function(pojo){
+			var updatePojo = {
+				"updatePojo":pojo
+			}
+			return $http.post("/back/print/updateConetInfo",updatePojo);
+		};
+		this.save = function(pojo){
+			var savePojo = {
+				"savePojo":pojo
+			}
+			return $http.post("/back/print/saveContInfo",savePojo);
+		}
+	}]);
+
+	app.controller("main",["$scope","dataService"
+	,function($scope,dataService){
+		$scope.connect = {};
+		dataService.getData().success(function(data){
+			if(data){
+				$scope.connect = data;
+			}
+		});
+
+		$scope.saveOrUpdate = function(){
+			console.log($scope.connect);
+			if(!$scope.connect._id){
+				dataService.save($scope.connect)
+				.success(function(msg){
+					msg ? alert("保存成功") : alert("保存失败");
+				});
+			}else{
+				dataService.update($scope.connect)
+				.success(function(msg){
+					msg ? alert("保存成功") : alert("保存失败");
+				});
+			}
+		}
+	}]);
+
+
+</script>
+</html>

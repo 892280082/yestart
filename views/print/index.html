@@ -231,29 +231,43 @@ $(function() {
 </div>
 <div class="index_fa">
   <div class="ft fa_l">
-    <div class="tac"><a href="#"  title="天长市招标采购交易中心 TCZBCG-20"><img src="images/t5c1.jpg"  width="206" height="76"></a> </div>
-    <ul>
-      <li>·<a href="#" >天长市招标采购交易中心 TCZBCG-20</a></li>
-      <li>·<a href="#" >蚌埠市人社局印制新年日历中标公示</a></li>
-      <li>·<a href="#" >合肥市直单位印刷定点单位招标项目</a></li>
-      <li>·<a href="#" >《安庆市宜秀区志》（1988-2007）</a></li>
-      <li>·<a href="#" >安徽省政府采购中心交通知书</a></li>
-      <li>·<a href="#" >安徽省农行印刷服务单位</a></li>
-      <li>·<a href="#" >关于转发区政府《关于区直行政事业</a></li>
-    </ul>
-  </div>
+    <%  articleDocs.forEach(function(cate){ %>
+    <%      if(cate.name == '中标项目'){ %>
+    <%            if(cate.typeArray[0]){ %>
+                 <div class="tac"><a href="#"  
+                 title="<%- cate.typeArray[0].title %>">
+                 <img src="<%- cate.typeArray[0].picUrl %>"  
+                 width="206" height="76"></a> </div>
+    <%            } %>
+            <ul>
+    <%          cate.typeArray.forEach(function(article,index){ %>
+    <%                 if( index < 7){ %>
+                          <li><a><%- article.title %></a></li>
+    <%                 } %>
+    <%          }); %>
+             </ul>
+    <%      } %>
+    <%  }); %>
+     </div>
   <div class="fr fa_r">
     <ul>
-      <li> <a href="#"  title="快马印刷画册性价比非常高!"><img width="192" height="112" src="images/1-1402252222550-L.jpg" ></a>
-        <h1><a href="#"  title="快马印刷画册性价比非常高!">快马印刷画册性价比非常高!</a></h1>
-        <h3>芜湖美的-王经理 三年来，我们公司和快马印务合作的一直很愉快，服务速度很快，印刷价格也比较公道，最重要的是印刷质量方面让我们一直很放心，毕竟不管是画册还是纸盒纸箱代表的是企业形象，质量问题尤其重要，快马</h3>
-        <h4><a href="#"  title="快马印刷画册性价比非常高!">+ 更多详情</a></h4>
-      </li>
-      <li> <a href="#"  title="快马印务服务确实很不错！"><img width="192" height="112" src="images/1-1402252223390-L.jpg" ></a>
-        <h1><a href="#"  title="快马印务服务确实很不错！">快马印务服务确实很不错！</a></h1>
-        <h3>中国银行-李主任 快马印务服务确实很不错，我行经常有许多资料今天定稿，明天就要，银行系统对产品质量要求一般都较高，快马印务完善的售前-售中-售后定制服务体系，每次合作都是全程服务跟踪，让我们很放心！</h3>
-        <h4><a href="#"  title="快马印务服务确实很不错！">+ 更多详情</a></h4>
-      </li>
+    <%  articleDocs.forEach(function(cate){ %>
+    <%      if(cate.name == '客户眼中的快马印务'){ %>
+    <%          cate.typeArray.forEach(function(article,index){ %>
+    <%              if(index < 2){ %>
+                      <li> <a href="#"  title="<%- article.title %>">
+                      <img width="192" height="112" src="<%- article.picUrl %>" ></a>
+                       <h1>
+                       <a href="#"  title="<%- article.title %>">
+                        <%- article.title %></a></h1>
+                      <%  var dealContent = article.content.replace(/<[^>]+>/g,"").substr(0,100) %>
+                     <h3><%- dealContent %></h3>
+                        <h4><a href="#"  title="<%- article.title %>!">+ 更多详情</a></h4>
+                    </li>
+    <%               } %>
+    <%          }); %>
+    <%      } %>
+    <%  }); %>
     </ul>
   </div>
 </div>
@@ -290,13 +304,19 @@ $(function() {
       </form>
     </div>
     <ul>
-      <li><a href="#"  title="瓦楞包装：以“绿色”席卷市场">瓦楞包装：以“绿色”席卷市场</a>[2015-06-25]</li>
-      <li><a href="#"  title="纸张的印刷适性管理">纸张的印刷适性管理</a>[2015-06-14]</li>
-      <li><a href="#"  title="不同的纸张印刷出来的效果有影响吗？">不同的纸张印刷出来的效果有影响吗？</a>[2015-02-14]</li>
-      <li><a href="#"  title="什么样的纸张决定什么样的印刷质量">什么样的纸张决定什么样的印刷质量</a>[2015-02-13]</li>
-      <li><a href="#"  title="包装纸盒印刷如何控制颜色的一致性">包装纸盒印刷如何控制颜色的一致性</a>[2015-02-12]</li>
-      <li><a href="#"  title="CTP技术在印刷企业应用的三大领域">CTP技术在印刷企业应用的三大领域</a>[2015-02-11]</li>
-      <li><a href="#"  title="印刷时使用的是哪一种色彩模式？">印刷时使用的是哪一种色彩模式？</a>[2015-02-10]</li>
+    <%  articleDocs.forEach(function(cate){ %>
+    <%      if(cate.name == '行业资讯'){ %>
+    <%          cate.typeArray.forEach(function(article,index){ %>
+    <%                 if( index < 7){ %>
+                          <li><a href="#"  title="<%- article.title %>">
+                          <%- article.title %></a>
+                          [<%- article.createDate.getFullYear()+"-"
+                              + (article.createDate.getMonth()+1)+"-"
+                              + article.createDate.getDate() %>]</li>
+    <%                 } %>
+    <%          }); %>
+    <%      } %>
+    <%  }); %>
     </ul>
   </div>
 </div>

@@ -37,7 +37,7 @@ var photo = new  Schema({
  		"_id":_id,
  		"typeArray._id":typeArrayId
  	},{
- 		"typeArray":updatePojo
+ 		"typeArray.$":updatePojo
  	},function(err,info){
  		if(err)
  			console.log(err);

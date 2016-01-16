@@ -85,7 +85,7 @@ ProductSchema.static("editTypeProPro"
 			"typeArray._id":_cateId,
 			"typeArray.productArray._id":_ProId
 		},{
-			"typeArray.$.productArray":product
+			"typeArray.$.productArray.$":product
 		},function(err,doc){
 			if(err) 
 				console.log(err);

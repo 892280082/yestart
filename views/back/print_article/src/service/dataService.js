@@ -37,7 +37,7 @@
         		"_id":_id,
         		"typeArrayId":typeArrayId
         	}
-        	return $http.post("/back/print/pull_typeArray",{
+        	return $http.post("/back/print/ar_pull_typeArray",{
         		"pullPojo":pullPojo
         	});
         }

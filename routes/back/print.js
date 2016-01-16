@@ -3,6 +3,7 @@ var merges = require('../../self_modules/merges/merges.js');
 var Product = require('../../models/product.js');
 var Photo = require('../../models/photo.js');
 var Article = require('../../models/article.js');
+var Connect = require('../../models/connect.js');
 var router = express.Router();
 
 //保存产品分类
@@ -160,12 +161,51 @@ router.post("/removeArticle",function(req,res){
 
 router.post("/ar_update_typeArray",function(req,res){
 	var updatePojo = req.body.updatePojo;
-	console.log(req.body.updatePojo);
 	Article.update_typeArray(updatePojo._id,updatePojo.pojo
 	,function(err,info){
 		!err ? res.json(true):res.json(false);
 	});
 });
+
+router.post("/ar_pull_typeArray",function(req,res){
+	var pullPojo = req.body.pullPojo;
+	Article.pull_typeArray(pullPojo._id,pullPojo.typeArrayId
+	,function(err,info){
+			!err ? res.json(true): res.json(false);
+	});
+});
+
+router.post("/saveContInfo",function(req,res){
+	var savePojo = req.body.savePojo;
+	var connect = new Connect(savePojo);
+	connect.save(function(err){
+		!err ? res.json(true) : res.json(false);
+	});
+});
+
+router.post("/getConectInfo",function(req,res){
+	Connect.findOne(null,function(err,doc){
+		if(err){
+			console.log(err);
+		}
+		!err ? res.json(doc) : res.json(false);
+	});
+});
+
+router.post("/updateConetInfo",function(req,res){
+	var updatePojo = req.body.updatePojo;
+	var _id = updatePojo._id;
+	delete updatePojo["_id"];
+	Connect.update({"_id":_id},updatePojo,function(err,info){
+		if(err){
+			console.log(err);
+		}
+		!err ? res.json(true) : res.json(false);
+	});
+});
+
+
+
 
 
 
