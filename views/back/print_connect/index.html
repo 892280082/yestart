@@ -4,6 +4,9 @@
 	<meta charset="UTF-8">
 	<title>联系内容</title>
 	<link href="/back/resource/css/style.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" charset="utf-8" src="/public/plugin/ueditor/ueditor.config.js"></script>
+    <script type="text/javascript" charset="utf-8" src="/public/plugin/ueditor/ueditor.all.min.js"> </script>
+    <script type="text/javascript" charset="utf-8" src="/public/plugin/ueditor/lang/zh-cn/zh-cn.js"> </script>
 </head>
 <body ng-controller="main">
     <div class="formbody">
@@ -55,6 +58,16 @@
             type="text" class="dfinput"  />
             <i ng-show="subForm.t_comAddress.$error.required">请输入公司厂址</i>
          </li>
+        <li><label>首页图片</label>
+             <input type="file" nv-file-select="" uploader="uploader" /><br/>
+             <img ng-src="{{ connect.picUrl}}" width="160px" height="140px" ng-if="connect.picUrl"/>
+        </li>
+        <li><label>公司简介</label></li>
+        <div 
+            style="width:700px;height:500px;float:left"  
+            class="ueditor" config="config" 
+            ng-model="connect.content">
+        </div>
         <li><label>&nbsp;</label>
             <input  type="submit" ng-disabled="subForm.$invalid"
             class="btn" value="确认保存"/>
@@ -64,8 +77,11 @@
     </div>
 </body>
 <script type="text/javascript" src="/public/bower_components/angular/angular.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="/public/bower_components/angular/angular-file-upload.min.js"> </script>
+<script type="text/javascript" src="/lib/src/directive/angular-ueditor.js"></script>
 <script type="text/javascript">
-	var app = angular.module('myApp',[]);
+	var app = angular.module('myApp',['angularFileUpload',
+                                      'ng.ueditor']);
 
 	app.service("dataService",['$http',
 	function($http){
@@ -86,14 +102,26 @@
 		}
 	}]);
 
-	app.controller("main",["$scope","dataService"
-	,function($scope,dataService){
+	app.controller("main",["$scope","dataService","FileUploader"
+	,function($scope,dataService,FileUploader){
 		$scope.connect = {};
+
 		dataService.getData().success(function(data){
 			if(data){
 				$scope.connect = data;
 			}
 		});
+
+        var uploader = $scope.uploader = new FileUploader({
+            url: '/upload',
+            alias:'fileName'
+        });
+        uploader.onAfterAddingFile = function(item) {
+           item.upload();
+        };
+        uploader.onCompleteItem = function(fileItem, response, status, headers) {
+            $scope.connect.picUrl = response.path;
+        };
 
 		$scope.saveOrUpdate = function(){
 			console.log($scope.connect);

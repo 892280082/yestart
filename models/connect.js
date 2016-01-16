@@ -9,7 +9,9 @@ var ConnectSchema = new Schema({
 	QQ:String,
 	email:String,
 	address:String,
-	comAddress:String
+	comAddress:String,
+	picUrl:String,
+	content:String
 });
 
 

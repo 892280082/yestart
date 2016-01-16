@@ -184,21 +184,24 @@ $(function() {
   </div>
   <script>jQuery(".jj_ry").slide({mainCell:"ul",autoPage:true,effect:"topLoop",autoPlay:true,vis:3,delayTime:1000});</script>
   <div class="fr rr_sm"><a href="#"  title="安徽省快马印刷公司"><img src="images/20131029174025.jpg" width="255" height="180"  class="img_3"></a>
-    <h1>安徽省快马印务有限责任公司</h1>
-    <h3>
-      <p>　　安徽省快马印务有限责任公司，1992年成立于合肥，是国内著名的印刷企业，专业为大中企业提供印刷配套服务，主要生产高档画册、图书、精装书、挂历、对联、扑克、笔记本、纸袋、纸盒、纸箱。<br>
-        经过21年的发展，安徽省快马印务有限责任公司建成了较完整的生产体系，配置了过更的硬件。能完成高档图书、画册及精装盒的生产工作。1992年，购置了安徽省快马印务有限责任公司的第一台设备，2000年，在双凤工业区兴建了占地60亩的快马工业园；建成总面积12000平方米的厂房；2004年，引进精装书生产线........ <a href="#">+ 更多</a></p>
-    </h3>
+    <h1><%- connectUs.name %></h1>
+    <h3><%- connectUs.content %></h3>
     <div class="index_xc">
       <ul>
-        <li><a href="#" >合肥那家印刷厂的宣传册印刷质量好，有保障呢？</a>[2015-02-14]</li>
-        <li><a href="#" >彩盒包装盒印刷要注意的问题</a>[2015-02-13]</li>
-        <li><a href="#" >画册设计的分类以及设计中的三大误区</a>[2015-02-12]</li>
-        <li><a href="#" >服装吊牌印刷制作</a>[2015-02-11]</li>
-        <li><a href="#" >纸盒印刷包装介绍</a>[2015-02-10]</li>
-        <li><a href="#" >包装印刷厂告诉您色彩如何调配</a>[2015-02-09]</li>
-        <li><a href="#" >食品包装印刷有哪些理念？</a>[2015-02-03]</li>
-        <li><a href="#" >包装印刷与生活的关系</a>[2015-02-02]</li>
+
+        <%  articleDocs.forEach(function(cate){ %>
+        <%      if(cate.name == '公司简介'){ %>
+        <%          cate.typeArray.forEach(function(article,index){ %>
+        <%                 if( index < 8){ %>
+                              <li><a><%- article.title %></a>
+                              [<%- article.createDate.getFullYear()+"-"
+                              + (article.createDate.getMonth()+1)+"-"
+                              + article.createDate.getDate() %>]
+                              </li>
+        <%                 } %>
+        <%          }); %>
+        <%      } %>
+        <%  }); %>
       </ul>
     </div>
     <div class="index_sb">
@@ -279,13 +282,13 @@ $(function() {
   <a href="#" title="更多">&nbsp;</a> </div>
 <div class="index_zx">
   <div class="ft zx_l">
-    <h3>名称: 安徽省快马印务有限责任公司<br>
-      电话: 0551-65220558 <br>
-      传真: 0551-62633741 <br>
-      Q Q : <a href="#" rel="nofollow">4000551009</a> <br>
-      邮箱: kuaima888@126.com <br>
-      地址: 合肥市市府广场天徽大厦C座6层 <br>
-      厂址: 合肥市双凤开发区快马工业园</h3>
+    <h3>名称: <%- connectUs.name %><br>
+      电话:  <%- connectUs.tel %><br>
+      传真: <%- connectUs.czTel %> <br>
+      Q Q : <a href="#" rel="nofollow"><%- connectUs.QQ %></a> <br>
+      邮箱: <%- connectUs.email %> <br>
+      地址: <%- connectUs.address %> <br>
+      厂址: <%- connectUs.comAddress %></h3>
   </div>
   <div class="fr zx_r">
     <div class="fr zx_ly">
