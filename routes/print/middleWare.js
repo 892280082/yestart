@@ -3,7 +3,8 @@ var Photo = require('../../models/photo.js');
 var Article = require('../../models/article.js');
 var Connect = require('../../models/connect.js');
 
-var getAllDatas = function(callback){
+var service = {};
+service.getAllDatas = function(callback){
 	Product.find(null,function(err,productDocs){
 		if(err){
 			console.log(err);
@@ -39,6 +40,5 @@ var getAllDatas = function(callback){
 	});
 }
 
-module.exports = {
-	"getAllDatas":getAllDatas
-}
+
+module.exports = service;

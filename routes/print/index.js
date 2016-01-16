@@ -11,4 +11,10 @@ router.get("/index",function(req,res,next){
 	});
 });
 
+router.get("/product",function(req,res,next){
+	printService.getAllDatas(function(err,datas){
+		!err ? res.render("print/product.html",datas) : res.send("system error!");
+	});
+});
+
 module.exports = router;

@@ -10,30 +10,7 @@
 <script type="text/javascript" src="js/index.js"></script>
 </head>
 <body>
-<div class="head">
-  <div class="w100">
-    <div class="ft"><a href="#" >印刷厂</a> <a href="#" >画册印刷</a> <a href="#" >纸袋定做</a> <a href="#" >合肥印刷公司</a> </div>
-    <div class="fr"><a href="#" rel="nofollow" ><img src="images/ico01.gif"> 新浪微博</a><a href="#" rel="nofollow" >腾讯微博</a><a href="#" rel="nofollow" class="sc">加入收藏</a>|<a href="#" rel="nofollow">在线留言</a>|<a href="#" rel="nofollow">关于快马</a>|<a href="#">站点地图</a></div>
-  </div>
-</div>
-<div class="logo_s">
-  <div class="ft"><a href="#" rel="nofollow"><img src="images/logo.jpg" width="358" height="85"></a></div>
-  <div class="fr"><a href="#" rel="nofollow" title="联系方式"><img src="images/head_lx.jpg"></a></div>
-</div>
-<div class="nav">
-  <ul>
-    <li class="nav_sy"><a href="#">快马首页</a></li>
-     <%  productDocs.forEach(function(product){  %>
-         <li class="nav_2"><a href="#"><%- product.title %></a>
-          <h3>
-         <%   product.typeArray.forEach(function(cate){    %>
-               <a href="#"><%-  cate.cateName %></a>
-        <%  }); %>
-        </li>
-      <% }); %>
-    <li><a href="#" rel="nofollow">在线下单</a></li>
-  </ul>
-</div>
+<%- include ./include/head.html %>
 <div id="clear"></div>
 <div class="banner">
   <div class="bd">
@@ -58,15 +35,7 @@
      </div>
   </div>
   <div class="index_gjc">
-    <div class="ft"><b>热门关键词：</b><a href="#">家谱印刷</a> <a href="#">画册印刷</a> <a href="#">印刷公司</a> <a href="#">包装盒印刷</a> <a href="#">合肥印刷</a> </div>
-    <div class="sousuo">
-      <form name="formsearch" action="http://www.4000551009.com/plus/search.php">
-        <input type="hidden" name="kwtype" value="0">
-        <input type="hidden" name="searchtype" value="title">
-        <input type="image" id="searchButton" src="images/ss_2.jpg" class="ss_2">
-        <input name="q" type="text" onfocus="if(this.value==&#39;输入搜索关键词&#39;)this.value=&#39;&#39;;" onblur="if(this.value==&#39;&#39;)this.value=&#39;输入搜索关键词&#39;;" value="输入搜索关键词" class="ss_1">
-      </form>
-    </div>
+    <%- include ./include/search.html %>
   </div>
 </div>
 <script>jQuery(".banner").slide({mainCell:".bd ul",effect:"fold",autoPlay:true,easing:"swing"});</script>
@@ -87,8 +56,8 @@ $(function() {
 });
 </script>
   <div class="ft cp_l index_xd">
-    <div class="fl_sli">
-         <%  productDocs.forEach(function(product){  %>
+          <%  productDocs.forEach(function(product){  %>
+           <div class="fl_sli">
            <h2><a href="#"><%- product.title %></a></h2>
            <h3>&nbsp;</h3>
             <ul>
@@ -97,8 +66,8 @@ $(function() {
                 <%  }); %>
            </ul>
            <div id="clear"></div>
-      <% }); %>
-    </div>
+           </div>
+         <% }); %>
   </div>
   <div class="fr cp_r">
     <div class="cp_sli">
@@ -135,31 +104,9 @@ $(function() {
   <div class="dkh_hd"><a class="next"></a><a class="prev"></a></div>
 </div>
 <script>jQuery(".index_dkh").slide({mainCell:".dkh_bd ul",titCell:".dkh_hd li",autoPlay:true,effect:"leftMarquee",vis:9,interTime:50});</script>
-<div class="lanmu_1">
-  <h2><b>快马印务十大优势</b> / Superiority</h2>
-  <h3>&nbsp;</h3>
-  <h4>服务热线：<b>0551-65220569 4000551009</b></h4>
-</div>
-<div class="index_ys">
-  <div class="ft">
-    <ul>
-      <li><b>服务专业：</b>21年印刷经验，服务过12000家企业</li>
-      <li><b>定点服务：</b>定点印刷，全面节省企业成本30%</li>
-      <li><b>全面服务：</b>全系列产品，为广大中企业提供稳定印刷配套</li>
-      <li><b>惊喜连连：</b>月月有活动，周周有特价</li>
-      <li><b>免费设计：</b>专业的设计师团队</li>
-    </ul>
-  </div>
-  <div class="fr">
-    <ul>
-      <li><b>质量保证：</b>每一件产品都力求完美</li>
-      <li><b>方便可靠：</b>网络下单，物流配送，24小时送货</li>
-      <li><b>交通便利：</b>立足合肥，辐射全国</li>
-      <li><b>产能超强：</b>印刷大户的福音，日均出产60吨</li>
-      <li><b>设备齐全：</b>全系列进口印刷和印后设备</li>
-    </ul>
-  </div>
-</div>
+
+<%- include ./include/tenGood.js %>
+
 <div class="lanmu_1">
   <h2><b>荣誉资质</b> / Honors</h2>
   <h3><b>公司简介</b> / Company Profile</h3>
@@ -216,7 +163,7 @@ $(function() {
                                                 <img src="<%- p.picUrl %>" width="172" height="126" ></a>
                                                 <h3><a href="#"><%- p.name %></a></h3>
                                          </li>
-             <%                 }); %>
+            <%                 }); %>
             <%          } %>
             <%  }); %>
           </ul>
@@ -275,54 +222,9 @@ $(function() {
   </div>
 </div>
 <div class="index_ad"><script src="images/ad_js.php" language="javascript"></script></div>
-<div class="lanmu_1">
-  <h2><b>联系方式</b> / Contact</h2>
-  <h3><b>行业资讯</b> / News</h3>
-  <h4>服务热线：<b>0551-65220569 4000551009</b></h4>
-  <a href="#" title="更多">&nbsp;</a> </div>
-<div class="index_zx">
-  <div class="ft zx_l">
-    <h3>名称: <%- connectUs.name %><br>
-      电话:  <%- connectUs.tel %><br>
-      传真: <%- connectUs.czTel %> <br>
-      Q Q : <a href="#" rel="nofollow"><%- connectUs.QQ %></a> <br>
-      邮箱: <%- connectUs.email %> <br>
-      地址: <%- connectUs.address %> <br>
-      厂址: <%- connectUs.comAddress %></h3>
-  </div>
-  <div class="fr zx_r">
-    <div class="fr zx_ly">
-      <form method="post" action="http://www.4000551009.com/plus/message.php" name="form1">
-        <input type="hidden" name="action" value="save2">
-        <input type="hidden" name="img" value="01">
-        <input type="hidden" name="title" value="邮件订阅">
-        <div class="dy_cn">
-          <h3>姓名：</h3>
-          <input name="uname" type="text" class="inp_ly">
-          <div id="clear"></div>
-          <h3>手机：</h3>
-          <input name="homepage" type="text" class="inp_ly">
-          <input name="订阅" type="submit" value="订阅">
-        </div>
-      </form>
-    </div>
-    <ul>
-    <%  articleDocs.forEach(function(cate){ %>
-    <%      if(cate.name == '行业资讯'){ %>
-    <%          cate.typeArray.forEach(function(article,index){ %>
-    <%                 if( index < 7){ %>
-                          <li><a href="#"  title="<%- article.title %>">
-                          <%- article.title %></a>
-                          [<%- article.createDate.getFullYear()+"-"
-                              + (article.createDate.getMonth()+1)+"-"
-                              + article.createDate.getDate() %>]</li>
-    <%                 } %>
-    <%          }); %>
-    <%      } %>
-    <%  }); %>
-    </ul>
-  </div>
-</div>
+
+<%- include ./include/connectUs.html %>
+
 <div class="lanmu_1">
   <h2><b>服务流程</b> / Service</h2>
   <h3>&nbsp;</h3>
