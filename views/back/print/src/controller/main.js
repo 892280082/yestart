@@ -145,6 +145,8 @@ angular.module("controller.main",[
                 if(data){
                     $scope.show.$set("prolist");
                     $scope.pushProductPojo.pojo = {};
+                }else{
+                    alert("保存错误");
                 }
             });
         }

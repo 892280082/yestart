@@ -3,7 +3,22 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>宣传册印刷</title>
+<title>
+      <%  if(!_id){%>
+        <%- connectUs.name %>
+      <%}else{%>
+      <%  for(var i=0;i<productDocs.length;i++){ %>
+      <%    if(_id == productDocs[i]._id){ %>
+      <%      var typeArray = productDocs[i].typeArray; %>
+      <%      for(var j=0;j<typeArray.length;j++){ %>
+      <%        if(_cateId == typeArray[j]._id){ %>
+                <%- typeArray[j].cateName%>
+      <%        } %>
+      <%      } %>
+      <%    } %>
+      <%  } %>
+      <% } %>
+</title>
 <meta name="keywords" content="宣传册印刷,宣传单,折页印刷,海报印刷">
 <meta name="description" content="宣传品印刷的第 1 页,提供:">
 <link href="css/style.css" rel="stylesheet" type="text/css">
@@ -41,41 +56,30 @@
       </div>
     <div class="cp_rxsf">热销产品</div>
     <div class="rxsf">
-
     <%  var allShowTotal = 3; %>
     <%  var allShowCount = 0; %>
     <%  var ranTypeArray = ranPro.typeArray; %>
-    <%   for(var i=0;i<ranTypeArray.length;i++){ %>
     <%     var typeRandom = 
                 parseInt(ranTypeArray.length*Math.random()); %>
+    <%   for(var i=0;i<ranTypeArray.length;i++){ %>
     <%     var typeArrayPojo = 
                 ranTypeArray[typeRandom++%ranTypeArray.length]; %>
-    <%          for(var j=0;j<typeArrayPojo.productArray.length;j++){  %>
-    <%            var productRandom =   
+    <%     var productRandom =   
                   parseInt(typeArrayPojo.productArray.length*Math.random()); %>
+    <%          for(var j=0;j<typeArrayPojo.productArray.length;j++){  %>
     <%              var proPojo = 
-                      typeArrayPojo.productArray[productRandom++]; %>
+                      typeArrayPojo.productArray[productRandom++%typeArrayPojo.productArray.length]; %>
     <%               if(proPojo && allShowCount < allShowTotal){ %>
                       <div class="rxsf_li">
-                      <a href="/print/product?_id=<%- ranPro._id%>&_cateId=<%- typeArrayPojo._id %>" >
+                      <a href="/print/product?_id=<%- ranPro._id%>&_cateId=<%- typeArrayPojo._id %>" target="_BLANK">
                       <img src="<%- proPojo.picture %>" 
                       width="135" height="100" ></a>
-                      <h4><a href="#"><%- typeArrayPojo.cateName %></a></h4>
+                      <h4><a href="#"><%- proPojo.name %>[<%- typeArrayPojo.cateName %>]</a></h4>
                       </div>
     <%                allShowCount++; %>
-    <%                break;    %>
     <%               } %>
     <%          } %>
     <%   } %>
-
-    
-
-      <div class="rxsf_li"><a href="#" ><img src="images/lipindai_001_yinshua.jpg" width="135" height="100" ></a>
-        <h4><a href="#">服装礼品袋</a></h4>
-      </div>
-      <div class="rxsf_li"><a href="#" ><img src="images/gouwudai_006_yinshua.jpg" width="135" height="100" ></a>
-        <h4><a href="#">高档购物纸袋</a></h4>
-      </div>
     </div>
   </div>
   <div class="fr cp_r">
