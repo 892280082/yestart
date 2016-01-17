@@ -12,10 +12,10 @@
   <ul>
     <li class="nav_sy"><a href="#">快马首页</a></li>
      <%  productDocs.forEach(function(product){  %>
-         <li class="nav_2"><a href="#"><%- product.title %></a>
+         <li class="nav_2"><a><%- product.title %></a>
           <h3>
          <%   product.typeArray.forEach(function(cate){    %>
-               <a href="#"><%-  cate.cateName %></a>
+               <a href="/print/product?_id=<%- product._id%>&_cateId=<%- cate._id %>" target="_BLANK"><%-  cate.cateName %></a>
         <%  }); %>
         </li>
       <% }); %>

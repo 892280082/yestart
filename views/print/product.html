@@ -26,23 +26,50 @@
 <div class="index_cp cp_cns" style="margin-bottom:0">
   <div class="ft left_s">
     <div class="fl_sli pb10">
-      <h2><a href="#">宣传品印刷</a></h2>
-      <h3>&nbsp;</h3>
-      <ul>
-        <li><a href="#">画册</a></li>
-        <li><a href="#">说明书</a></li>
-        <li><a href="#">楼书</a></li>
-        <li><a href="#">封套</a></li>
-        <li><a href="#">海报</a></li>
-        <li><a href="#">单页折页</a></li>
-      </ul>
-      <div id="clear"></div>
-    </div>
+      <%  productDocs.forEach(function(product){  %>
+      <%    if(product._id == _id || !_id){  %>
+              <h2><a><%- product.title %></a></h2>
+                <h3>&nbsp;</h3>
+              <ul>
+            <%   product.typeArray.forEach(function(cate){    %>
+                  <li><a href="/print/product?_id=<%- product._id%>&_cateId=<%- cate._id %>" target="_BLANK"><%-  cate.cateName %></a></li>
+        <%        }); %>
+        <%  }  %>
+            </ul>
+            <div id="clear"></div>
+      <% }); %>
+      </div>
     <div class="cp_rxsf">热销产品</div>
     <div class="rxsf">
-      <div class="rxsf_li"><a href="#" ><img src="images/nianjian_008_yinshua.jpg" width="135" height="100" ></a>
-        <h4><a href="#">地方年鉴印刷</a></h4>
-      </div>
+
+    <%  var allShowTotal = 3; %>
+    <%  var allShowCount = 0; %>
+    <%  var ranTypeArray = ranPro.typeArray; %>
+    <%   for(var i=0;i<ranTypeArray.length;i++){ %>
+    <%     var typeRandom = 
+                parseInt(ranTypeArray.length*Math.random()); %>
+    <%     var typeArrayPojo = 
+                ranTypeArray[typeRandom++%ranTypeArray.length]; %>
+    <%          for(var j=0;j<typeArrayPojo.productArray.length;j++){  %>
+    <%            var productRandom =   
+                  parseInt(typeArrayPojo.productArray.length*Math.random()); %>
+    <%              var proPojo = 
+                      typeArrayPojo.productArray[productRandom++]; %>
+    <%               if(proPojo && allShowCount < allShowTotal){ %>
+                      <div class="rxsf_li">
+                      <a href="/print/product?_id=<%- ranPro._id%>&_cateId=<%- typeArrayPojo._id %>" >
+                      <img src="<%- proPojo.picture %>" 
+                      width="135" height="100" ></a>
+                      <h4><a href="#"><%- typeArrayPojo.cateName %></a></h4>
+                      </div>
+    <%                allShowCount++; %>
+    <%                break;    %>
+    <%               } %>
+    <%          } %>
+    <%   } %>
+
+    
+
       <div class="rxsf_li"><a href="#" ><img src="images/lipindai_001_yinshua.jpg" width="135" height="100" ></a>
         <h4><a href="#">服装礼品袋</a></h4>
       </div>
@@ -113,11 +140,9 @@
 
 <%- include ./include/connectUs.html %>
 
-<%- include ./include/tenGood.js %>
+<%- include ./include/tenGood.html %>
 
-<div class="bot_nav"><a href="#">关于快马</a>|<a href="#">产品包装盒</a>|<a href="#">企业宣传册</a>|<a href="#">精装书刊</a>|<a href="#">精美手提袋</a>|<a href="#">笔记本印刷</a>|<a href="#">纸制品印刷</a>|<a href="#">办公用品</a>|<a href="#">印刷常识</a>|<a href="#" rel="nofollow">联系快马</a></div>
-<div class="bottom">合肥印刷厂集印刷品的策划、设计、印刷为一体的大型合肥印务公司,专业为您提供画册印刷及各种精美书籍、宣传单等印刷，安徽省合肥快马印务公司是全省最有实力的合肥印刷厂<br>
-  Copyright 2013 安徽省快马印刷公司_合肥印务公司_合肥印刷厂 版权所有 All Rights Reserved 皖ICP备10006187号-6</div>
+<%- include ./include/foot.html %>
 <!--1003-->
 </body>
 </html>
