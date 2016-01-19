@@ -13,7 +13,11 @@ var  pro  =  new  Schema({
 	price:Number,
 	unit:String,
 	show:Boolean,
-	clickCount:{ type:Number , default:0 }	//点击率
+	clickCount:{ type:Number , default:0 },	//点击率
+	_parentId:{
+		_id:String,
+		_cateId:String
+	}
 });
 
 var ProductSchema = new Schema({

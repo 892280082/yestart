@@ -1,0 +1,12 @@
+        <%  productDocs.forEach(function(product){  %>
+           <div class="fl_sli">
+           <h2><a href="#"><%- product.title %></a></h2>
+           <h3>&nbsp;</h3>
+            <ul>
+                <%   product.typeArray.forEach(function(cate){    %>
+                  <li><a href="#"><%-  cate.cateName %></a></li>
+                <%  }); %>
+           </ul>
+           <div id="clear"></div>
+           </div>
+         <% }); %>

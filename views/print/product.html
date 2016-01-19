@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <!-- saved from url=(0050)http://www.4000551009.com/xuanchuanpinyinshua.html -->
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="myApp">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>
@@ -26,7 +26,7 @@
 <script type="text/javascript" src="js/jquery.SuperSlide.js"></script>
 <script type="text/javascript" src="js/index.js"></script>
 </head>
-<body>
+<body ng-controller="main">
 <%- include ./include/head.html %>
 <div class="index_gjc2">
   <%- include ./include/search.html %>
@@ -47,7 +47,11 @@
                 <h3>&nbsp;</h3>
               <ul>
             <%   product.typeArray.forEach(function(cate){    %>
-                  <li><a href="/print/product?_id=<%- product._id%>&_cateId=<%- cate._id %>" target="_BLANK"><%-  cate.cateName %></a></li>
+                  <li><a 
+                  ng-click="getCateDatas('<%- product._id%>',
+                    '<%- cate._id %>'
+                  )"
+                  ><%-  cate.cateName %></a></li>
         <%        }); %>
         <%  }  %>
             </ul>
@@ -74,7 +78,7 @@
                       <a href="/print/product?_id=<%- ranPro._id%>&_cateId=<%- typeArrayPojo._id %>" target="_BLANK">
                       <img src="<%- proPojo.picture %>" 
                       width="135" height="100" ></a>
-                      <h4><a href="#"><%- proPojo.name %>[<%- typeArrayPojo.cateName %>]</a></h4>
+                      <h4><a href="/print/product?_id=<%- ranPro._id%>&_cateId=<%- typeArrayPojo._id %>" target="_BLANK"><%- proPojo.name %>[<%- typeArrayPojo.cateName %>]</a></h4>
                       </div>
     <%                allShowCount++; %>
     <%               } %>
@@ -84,57 +88,25 @@
   </div>
   <div class="fr cp_r">
     <div class="cp_list">
-      <ul>
-        <li><a href="#"  ><img src="images/shuomingshu_007_yinshua.jpg" width="172" height="126" ></a>
-          <h3><a href="#" >专业订制产品说明书</a></h3>
-        </li>
-        <li><a href="#"  ><img src="images/shuomingshu_006_yinshua.jpg" width="172" height="126" ></a>
-          <h3><a href="#" >使用说明书印刷</a></h3>
-        </li>
-        <li><a href="#"  ><img src="images/shuomingshu_005_yinshua.jpg" width="172" height="126" ></a>
-          <h3><a href="#" >说明书印刷</a></h3>
-        </li>
-        <li><a href="#"  ><img src="images/shuomingshu_004_yinshua.jpg" width="172" height="126" ></a>
-          <h3><a href="#" >订做产品目录说明书</a></h3>
-        </li>
-        <li><a href="#"  ><img src="images/shuomingshu_003_yinshua.jpg" width="172" height="126" ></a>
-          <h3><a href="#" >说明书定制</a></h3>
-        </li>
-        <li><a href="#"  ><img src="images/shuomingshu_002_yinshua.jpg" width="172" height="126" ></a>
-          <h3><a href="#" >产品说明书印刷</a></h3>
-        </li>
-        <li><a href="#"  ><img src="images/huace_008_yinshua.jpg" width="172" height="126" ></a>
-          <h3><a href="#" >精美宣传册印刷</a></h3>
-        </li>
-        <li><a href="#"  ><img src="images/huace_007_yinshua.jpg" width="172" height="126" ></a>
-          <h3><a href="#" >精品长方形画册</a></h3>
-        </li>
-        <li><a href="#"  ><img src="images/huace_005_yinshua.jpg" width="172" height="126" ></a>
-          <h3><a href="#" >精装画册印刷</a></h3>
-        </li>
-        <li><a href="#"  ><img src="images/huace_004_yinshua.jpg" width="172" height="126" ></a>
-          <h3><a href="#" >产品画册印刷</a></h3>
-        </li>
-        <li><a href="#"  ><img src="images/huace_003_yinshua.jpg" width="172" height="126" ></a>
-          <h3><a href="#" >集团周年纪念画册</a></h3>
-        </li>
-        <li><a href="#"  ><img src="images/huace_002_yinshua.jpg" width="172" height="126" ></a>
-          <h3><a href="#" >专业画册印刷</a></h3>
+      <ul ng-repeat="pojo in pageResult.$array">
+        <li><a href="/print/proDetail?_id={{ pojo._parentId._id }}&_cateId={{ pojo._parentId._cateId }}&_proId={{ pojo._id }}"  >
+          <img ng-src="{{ pojo.picture }}" 
+          width="172" height="126" ></a>
+          <h3><a href="#" >{{ pojo.name }}</a></h3>
         </li>
       </ul>
       <div id="clear"></div>
     </div>
     <div class="pages">
       <ul>
-        <li class="nobr">&#171; 前一页</li>
-        <li class="thisclass">1</li>
-        <li><a href="#">2</a></li>
-        <li><a href="#">3</a></li>
-        <li><a href="#">4</a></li>
-        <li><a href="#">5</a></li>
-        <li><a href="#">6</a></li>
-        <li class="nobr"><a href="#">下一页 &#187;</a></li>
-        <li class="nobr"><span class="pageinfo">共 <strong>6</strong>页<strong>72</strong>条</span></li>
+        <li class="nobr" ng-show="pageResult.$toLast"
+        ng-click="pageResult.$last()" >&#171; 前一页</li>
+        <li class="thisclass">{{ pageResult.$curPage }}</li>
+        <li class="nobr" ng-show="pageResult.$toNext"
+        ng-click="pageResult.$next()" ><a>下一页 &#187;</a></li>
+        <li class="nobr"><span class="pageinfo">
+        共 <strong>{{ pageResult.$pageCount }}</strong>页
+        <strong>{{ pageResult.$totalPage }}</strong>条</span></li>
       </ul>
     </div>
   </div>
@@ -147,6 +119,16 @@
 <%- include ./include/tenGood.html %>
 
 <%- include ./include/foot.html %>
+
+<script type="text/javascript" src="/public/bower_components/angular/angular.min.js"></script>
+<script type="text/javascript">
+  GLOBALOBJECT = {
+    "_id":'<%- _id %>',
+    "_cateId":'<%- _cateId %>'
+  }
+</script>
+<script type="text/javascript" src="./js/product.js"></script>
+
 <!--1003-->
 </body>
 </html>

@@ -5,6 +5,7 @@
 <title>产品详情页</title>
 <link href="css/style.css" rel="stylesheet" type="text/css">
 <link rel="stylesheet" rev="stylesheet" href="css/pshow2.css" type="text/css">
+<script type="text/javascript" src="js/jquery.min.js"></script>
 <script type="text/javascript" src="js/jquery.SuperSlide.js"></script>
 <script type="text/javascript" src="js/index.js"></script>
 </head>
@@ -29,196 +30,77 @@ var ARR_AD_MARK = ["product_detail_1"];
 var SID = "0001,0002,0008";
 var atts="";
 </script>
-<div class="head">
-  <div class="w100">
-    <div class="ft"><a href="#" >印刷厂</a> <a href="#" >画册印刷</a> <a href="#" >纸袋定做</a> <a href="#" >合肥印刷公司</a> </div>
-    <div class="fr"><a href="#" rel="nofollow" ><img src="images/ico01.gif"> 新浪微博</a><a href="#" rel="nofollow" >腾讯微博</a>|<a href="#" rel="nofollow" >阿里巴巴旺铺</a>|<a href="#" rel="nofollow" >在线留言</a>|<a href="#" rel="nofollow">关于快马</a>|<a href="#">站点地图</a></div>
-  </div>
-</div>
-<div class="logo_s">
-  <div class="ft"><a href="#" rel="nofollow" ><img src="images/logo.jpg" width="358" height="85"></a></div>
-  <div class="fr"><a href="#" rel="nofollow" ><img src="images/head_lx.jpg"></a></div>
-</div>
-<div class="nav">
-  <ul>
-    <li class="nav_sy"><a href="#">快马首页</a></li>
-    <li class="nav_2"><a href="#">宣传品印刷</a>
-      <h3><a href="#">画册</a><a href="#">说明书</a><a href="#">楼书</a><a href="#">封套</a><a href="#">海报</a><a href="#">单页折页</a></h3>
-    </li>
-    <li><a href="#">书刊印刷</a>
-      <h3><a href="#">图书</a><a href="#">汇编</a><a href="#">精装书</a><a href="#">家谱</a><a href="#">培训教材</a><a href="#">年鉴</a><a href="#">期刊杂志</a></h3>
-    </li>
-    <li class="nav_2"><a href="#">包装品印刷</a>
-      <h3><a href="#">蔬果包装</a><a href="#">鸡蛋包装</a><a href="#">干货包装</a><a href="#">杂粮包装</a><a href="#">红酒包装</a><a href="#">礼品包装</a><a href="#">白酒包装</a><a href="#">糕点包装</a><a href="#">茶叶包装</a><a href="#">喜糖包装</a></h3>
-    </li>
-    <li class="nav_2"><a href="#">纸袋印刷</a>
-      <h3><a href="#">广告纸袋</a><a href="#">礼品袋</a><a href="#">无纺布袋</a><a href="#">牛皮袋</a><a href="#">购物袋</a><a href="#">资料袋</a></h3>
-    </li>
-    <li><a href="#">促销品印刷</a>
-      <h3><a href="#">春联</a><a href="#">大礼包</a><a href="#">扑克牌</a><a href="#">易事贴</a><a href="#">纸杯</a><a href="#">抽纸</a></h3>
-    </li>
-    <li class="nav_2"><a href="#">纸制品印刷</a>
-      <h3><a href="#">不干胶</a><a href="#">台历</a><a href="#">挂历</a><a href="#">门票</a><a href="#">请柬</a><a href="#">菜谱</a></h3>
-    </li>
-    <li><a href="#">办公用品</a>
-      <h3><a href="#">笔记本</a><a href="#">便签</a><a href="#">无碳票据</a><a href="#">报表</a><a href="#">信封信纸</a><a href="#">档案盒</a><a href="#">练习本</a></h3>
-    </li>
-    <li><a href="#">关于快马</a>
-      <h3><a href="#">公司简介</a><a href="#">快马资质</a><a href="#">设备展示</a><a href="#">合作客户</a><a href="#">中标项目</a><a href="#">解决方案</a><a href="#">联系方式</a></h3>
-    </li>
-    <li><a href="#" rel="nofollow">联系快马</a></li>
-  </ul>
-</div>
+
+<%- include ./include/head.html %>
+
 <div class="index_gjc2">
-  <div class="ft"><b>热门关键词：</b><a href="#">画册印刷</a> <a href="#">家谱印刷</a> <a href="#">纸袋印刷</a> <a href="#">包装盒印刷</a> <a href="#">合肥印刷</a></div>
-  <div class="sousuo">
-    <form name="formsearch" action="http://www.4000551009.com/plus/search.php">
-      <input type="hidden" name="kwtype" value="0">
-      <input type="hidden" name="searchtype" value="title">
-      <input type="image" id="searchButton" src="./精装画册印刷_安徽快马印务公司-设计 印刷 报价一站式服务电话 400-0551-009_files/ss_2.jpg" class="ss_2">
-      <input name="q" type="text" onfocus="if(this.value==&#39;输入搜索关键词&#39;)this.value=&#39;&#39;;" onblur="if(this.value==&#39;&#39;)this.value=&#39;输入搜索关键词&#39;;" value="输入搜索关键词" class="ss_1">
-    </form>
-  </div>
+<%- include ./include/search.html %>
 </div>
 <div id="clear"></div>
 <div class="index_ad"><img src="images/banner_sp_17.jpg" width="1000" height="200"></div>
 <div class="nowsite">
   <h2><b>产品类别</b> / Category</h2>
-  <h3>您现在的位置：<a href="#">主页</a> &gt; <a href="#">宣传品印刷</a> &gt; <a href="#">画册</a></h3>
+  <h3>您现在的位置： 
+                  <% var tarProduct = {} %>
+                  <% proArray.forEach(function(pro){ %>
+                  <%    if(pro._id == _proId){ %>
+                  <%      tarProduct = pro;  %>
+                  <%    } %>
+                  <%  }) %>
+                  <%  for(var i=0;i<productDocs.length;i++){ %>
+                  <%     if(productDocs[i]._id == _id){ %>
+                            <a href="#"><%- productDocs[i].title %></a>
+                  <%          var _typeArray = productDocs[i].typeArray; %>
+                  <%          _typeArray.forEach(function(cate){ %>
+                  <%            if(cate._id == _cateId){ %>
+                                  &gt;<%- cate.cateName %>
+                                  &gt;<%- tarProduct.name %>
+                  <%            } %>
+                  <%          }); %>
+                  <%      } %>
+                  <%  } %>
 </div>
 <div class="product">
   <div class="fr product_r">
     <div class="pro_li">
-      <div class="fl_sli">
-        <h2><a href="#">宣传品印刷</a></h2>
-        <h3>&nbsp;</h3>
-        <ul>
-          <li><a href="#">画册</a></li>
-          <li><a href="#">说明书</a></li>
-          <li><a href="#">楼书</a></li>
-          <li><a href="#">封套</a></li>
-          <li><a href="#">海报</a></li>
-          <li><a href="#">单页折页</a></li>
-        </ul>
-        <div id="clear"></div>
-      </div>
-      <div class="fl_sli">
-        <h2><a href="#">促销品印刷</a></h2>
-        <h3>&nbsp;</h3>
-        <ul>
-          <li><a href="#">春联</a></li>
-          <li><a href="#">大礼包</a></li>
-          <li><a href="#">扑克牌</a></li>
-          <li><a href="#">易事贴</a></li>
-          <li><a href="#">纸杯</a></li>
-          <li><a href="#">抽纸</a></li>
-        </ul>
-        <div id="clear"></div>
-      </div>
-      <div class="fl_sli">
-        <h2><a href="#">办公品印刷</a></h2>
-        <h3>&nbsp;</h3>
-        <ul>
-          <li><a href="#">笔记本</a></li>
-          <li><a href="#">便签</a></li>
-          <li><a href="#">无碳票据</a></li>
-          <li><a href="#">报表</a></li>
-          <li><a href="#">信封信纸</a></li>
-          <li><a href="#">档案盒</a></li>
-          <li><a href="#">练习本</a></li>
-        </ul>
-        <div id="clear"></div>
-      </div>
-      <div class="fl_sli">
-        <h2><a href="#">包装品印刷</a></h2>
-        <h3>&nbsp;</h3>
-        <ul>
-          <li><a href="#">蔬果包装</a></li>
-          <li><a href="#">鸡蛋包装</a></li>
-          <li><a href="#">干货包装</a></li>
-          <li><a href="#">杂粮包装</a></li>
-          <li><a href="#">红酒包装</a></li>
-          <li><a href="#">礼品包装</a></li>
-          <li><a href="#">白酒包装</a></li>
-          <li><a href="#">糕点包装</a></li>
-          <li><a href="#">茶叶包装</a></li>
-          <li><a href="#">喜糖包装</a></li>
-          <li><a href="#">月饼包装</a></li>
-          <li><a href="#">医药包装</a></li>
-          <li><a href="#">粽子包装</a></li>
-        </ul>
-        <div id="clear"></div>
-      </div>
-      <div class="fl_sli">
-        <h2><a href="#">纸袋印刷</a></h2>
-        <h3>&nbsp;</h3>
-        <ul>
-          <li><a href="#">广告纸袋</a></li>
-          <li><a href="#">礼品袋</a></li>
-          <li><a href="#">无纺布袋</a></li>
-          <li><a href="#">牛皮袋</a></li>
-          <li><a href="#">购物袋</a></li>
-          <li><a href="#">资料袋</a></li>
-        </ul>
-        <div id="clear"></div>
-      </div>
-      <div class="fl_sli">
-        <h2><a href="#">书刊印刷</a></h2>
-        <h3>&nbsp;</h3>
-        <ul>
-          <li><a href="#">图书</a></li>
-          <li><a href="#">汇编</a></li>
-          <li><a href="#">精装书</a></li>
-          <li><a href="#">家谱</a></li>
-          <li><a href="#">培训教材</a></li>
-          <li><a href="#">年鉴</a></li>
-          <li><a href="#">期刊杂志</a></li>
-        </ul>
-        <div id="clear"></div>
-      </div>
-      <div class="fl_sli">
-        <h2><a href="#">春联大礼包</a></h2>
-        <h3>&nbsp;</h3>
-        <ul>
-          <li><a href="#">不干胶</a></li>
-          <li><a href="#">台历</a></li>
-          <li><a href="#">挂历</a></li>
-          <li><a href="#">门票</a></li>
-          <li><a href="#">请柬</a></li>
-          <li><a href="#">菜谱</a></li>
-        </ul>
-        <div id="clear"></div>
-      </div>
+      <%- include ./include/category.html %>
     </div>
     <div id="clear"></div>
     <div class="pro_rt">热销产品</div>
     <div class="pro_rx">
       <ul>
-        <li><a href="#" ><img src="images/wufangbudai_001_yinshua.jpg" width="172" height="126"></a>
-          <h4><a href="#">高品质无纺布袋</a></h4>
-        </li>
-        <li><a href="#" ><img src="images/dalibao_001_yinshua.jpg" width="172" height="126"></a>
-          <h4><a href="#">大礼包定制</a></h4>
-        </li>
-        <li><a href="#" ><img src="images/lipindai_001_yinshua.jpg" width="172" height="126"></a>
-          <h4><a href="#">服装礼品袋</a></h4>
-        </li>
-        <li><a href="#" ><img src="images/gouwudai_005_yinshua.jpg" width="172" height="126"></a>
-          <h4><a href="#">购物纸袋定制</a></h4>
-        </li>
+          <%  var allShowTotal = 4; %>
+          <%  var _allShowCount = 0; %>
+          <%  var ranTypeArray = ranPro.typeArray; %>
+          <%     var typeRandom = 
+                      parseInt(ranTypeArray.length*Math.random()); %>
+          <%   for(var i=0;i<ranTypeArray.length;i++){ %>
+          <%     var typeArrayPojo = 
+                      ranTypeArray[typeRandom++%ranTypeArray.length]; %>
+          <%     var productRandom =   
+                        parseInt(typeArrayPojo.productArray.length*Math.random()); %>
+          <%          for(var j=0;j<typeArrayPojo.productArray.length;j++){  %>
+          <%              var proPojo = 
+                            typeArrayPojo.productArray[productRandom++%typeArrayPojo.productArray.length]; %>
+          <%               if(proPojo && _allShowCount < allShowTotal){ %>
+                <li><a href="/print/product?_id=<%- ranPro._id%>&_cateId=<%- typeArrayPojo._id %>" ><img src="<%- proPojo.picture %>" width="172" height="126"></a>
+                <h4><a href="/print/product?_id=<%- ranPro._id%>&_cateId=<%- typeArrayPojo._id %>" ><%- proPojo.name %>[<%- typeArrayPojo.cateName %>]</a></h4>
+                </li>
+          <%                _allShowCount++; %>
+          <%               } %>
+          <%          } %>
+          <%   } %>
       </ul>
     </div>
     <div class="pro_rt">联系我们</div>
     <div class="pro_lx">
       <div class="tac"><a href="#" ><img src="images/n2.jpg" width="224" height="115"></a></div>
-      <p>名称: 安徽省快马印务有限责任公司<br>
-        Q Q : <a href="#" rel="nofollow" >400&nbsp;<font color="#cc0000">0551</font>&nbsp;009</a> <br>
-        网站: <a href="#">400&nbsp;<font color="#cc0000">0551</font>&nbsp;009.com</a> <br>
-        电话: 400-<font color="#cc0000">0551</font>-009 <br>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0551-65220569 <br>
-        邮箱: kuaima888@126.com <br>
-        地址: 合肥市市府广场天徽大厦C座6层 <br>
-        厂址: 合肥市双凤开发区快马工业园</p>
+      <p>名称: <%- connectUs.name %><br>
+        Q Q : <a href="#" rel="nofollow"><%- connectUs.QQ %></a><br>
+        电话: <%- connectUs.tel %> <br>
+        邮箱: <%- connectUs.email %> <br>
+        地址: <%- connectUs.address %> <br>
+        厂址: <%- connectUs.comAddress %></p>
     </div>
   </div>
   <div class="ft product_l">
@@ -226,13 +108,13 @@ var atts="";
       <div class="pro_bd">
         <div class="tempWrap" style="overflow:hidden; position:relative; height:300px">
           <ul style="height: 900px; position: relative; padding: 0px; margin: 0px; top: -300px;">
-            <li style="height: 300px; position: relative;"><a href="#"   class="jqzoom" style="outline-style: none; text-decoration: none; cursor: crosshair; display: block; position: relative; height: 300px; width: 300px;"><img src="images/huace_005_yinshua.jpg" width="302" height="302" class="js_goods_image_url">
+            <li style="height: 300px; position: relative;"><a href="#"   class="jqzoom" style="outline-style: none; text-decoration: none; cursor: crosshair; display: block; position: relative; height: 300px; width: 300px;"><img src="<%- tarProduct.picture %>" width="302" height="302" class="js_goods_image_url">
               <div class="preload" style="visibility: hidden;">Loading zoom</div>
               </a></li>
-            <li style="height: 300px; position: relative;"><a href="#"   class="jqzoom" style="outline-style: none; text-decoration: none; cursor: crosshair; display: block; position: relative; height: 300px; width: 300px;"><img src="images/huace_005_yinshua.jpg" width="302" height="302" class="js_goods_image_url">
+            <li style="height: 300px; position: relative;"><a href="#"   class="jqzoom" style="outline-style: none; text-decoration: none; cursor: crosshair; display: block; position: relative; height: 300px; width: 300px;"><img src="<%- tarProduct.picture %>" width="302" height="302" class="js_goods_image_url">
               <div class="preload" style="visibility: hidden;">Loading zoom</div>
               </a></li>
-            <li style="height: 300px; position: relative;"><a href="#"   class="jqzoom" style="outline-style: none; text-decoration: none; cursor: crosshair; display: block; position: relative; height: 300px; width: 300px;"><img src="images/huace_005_yinshua.jpg" width="302" height="302" class="js_goods_image_url">
+            <li style="height: 300px; position: relative;"><a href="#"   class="jqzoom" style="outline-style: none; text-decoration: none; cursor: crosshair; display: block; position: relative; height: 300px; width: 300px;"><img src="<%- tarProduct.picture %>" width="302" height="302" class="js_goods_image_url">
               <div class="preload" style="visibility: hidden;">Loading zoom</div>
               </a></li>
           </ul>
@@ -240,14 +122,14 @@ var atts="";
       </div>
       <div class="pro_hd">
         <ul>
-          <li class="on"><img src="images/huace_005_yinshua.jpg" width="60" height="60"></li>
+          <li class="on"><img src="<%- tarProduct.picture %>" width="60" height="60"></li>
         </ul>
       </div>
       <div class="pro_kkk">
-        <h1>[精装画册印刷]</h1>
+        <h1>[<%- tarProduct.name %>]</h1>
         <h3>有没有这种感觉：捧一本产品画册，就知道这个产品到底属于什么档次。色彩、质感、品味，从出片、用版，到材质匹配，上光、后期装订、裁切，每一个环节都要精益求精。印好画册，也是一个系统工程：好工人、好设备、好管理。<br>
           0551-65220569</h3>
-        <p><a href="#" rel="nofollow" ><img src="images/buynowsmalls.gif"></a></p>
+        <p><a rel="nofollow" ><img src="images/buynowsmalls.gif"></a></p>
         <div class="art_fx">
           <div class="bdsharebuttonbox bdshare-button-style0-16" data-bd-bind="1440555061291"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_weixin" data-cmd="weixin" ></a><a href="#" class="bds_qzone" data-cmd="qzone" ></a><a href="#" class="bds_tsina" data-cmd="tsina" ></a><a href="#" class="bds_tqq" data-cmd="tqq" ></a><a href="#" class="bds_renren" data-cmd="renren" ></a></div></div>
       </div>
@@ -256,18 +138,20 @@ var atts="";
     <div class="pro_xg"> <a href="#" rel="nofollow" ><img src="images/dingzhi_1.jpg" width="740"></a>
       <h2>相关产品</h2>
       <ul>
-        <li><a href="#"><img src="images/huace_006_yinshua.jpg" width="172" height="126"></a>
-          <h4><a href="#">企业画册印刷</a></h4>
-        </li>
-        <li><a href="#"><img src="images/huace_001_yinshua.jpg" width="172" height="126"></a>
-          <h4><a href="#">房地产画册印刷</a></h4>
-        </li>
-        <li><a href="#"><img src="images/huace_002_yinshua.jpg" width="172" height="126"></a>
-          <h4><a href="#">专业画册印刷</a></h4>
-        </li>
-        <li><a href="#"><img src="images/huace_003_yinshua.jpg" width="172" height="126"></a>
-          <h4><a href="#">集团周年纪念画册</a></h4>
-        </li>
+      <%    var proRandom = parseInt(proArray.length*Math.random()); %>
+      <%    var proCountFlag = 0 %>
+      <%  for(var i=0;i<proArray.length;i++){ %>
+      <%      proRandom++; %>
+      <%      var tempPro = proArray[proRandom%proArray.length]; %>
+      <%      if( proCountFlag > 3 ) break; %>
+      <%      if(tempPro._id == _proId) continue;%>
+      <%        proCountFlag++ %>
+              <li><a href="/print/proDetail?_id=<%- tempPro._parentId._id %>&_cateId=<%- tempPro._parentId._cateId %>&_proId=<%- tempPro._id %>">
+                  <img src="<%- tempPro.picture %>" 
+                  width="172" height="126"></a>
+                  <h4><a href="/print/proDetail?_id=<%- tempPro._parentId._id %>&_cateId=<%- tempPro._parentId._cateId %>&_proId=<%- tempPro._id %>"><%- tempPro.name %></a></h4>
+              </li> 
+      <%  } %>
       </ul>
       <div id="clear"></div>
     </div>
@@ -295,10 +179,8 @@ var atts="";
           </tbody>
         </table>
         &nbsp;<br>
-        <img src="images/huace_005-1_yinshua.jpg" style="width: 600px; height: 400px;"><br>
-        <img src="images/huace_005-2_yinshua.jpg" style="width: 600px; height: 400px;"><br>
-        <img src="images/huace_005-3_yinshua.jpg" style="width: 600px; height: 400px;"><br>
-        <img src="images/huace_005-4_yinshua.jpg" style="width: 600px; height: 400px;"></div>
+        <%- tarProduct.content %>
+      </div>
       <div class="keywords">产品关键词: 画册印刷,宣传画册印刷,企业画册印刷,产品画册印刷</div>
       <div><a href="#" rel="nofollow" ><img src="images/dingzhi_2.jpg" width="740"></a></div>
     </div>

@@ -50,10 +50,35 @@ service.getProById = function(_id,callback){
 			console.log(err);
 			return callback(err);
 		}
-		console.log(doc);
 		callback(null,doc);
 	});
 }
+
+//根据_id和_cateId获取productArray信息
+service.getProArray = function(_id,_cateId,callback){
+	Product.findOne({
+		"_id":_id
+		},{
+		"typeArray":{"$elemMatch":{ "_id":_cateId }}
+		},function(err,doc){
+		if(err){
+			console.log(err);
+			return callback(err);
+		}
+		var proArray = doc.typeArray[0].productArray;
+		proArray.forEach(function(pro){
+			pro._parentId = {
+				_id:_id,
+				_cateId:_cateId
+			};
+		});
+		callback(null,proArray);
+	});
+}
+
+
+
+
 
 
 module.exports = service;
