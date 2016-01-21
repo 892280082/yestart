@@ -13,11 +13,16 @@ var  pro  =  new  Schema({
 	price:Number,
 	unit:String,
 	show:Boolean,
-	clickCount:{ type:Number , default:0 },	//点击率
+	introduce:String,
+	clickCount:{ type:Number , default:0 },	
 	_parentId:{
 		_id:String,
 		_cateId:String
-	}
+	},
+	detail:[{
+		title:String,
+		content:String
+	}]
 });
 
 var ProductSchema = new Schema({
@@ -82,22 +87,36 @@ ProductSchema.static("pullProductArray"
 //更新 typeArray -> productArray -> pro
 ProductSchema.static("editTypeProPro"
 	,function(_id,_cateId,product,callback){
-		var _ProId = product._id;
-		delete product["_id"];
-		this.update({
+		var _self = this;
+		this.findOne({
 			"_id":_id,
-			"typeArray._id":_cateId,
-			"typeArray.productArray._id":_ProId
+			"typeArray._id":_cateId
 		},{
-			"typeArray.$.productArray.0":product
+			"typeArray":{"$elemMatch":{ "_id":_cateId }}
 		},function(err,doc){
-			if(err) 
+			if(err){
 				console.log(err);
-			callback(err);
+				return callback(err);
+			}
+			var _mongoProArray = doc.typeArray[0].productArray;
+			for(var i=0,ii=_mongoProArray.length;i<ii;i++){
+				if(_mongoProArray[i]._id == product._id){
+					_mongoProArray[i] = product;
+					break;
+				}
+			}
+			_self.update({
+					"_id":_id,
+					"typeArray._id":_cateId
+				},{
+					"typeArray.$.productArray":_mongoProArray
+				},function(err,info){
+					if(err)
+						console.log(err);
+					callback(err,info);
+			});
 		})
 });
-
-
 
 var  Product = mongoose.model("Products", ProductSchema);
 

@@ -4,7 +4,7 @@
            <h3>&nbsp;</h3>
             <ul>
                 <%   product.typeArray.forEach(function(cate){    %>
-                  <li><a href="#"><%-  cate.cateName %></a></li>
+                  <li><a href="/print/product?_id=<%- product._id%>&_cateId=<%- cate._id %>"><%-  cate.cateName %></a></li>
                 <%  }); %>
            </ul>
            <div id="clear"></div>

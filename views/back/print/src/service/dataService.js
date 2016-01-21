@@ -38,6 +38,7 @@
             });
         };
         this.editTypeProPro = function(pojo){
+            console.log(pojo);
             return $http.post("/back/print/editTypeProPro",{
                 "editPojo":pojo
             });

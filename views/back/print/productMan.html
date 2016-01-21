@@ -140,9 +140,7 @@
 <script type="text/ng-template" id="prolist">
     <div class="tools">
        <ul class="toolbar">
-            <li ng-click="
-            pushProductPojo.pojo = {};
-            show.$set('proadd')">
+            <li ng-click="viewPushProduct()">
                 <span><img src="/back/resource/images/t01.png" /></span>添加
             </li>
         </ul>
@@ -223,6 +221,29 @@
             name="t_unit" required
             type="text" class="dfinput"  />
             <i ng-show="subForm.t_unit.$error.required">请输入单位</i>
+        </li>
+        <li><label>产品介绍</label>
+            <textarea class="textinput" ng-model="pushProductPojo.pojo.introduce"></textarea>
+        </li>
+        <li>
+            <label>
+                参数
+               
+            </label>
+            <ul ng-repeat="detail in pushProductPojo.pojo.detail">
+                <li><label style="text-align:center;">
+                    {{ $index + 1 }}</label>
+                    <input type="text"  class="dfinput"
+                         ng-model="detail.title"/>
+                    <input type="text"  class="dfinput" 
+                        ng-model="detail.content">
+                    <input type="button" value="删除" 
+                        ng-click="removeDeatail(detail)"/>
+                     <input ng-if="$index+1 ==  pushProductPojo.pojo.detail.length"  type="button" value="添加" 
+                        ng-click="pushDetailArray()" />
+                    </br>
+                </li>
+            </ul>
         </li>
         <li><label>是否显示</label>
             <input type="checkbox" ng-model="pushProductPojo.pojo.show" 

@@ -49,7 +49,7 @@ var atts="";
                   <%  }) %>
                   <%  for(var i=0;i<productDocs.length;i++){ %>
                   <%     if(productDocs[i]._id == _id){ %>
-                            <a href="#"><%- productDocs[i].title %></a>
+                              <%- productDocs[i].title %></a>
                   <%          var _typeArray = productDocs[i].typeArray; %>
                   <%          _typeArray.forEach(function(cate){ %>
                   <%            if(cate._id == _cateId){ %>
@@ -127,8 +127,13 @@ var atts="";
       </div>
       <div class="pro_kkk">
         <h1>[<%- tarProduct.name %>]</h1>
-        <h3>有没有这种感觉：捧一本产品画册，就知道这个产品到底属于什么档次。色彩、质感、品味，从出片、用版，到材质匹配，上光、后期装订、裁切，每一个环节都要精益求精。印好画册，也是一个系统工程：好工人、好设备、好管理。<br>
-          0551-65220569</h3>
+        <h3>
+          <% if(tarProduct.introduce){ %>
+                <%- tarProduct.introduce %>
+          <% } %>
+          <br>
+          0551-65220569
+        </h3>
         <p><a rel="nofollow" ><img src="images/buynowsmalls.gif"></a></p>
         <div class="art_fx">
           <div class="bdsharebuttonbox bdshare-button-style0-16" data-bd-bind="1440555061291"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_weixin" data-cmd="weixin" ></a><a href="#" class="bds_qzone" data-cmd="qzone" ></a><a href="#" class="bds_tsina" data-cmd="tsina" ></a><a href="#" class="bds_tqq" data-cmd="tqq" ></a><a href="#" class="bds_renren" data-cmd="renren" ></a></div></div>
@@ -160,22 +165,23 @@ var atts="";
       <div class="xx_text">
         <table style="width:660px;">
           <tbody>
-            <tr>
-              <td style="width:365px;"> 名&nbsp;&nbsp;&nbsp;&nbsp;称：&nbsp;<a href="#" ><u>画册</u></a>&nbsp;宣传册&nbsp;说明书&nbsp;目录等统称--<a href="#" ><u>画册</u></a></td>
-              <td style="width:295px;"> 尺寸分别：210*285mm;可根据客户要求定制</td>
-            </tr>
-            <tr>
-              <td style="width:365px;"> 装钉方式：折页;骑马钉;锁线胶装;上胶圈;Y型圈等多种装钉方式</td>
-              <td style="width:295px;"> 表面处理：过光胶;过哑胶;过油</td>
-            </tr>
-            <tr>
-              <td style="width:365px;"> 特殊工艺：过UV;烫金（银）;击凸;覆膜;压纹等多项特别工艺服务。</td>
-              <td style="width:295px;"> 合作方式：提供设计，印刷，送货一条龙服务</td>
-            </tr>
-            <tr>
-              <td style="width:365px;"> 设计交流：专业的设计师一对一服务</td>
-              <td style="width:295px;"> 交货方式：合肥市内送货上门,其他地方物流自提</td>
-            </tr>
+            <%  if(tarProduct.detail){ %>
+            <%    var detail = tarProduct.detail; %>
+            <%    for(var i=0,ii=detail.length;i<ii;i+=2){ %>
+            <%      if(detail[i]){ %>
+                      <tr>
+                      <td style="width:365px;">
+                        <%- detail[i].title %>:<%- detail[i].content %>
+                      </td>
+            <%        if(detail[i+1]){ %>
+                        <td style="width:295px;">
+                          <%- detail[i+1].title %>:<%- detail[i+1].content %>
+                        </td>
+            <%        } %>
+                      </tr>
+            <%      } %>
+            <%    } %>
+            <%  } %>
           </tbody>
         </table>
         &nbsp;<br>

@@ -6,6 +6,8 @@ app.controller("main",["$scope","dataService","pageResult"
 	$scope.datas = {};
 	$scope.showData = {};
 
+	$scope._currentCate = searchInfo._cateId;
+
 	dataService.getDatas(searchInfo)
 	.success(function(datas){
 		console.log(datas);
@@ -19,9 +21,9 @@ app.controller("main",["$scope","dataService","pageResult"
 			"_id":_id,
 			"_cateId":_cateId
 		}
+		$scope._currentCate = searchInfo._cateId;
 		dataService.getDatas(searchInfo)
 		.success(function(datas){
-			console.log(datas);
 			$scope.pageResult = pageResult.$init(datas,12);
 		}).error(function(data){
 			alert("产品信息获取失败");

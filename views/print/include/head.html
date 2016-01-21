@@ -14,8 +14,8 @@
      <%  productDocs.forEach(function(product){  %>
          <li class="nav_2"><a><%- product.title %></a>
           <h3>
-         <%   product.typeArray.forEach(function(cate){    %>
-               <a href="/print/product?_id=<%- product._id%>&_cateId=<%- cate._id %>" target="_BLANK"><%-  cate.cateName %></a>
+        <%   product.typeArray.forEach(function(cate){    %>
+               <a href="/print/product?_id=<%- product._id%>&_cateId=<%- cate._id %>"><%-  cate.cateName %></a>
         <%  }); %>
         </li>
       <% }); %>

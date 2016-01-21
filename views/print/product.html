@@ -25,6 +25,11 @@
 <script type="text/javascript" src="js/jquery.min.js"></script>
 <script type="text/javascript" src="js/jquery.SuperSlide.js"></script>
 <script type="text/javascript" src="js/index.js"></script>
+<style type="text/css">
+  .currCate {
+    color: red;
+  }
+</style>
 </head>
 <body ng-controller="main">
 <%- include ./include/head.html %>
@@ -47,7 +52,8 @@
                 <h3>&nbsp;</h3>
               <ul>
             <%   product.typeArray.forEach(function(cate){    %>
-                  <li><a 
+                  <li><a
+                  ng-class="{true:'currCate'}['<%- cate._id %>' == _currentCate]"
                   ng-click="getCateDatas('<%- product._id%>',
                     '<%- cate._id %>'
                   )"
@@ -75,10 +81,10 @@
                       typeArrayPojo.productArray[productRandom++%typeArrayPojo.productArray.length]; %>
     <%               if(proPojo && allShowCount < allShowTotal){ %>
                       <div class="rxsf_li">
-                      <a href="/print/product?_id=<%- ranPro._id%>&_cateId=<%- typeArrayPojo._id %>" target="_BLANK">
+                      <a href="/print/product?_id=<%- ranPro._id%>&_cateId=<%- typeArrayPojo._id %>" >
                       <img src="<%- proPojo.picture %>" 
                       width="135" height="100" ></a>
-                      <h4><a href="/print/product?_id=<%- ranPro._id%>&_cateId=<%- typeArrayPojo._id %>" target="_BLANK"><%- proPojo.name %>[<%- typeArrayPojo.cateName %>]</a></h4>
+                      <h4><a href="/print/product?_id=<%- ranPro._id%>&_cateId=<%- typeArrayPojo._id %>" ><%- proPojo.name %>[<%- typeArrayPojo.cateName %>]</a></h4>
                       </div>
     <%                allShowCount++; %>
     <%               } %>
@@ -89,10 +95,10 @@
   <div class="fr cp_r">
     <div class="cp_list">
       <ul ng-repeat="pojo in pageResult.$array">
-        <li><a href="/print/proDetail?_id={{ pojo._parentId._id }}&_cateId={{ pojo._parentId._cateId }}&_proId={{ pojo._id }}"  >
+        <li><a href="/print/proDetail?_id={{ pojo._parentId._id }}&_cateId={{ pojo._parentId._cateId }}&_proId={{ pojo._id }}" target="_BLANK"  >
           <img ng-src="{{ pojo.picture }}" 
           width="172" height="126" ></a>
-          <h3><a href="#" >{{ pojo.name }}</a></h3>
+          <h3><a href="/print/proDetail?_id={{ pojo._parentId._id }}&_cateId={{ pojo._parentId._cateId }}&_proId={{ pojo._id }}" target="_BLANK"  >{{ pojo.name }}</a></h3>
         </li>
       </ul>
       <div id="clear"></div>

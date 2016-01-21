@@ -120,6 +120,45 @@ angular.module("controller.main",[
     }
 
     /******************详细产品信息*****************/
+    //添加新产品
+    $scope.viewPushProduct = function(){
+        $scope.pushProductPojo.pojo = {
+            detail:[
+                {
+                    "title":"产品一般说明，用途",
+                    "content":"这是干什么的"
+                },
+                {
+                    "title":"尺寸",
+                    "content":"可根据用户要求定制"
+                },
+                {
+                    "title":"设计交流",
+                    "content":"设计师一对一交流",
+                },
+                {
+                    "title":"合作方式",
+                    "content":"提供设计印刷物流一条龙服务",
+                }
+            ]
+        };
+        $scope.show.$set('proadd');
+    }
+
+    //添加产品详情分类
+    $scope.pushDetailArray = function(){
+        var temp_pojo = {
+            "title":"",
+            "content":""
+        }
+        $scope.pushProductPojo.pojo.detail.push(temp_pojo);
+    };
+
+    //删除产品详情分类
+    $scope.removeDeatail = function(dealPojo){
+        $scope.pushProductPojo.pojo.detail.remove(dealPojo);
+    };
+
     $scope.tempProType = {};
 
     $scope.pushProductPojo = {
