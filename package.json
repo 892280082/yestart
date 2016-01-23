@@ -19,6 +19,7 @@
     "multer": "~1.1.0",
     "objectid": "^3.2.1",
     "serve-favicon": "~2.3.0",
+    "thenjs": "^2.0.2",
     "ueditor": "^1.0.0",
     "wechat": "^2.0.3",
     "wechat-api": "^1.20.0"

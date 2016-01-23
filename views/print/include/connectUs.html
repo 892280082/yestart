@@ -35,7 +35,8 @@
     <%      if(cate.name == '行业资讯'){ %>
     <%          cate.typeArray.forEach(function(article,index){ %>
     <%                 if( index < 7){ %>
-                          <li><a href="#"  title="<%- article.title %>">
+                          <li><a  href="/print/getAirticle?_id=<%- cate._id %>&_typId=<%- article._id %>"
+                          title="<%- article.title %>">
                           <%- article.title %></a>
                           [<%- article.createDate.getFullYear()+"-"
                               + (article.createDate.getMonth()+1)+"-"

@@ -8,6 +8,8 @@ require("../../public/bower_components/angular/angular-file-upload.min.js");
 /**加载后台数据接口*/
 require("./src/service/dataService");
 /**加载主程序人口*/
+/**加载url解析服务*/
+require('../../lib/src/service/angular-analyzeUrl')
 require("./src/controller/main");
 
 

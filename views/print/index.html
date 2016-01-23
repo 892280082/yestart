@@ -64,7 +64,8 @@ $(function() {
        <%   photoDocs.forEach(function(photo){  %>
         <%          if(photo.cate == '产品展示'){  %>
         <%                  photo.typeArray.forEach(function(p){  %>
-                                  <li><a href="#" title="<%-  p.name %>">
+                                  <li><a href="<%- p.linkUrl %>" 
+                                      title="<%-  p.name %>">
                                           <img src="<%-  p.picUrl %>" width="172" height="126" ></a>
                                   <h3><a href="#"><%-  p.name %></a></h3>
          <%                 }); %>
@@ -129,7 +130,7 @@ $(function() {
         <%      if(cate.name == '公司简介'){ %>
         <%          cate.typeArray.forEach(function(article,index){ %>
         <%                 if( index < 8){ %>
-                              <li><a><%- article.title %></a>
+                              <li><a href="/print/getAirticle?_id=<%- cate._id %>&_typId=<%- article._id %>" ><%- article.title %></a>
                               [<%- article.createDate.getFullYear()+"-"
                               + (article.createDate.getMonth()+1)+"-"
                               + article.createDate.getDate() %>]
@@ -173,7 +174,8 @@ $(function() {
     <%  articleDocs.forEach(function(cate){ %>
     <%      if(cate.name == '中标项目'){ %>
     <%            if(cate.typeArray[0]){ %>
-                 <div class="tac"><a href="#"  
+                 <div class="tac">
+                 <a href="/print/getAirticle?_id=<%- cate._id %>&_typId=<%- cate.typeArray[0]._id %>"  
                  title="<%- cate.typeArray[0].title %>">
                  <img src="<%- cate.typeArray[0].picUrl %>"  
                  width="206" height="76"></a> </div>
@@ -181,7 +183,9 @@ $(function() {
             <ul>
     <%          cate.typeArray.forEach(function(article,index){ %>
     <%                 if( index < 7){ %>
-                          <li><a><%- article.title %></a></li>
+                          <li><a
+                          href="/print/getAirticle?_id=<%- cate._id %>&_typId=<%- article._id %>"
+                          ><%- article.title %></a></li>
     <%                 } %>
     <%          }); %>
              </ul>
@@ -194,14 +198,14 @@ $(function() {
     <%      if(cate.name == '客户眼中的快马印务'){ %>
     <%          cate.typeArray.forEach(function(article,index){ %>
     <%              if(index < 2){ %>
-                      <li> <a href="#"  title="<%- article.title %>">
+                      <li> <a href="/print/getAirticle?_id=<%- cate._id %>&_typId=<%- article._id %>"  title="<%- article.title %>">
                       <img width="192" height="112" src="<%- article.picUrl %>" ></a>
                        <h1>
-                       <a href="#"  title="<%- article.title %>">
+                       <a href="/print/getAirticle?_id=<%- cate._id %>&_typId=<%- article._id %>"  title="<%- article.title %>">
                         <%- article.title %></a></h1>
                       <%  var dealContent = article.content.replace(/<[^>]+>/g,"").substr(0,100) %>
                      <h3><%- dealContent %></h3>
-                        <h4><a href="#"  title="<%- article.title %>!">+ 更多详情</a></h4>
+                        <h4><a href="/print/getAirticle?_id=<%- cate._id %>&_typId=<%- article._id %>"  title="<%- article.title %>!">+ 更多详情</a></h4>
                     </li>
     <%               } %>
     <%          }); %>

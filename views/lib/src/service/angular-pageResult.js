@@ -1,3 +1,11 @@
+/**
+*@work 简单分页服务
+*@Method $init(数组对象,分页大小);
+*@Method $next 下一页
+*@Method $last 上一页
+*@Method $showPage(页数) 指定一页
+*@Mthod $search({查询条件}) //只匹配第一个且只允许匹配一个条件
+*/
 angular.module("service.pageResult",[])
 .service("pageResult",[
 	function(){
@@ -78,5 +86,22 @@ angular.module("service.pageResult",[])
 				this.$array = this._getArrayByCur(tempCurPage);
 				this.$curPage = tempCurPage;
 			}
-		}
+		};
+		this.$search = function(searchPojo){
+			var key,value;
+			for( var p in searchPojo ){
+				key = p;
+				value = searchPojo[p];
+			}
+			var tempArray = this._array;
+			var _curPage = 1;
+			for(var i=0,ii=tempArray.length;i<ii;i++){
+				if(i%this.$pageSize==0 && i != 0){
+					_curPage++;
+				}
+				if(tempArray[i][key] == value){
+					this.$showPage(_curPage);
+				}
+			}
+		};
 }]);

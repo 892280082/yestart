@@ -4,10 +4,11 @@
 *@version 1.0.1
 */
 angular.module("controller.main",[
-                                    "ng.ueditor"
+                                    "ng.ueditor",
+                                    'service.analyzeUrl',
                                 ])
-.controller('main',['$scope','showCtrl','dataService','FileUploader'
-,function($scope,showCtrl,dataService,FileUploader){
+.controller('main',['$scope','showCtrl','dataService','FileUploader','analyzeUrl'
+,function($scope,showCtrl,dataService,FileUploader,analyzeUrl){
     /*********************注册show service**************************/
     $scope.show = showCtrl;
     $scope.show.$regist('catelist',['catelist'],true);
@@ -69,7 +70,13 @@ angular.module("controller.main",[
         $scope.show.$set("photoadd");
     }
     $scope.saveOrUpPhoto =function(){
+        var url = $scope.upPhoto.linkUrl;
+        if(analyzeUrl.$strict(url)){
+            var parObject = analyzeUrl.$parseUrl(url);
+            $scope.upPhoto.linkUrl = parObject.pathname + parObject.search;
+        }
         if(!$scope.upPhoto._id){
+            $scope.upPhoto.linkUrl = 1;
             dataService.push_typeArray(
                 $scope.tempPhoto._id,
                 $scope.upPhoto)

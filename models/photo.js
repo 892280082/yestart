@@ -7,6 +7,7 @@ var photo = new  Schema({
 	name:String,
 	picUrl:String,
 	show:Boolean,
+	linkUrl:String,
 	content:String
 });
 

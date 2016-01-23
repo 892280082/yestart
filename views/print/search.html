@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="myApp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>安徽快马印务</title>
+<link href="css/style.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/jquery.SuperSlide.js"></script>
+<script type="text/javascript" src="js/index.js"></script>
+</head>
+<body ng-controller="main">
+<%- include ./include/head.html %>
+<div class="index_gjc2">
+  <%- include ./include/search.html %>
+</div>
+<div id="clear"></div>
+<div class="index_ad"><img width="1000" height="200" alt="banner" 
+  src="/print/images/banner_s11.jpg"></div>
+<div class="nowsite">
+  <h2><b>站点查询</b> / Category</h2>
+  <h3>您现在的位置：
+      <a href="/print/index">主页</a> &gt;
+  </h3>
+</div>
+<div class="product">
+  <div class="fr product_r">
+    <div class="pro_li">
+      <%- include ./include/category.html %>
+    </div>
+    <div class="pro_rt">联系我们</div>
+    <div class="pro_lx">
+      <div class="tac"><a href="#" ><img src="images/n2.jpg" width="224" height="115"></a></div>
+      <p>名称: <%- connectUs.name %><br>
+        Q Q : <a href="#" rel="nofollow"><%- connectUs.QQ %></a><br>
+        电话: <%- connectUs.tel %> <br>
+        邮箱: <%- connectUs.email %> <br>
+        地址: <%- connectUs.address %> <br>
+        厂址: <%- connectUs.comAddress %></p>
+    </div>
+  </div>
+  <div class="ft article_l">
+    <ul>
+      <li>aa</li>
+      <li>aa</li>
+      <li>aa</li>
+      <li>aa</li>
+      <li>aa</li>
+    </ul>
+  
+
+  </div>
+  <div id="clear"></div>
+</div>
+<%- include ./include/foot.html %>
+<script type="text/javascript" src="/public/bower_components/angular/angular.min.js"></script>
+<script type="text/javascript" src="/lib/src/service/angular-pageResult.js"></script>
+<script type="text/javascript" src="./js/airticle.js"></script>
+</body>
+</html>

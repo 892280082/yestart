@@ -2,6 +2,7 @@ var Product = require('../../models/product.js');
 var Photo = require('../../models/photo.js');
 var Article = require('../../models/article.js');
 var Connect = require('../../models/connect.js');
+var then = require('thenjs');
 
 var service = {};
 //获取product所有的数据，不包括子产品。
@@ -76,8 +77,43 @@ service.getProArray = function(_id,_cateId,callback){
 	});
 }
 
-
-
+//根据thenjs库重写getAllDatas方法
+service.getAllDatasByThen = function(callback){
+	var deferParam = {
+		"productDocs":null,
+		"photoDocs":null,
+		"articleDocs":null,
+		"connectUs":null
+	};
+	then(function(defer){
+		Product.find(null,{"typeArray.productArray":0},function(err,docs){
+			deferParam.productDocs = docs;
+			defer(err,deferParam);
+		})
+	})
+	.then(function(defer,deferParam){
+		Photo.find(null,function(err,docs){
+			deferParam.photoDocs = docs;
+			defer(err,deferParam);
+		});
+	})
+	.then(function(defer,deferParam){
+		Article.find(null,function(err,docs){
+			deferParam.articleDocs = docs;
+			defer(err,deferParam);
+		});
+	})
+	.then(function(defer,deferParam){
+		Connect.findOne(null,function(err,doc){
+			deferParam.connectUs = doc;
+			callback(err,deferParam);
+		});
+	})
+	.fail(function(defer,err){
+		console.log(err);
+		callback(err);
+	});
+}
 
 
 

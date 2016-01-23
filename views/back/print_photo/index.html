@@ -117,6 +117,10 @@
              <input type="file" nv-file-select="" uploader="uploader" /><br/>
              <img ng-src="{{ upPhoto.picUrl}}" width="160px" height="140px" ng-if="upPhoto.picUrl"/>
         </li>
+        <li>
+          <label>链接地址</label>
+          <input type="text" ng-model="upPhoto.linkUrl"  class="dfinput"/>
+        </li>
         <li><label>是否显示</label>
             <input type="checkbox" ng-model="upPhoto.show" 
             ng-true-value="true" ng-false-value="false" />

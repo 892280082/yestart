@@ -4,6 +4,7 @@ var Product = require('../../models/product.js');
 var Photo = require('../../models/photo.js');
 var Article = require('../../models/article.js');
 var printService = require("./middleWare");
+var then = require('thenjs');
 
 //主页
 router.get("/index",function(req,res,next){
@@ -29,7 +30,7 @@ router.get("/product",function(req,res,next){
 	});
 });
 
-//详情页面
+//产品详情页面
 router.get("/proDetail",function(req,res,next){
 	printService.getAllDatas(function(err,datas){
 		var _id = req.query._id;
@@ -65,5 +66,50 @@ router.post("/getProArray",function(req,res,next){
 		!err ? res.json(proArray) : res.json(false);
 	});
 });
+
+//文章详情页面
+router.get("/getAirticle",function(req,res){
+	then(function(defer){
+		printService.getAllDatasByThen(function(err,datas){
+			defer(err,datas);
+		});
+	}).then(function(defer,datas){
+		var _id = req.query._id;
+		var _typId = req.query._typId;
+		Article.getTypeOne(_id,function(err,doc){
+			datas.airticle = doc;
+			datas._typId = _typId;
+			doc.typeArray.forEach(function(air){
+				if(air._id == _typId){
+					datas.currentAir = air;
+				}
+			});
+			!err ? res.render("print/airticle.html",datas)
+	 	 		 : res.send("system error!");
+		});
+	}).fail(function(defer,err){
+		res.send("system error!");
+	});
+});
+
+//获取文章分类列表
+router.post('/getAirTypeArry',function(req,res){
+	var searchPojo = req.body.searchPojo;
+	console.log(searchPojo);
+	Article.getTypeOne(searchPojo._id,function(err,doc){
+		!err ? res.json(doc) : res.json(false);
+	});
+});
+
+//搜索页面
+router.get('/getSearch',function(req,res){
+	then(function(defer){
+		printService.getAllDatasByThen(function(err,datas){
+			!err ? res.render("print/search.html",datas)
+	 	 		 : res.send("system error!");
+		});
+	});
+});
+
 
 module.exports = router;

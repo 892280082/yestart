@@ -59,6 +59,17 @@ var article = new  Schema({
  	})
  });
 
+ articleSchema.static("getTypeOne",function(_id,callback){
+ 	this.findOne({
+ 		"_id":_id,
+ 	},function(err,doc){
+ 		if(err){
+ 			console.log(err);
+ 		}
+ 		callback(err,doc);
+ 	});
+ });
+
  var  article = mongoose.model("articles", articleSchema);
 
 module.exports = article;
