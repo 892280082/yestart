@@ -115,6 +115,58 @@ service.getAllDatasByThen = function(callback){
 	});
 }
 
+service.searchAllDatas = function(search,callback){
+	var datas = {
+		cateDatas:[], //分类数据 { _id,{ _id,cateName } }
+		proDatas:[],	//产品数据 { product }
+		airDatas:[],	//文章数据 { _id,airticle }
+	}
+	then(function(defer){
+		Product.find(null,function(err,docs){
+			docs.forEach(function(doc){
+				doc.typeArray.forEach(function(cate){
+					if(!!~cate.cateName.indexOf(search)){
+						var tempCate = {
+							_id:cate._id,
+							cateName:cate.cateName
+						}
+						datas.cateDatas.push({
+							_id:doc._id,
+							cate:tempCate
+						});
+					}
+					cate.productArray.forEach(function(pro){
+						if(!!~pro.name.indexOf(search)){
+							pro._parentId = {
+								_id:doc._id,
+								_cateId:cate._id
+							}
+							datas.proDatas.push(pro);
+						}
+					});
+				});
+			});
+			defer(err);
+		})
+	}).then(function(defer){
+		Article.find(null,function(err,docs){
+			docs.forEach(function(doc){
+				doc.typeArray.forEach(function(air){
+					if(!!~air.title.indexOf(search)){
+						datas.airDatas.push({
+							"_id":doc._id,
+							"airticle":air
+						});
+					}
+				});
+			});
+			callback(err,datas);
+		});
+	}).fail(function(defer,err){
+		console.log(err);
+		callback(err);
+	});
+}
 
 
 module.exports = service;

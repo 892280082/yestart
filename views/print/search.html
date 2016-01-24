@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" ng-app="myApp">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>安徽快马印务</title>
+<title>新疆宏盛印务</title>
 <link href="css/style.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="js/jquery.min.js"></script>
 <script type="text/javascript" src="js/jquery.SuperSlide.js"></script>
@@ -19,7 +19,7 @@
 <div class="nowsite">
   <h2><b>站点查询</b> / Category</h2>
   <h3>您现在的位置：
-      <a href="/print/index">主页</a> &gt;
+      <a href="/print/index">搜索</a>
   </h3>
 </div>
 <div class="product">
@@ -39,15 +39,37 @@
     </div>
   </div>
   <div class="ft article_l">
-    <ul>
-      <li>aa</li>
-      <li>aa</li>
-      <li>aa</li>
-      <li>aa</li>
-      <li>aa</li>
-    </ul>
-  
+      <div class="self_search_list">
+        <h1 class="head">搜索结果</h1>
+        <ul>
+              <!--产品搜索结果-->
+          <%  searchData.proDatas.forEach(function(pojo){ %>
+                <li>
+                  <a href="/print/proDetail?_id=<%- pojo._parentId._id %>&_cateId=<%- pojo._parentId._cateId %>&_proId=<%- pojo._id %>" target="_BLANK"  >                     
+                    [产品]<%- pojo.name %>                 
+                    </a>
+                </li>
+          <%  }); %>
 
+          <!--产品分类结果-->
+          <%  searchData.cateDatas.forEach(function(pojo){ %>
+                <li>
+                  <a href="/print/product?_id=<%- pojo._id%>&_cateId=<%- pojo.cate._id %>" target="_BLANK">
+                    [分类]<%- pojo.cate.cateName %>
+                  </a>
+                </li>
+          <%  }); %>
+
+          <!--文章搜索结果-->
+          <%  searchData.airDatas.forEach(function(pojo){ %>
+                <li>
+                  <a href="/print/getAirticle?_id=<%- pojo._id %>&_typId=<%- pojo.airticle._id %>" target="_BLANK">
+                     [文章]<%- pojo.airticle.title %>
+                  </a>
+                </li>
+          <%  }); %>
+        </ul>
+      </div>
   </div>
   <div id="clear"></div>
 </div>

@@ -102,9 +102,15 @@ router.post('/getAirTypeArry',function(req,res){
 });
 
 //搜索页面
-router.get('/getSearch',function(req,res){
+router.post('/getSearch',function(req,res){
+	var search = req.body.q;
 	then(function(defer){
 		printService.getAllDatasByThen(function(err,datas){
+			defer(err,datas);
+		});
+	}).then(function(defer,datas){
+		printService.searchAllDatas(search,function(err,data){
+			datas.searchData = data;
 			!err ? res.render("print/search.html",datas)
 	 	 		 : res.send("system error!");
 		});
