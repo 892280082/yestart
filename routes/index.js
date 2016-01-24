@@ -52,6 +52,11 @@ if (app.get('env') === 'development') {
   });
 }
 
+//设置网站首页
+app.get("/",function(req,res){
+    res.redirect('/print/index');
+});
+
 //加载back模块路由
 backRoute(app);
 

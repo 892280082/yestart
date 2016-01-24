@@ -58,6 +58,31 @@
             type="text" class="dfinput"  />
             <i ng-show="subForm.t_comAddress.$error.required">请输入公司厂址</i>
          </li>
+        <li><label>公司关键字搜索</label>
+            <input  ng-model="connect.keyWord"  
+            placeHolder="关键字请用空格隔开"
+            name="t_keyWord" required
+            type="text" class="dfinput"  />
+            <i ng-show="subForm.t_keyWord.$error.required">关键字请用空格隔开</i>
+         </li>
+        <li>
+            <label>账户管理
+            <input type="button" value="添加用户" 
+                ng-click="addUser()" />
+            </label>
+            <ul ng-repeat="admin in connect.admins">
+                <li><label style="text-align:center;">
+                    {{ $index + 1 }}</label>
+                    <input type="text"  class="dfinput"
+                         ng-model="admin.name"/>
+                    <input type="password"  class="dfinput" 
+                        ng-model="admin.password">
+                    <input type="button" value="删除" 
+                        ng-click="removeUser(admin)"/>
+                    </br>
+                </li>
+            </ul>
+        </li>
         <li><label>首页图片</label>
              <input type="file" nv-file-select="" uploader="uploader" /><br/>
              <img ng-src="{{ connect.picUrl}}" width="160px" height="140px" ng-if="connect.picUrl"/>
@@ -80,6 +105,17 @@
 <script type="text/javascript" charset="utf-8" src="/public/bower_components/angular/angular-file-upload.min.js"> </script>
 <script type="text/javascript" src="/lib/src/directive/angular-ueditor.js"></script>
 <script type="text/javascript">
+    Array.prototype.remove = function(obj){
+            var flag = false;
+            for(var i=0;i<this.length;i++){
+                if(this[i] == obj){
+                    flag = !flag;
+                    break;
+                }
+            }
+            if(flag)this.splice(i,1);
+    }
+
 	var app = angular.module('myApp',['angularFileUpload',
                                       'ng.ueditor']);
 
@@ -104,7 +140,9 @@
 
 	app.controller("main",["$scope","dataService","FileUploader"
 	,function($scope,dataService,FileUploader){
-		$scope.connect = {};
+		$scope.connect = {
+            admins:[]
+        };
 
 		dataService.getData().success(function(data){
 			if(data){
@@ -123,8 +161,22 @@
             $scope.connect.picUrl = response.path;
         };
 
+        $scope.addUser = function(){
+            $scope.connect.admins.push({});
+        };
+
+        $scope.removeUser = function(admin){
+            $scope.connect.admins.remove(admin);
+        }
+
 		$scope.saveOrUpdate = function(){
-			console.log($scope.connect);
+            var admins = $scope.connect.admins;
+            for(var i=0,ii=admins.length;i<ii;i++){
+                if(admins[i].name == "" || admins[i].password.length < 5){
+                    alert(admins[i].name +"用户名密码太短,长度不得低于5位");
+                    return;
+                }
+            }
 			if(!$scope.connect._id){
 				dataService.save($scope.connect)
 				.success(function(msg){
