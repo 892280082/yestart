@@ -2,7 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>产品详情页</title>
+    <% var tarProduct = {} %>
+    <% proArray.forEach(function(pro){ %>
+    <%    if(pro._id == _proId){ %>
+    <%      tarProduct = pro;  %>
+    <%    } %>
+    <%  }) %>
+    <title><%- tarProduct.name %>-新疆印务</title>
 <link href="css/style.css" rel="stylesheet" type="text/css">
 <link rel="stylesheet" rev="stylesheet" href="css/pshow2.css" type="text/css">
 <script type="text/javascript" src="js/jquery.min.js"></script>
@@ -41,12 +47,6 @@ var atts="";
 <div class="nowsite">
   <h2><b>产品类别</b> / Category</h2>
   <h3>您现在的位置： 
-                  <% var tarProduct = {} %>
-                  <% proArray.forEach(function(pro){ %>
-                  <%    if(pro._id == _proId){ %>
-                  <%      tarProduct = pro;  %>
-                  <%    } %>
-                  <%  }) %>
                   <%  for(var i=0;i<productDocs.length;i++){ %>
                   <%     if(productDocs[i]._id == _id){ %>
                               <%- productDocs[i].title %></a>
@@ -191,22 +191,22 @@ var atts="";
       <div><a href="#" rel="nofollow" ><img src="images/dingzhi_2.jpg" width="740"></a></div>
     </div>
     <div class="pro_ly"><a name="dg"></a>
-      <h2>快马印务十大优势</h2>
+      <h2>宏盛印务十大优势</h2>
       <div><a href="#" rel="nofollow" ><img src="images/youshi_1.jpg" width="720"></a><br>
         <a href="#" rel="nofollow" ><img src="images/youshi_2.jpg" width="720"></a><br>
       </div>
       <div id="clear"></div>
     </div>
     <div class="pro_xx">
-      <h2>联系快马</h2>
+      <h2>联系宏盛</h2>
       <div class="xx_text"><a href="#" rel="nofollow" ><img src="images/lianxifangshi.png" width="720"></a></div>
     </div>
   </div>
   <div id="clear"></div>
 </div>
-<div class="bot_nav"><a href="#">关于快马</a>|<a href="#">产品包装盒</a>|<a href="#">企业宣传册</a>|<a href="#">精装书刊</a>|<a href="#">精美手提袋</a>|<a href="#">笔记本印刷</a>|<a href="#">纸制品印刷</a>|<a href="#">办公用品</a>|<a href="#">印刷常识</a>|<a href="#" rel="nofollow">联系快马</a></div>
-<div class="bottom">合肥印刷厂集印刷品的策划、设计、印刷为一体的大型合肥印务公司,专业为您提供画册印刷及各种精美书籍、宣传单等印刷，安徽省合肥快马印务公司是全省最有实力的合肥印刷厂<br>
-  Copyright 2013 安徽省快马印刷公司_合肥印务公司_合肥印刷厂 版权所有 All Rights Reserved 皖ICP备10006187号-6</div>
+<div class="bot_nav"><a href="#">关于宏盛</a>|<a href="#">产品包装盒</a>|<a href="#">企业宣传册</a>|<a href="#">精装书刊</a>|<a href="#">精美手提袋</a>|<a href="#">笔记本印刷</a>|<a href="#">纸制品印刷</a>|<a href="#">办公用品</a>|<a href="#">印刷常识</a>|<a href="#" rel="nofollow">联系宏盛</a></div>
+<div class="bottom">乌鲁木齐印刷厂集印刷品的策划、设计、印刷为一体的大型乌鲁木齐印务公司,专业为您提供画册印刷及各种精美书籍、宣传单等印刷，新疆省乌鲁木齐宏盛印务公司是全省最有实力的乌鲁木齐印刷厂<br>
+  Copyright 2013 新疆省宏盛印刷公司_乌鲁木齐印务公司_乌鲁木齐印刷厂 版权所有 All Rights Reserved 皖ICP备10006187号-6</div>
 <!--1003-->
 </body>
 </html>
